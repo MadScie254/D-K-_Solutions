@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danco & Khadija - Intelligent Digital Solutions</title>
+    <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+    <style>
+        /* --- Theme Variables --- */
+        :root {
+            /* Light Theme (Default) */
+            --bg-primary: #f3f4f6; /* Tailwind gray-100 */
+            --bg-secondary: #ffffff; /* White */
+            --bg-accent: #e5e7eb; /* Tailwind gray-200 */
+            --text-primary: #1f2937; /* Tailwind gray-800 */
+            --text-secondary: #4b5563; /* Tailwind gray-600 */
+            --text-accent: #6366f1; /* Indigo-500 */
+            --border-color: rgba(0, 0, 0, 0.1);
+            --gradient-start: #4f46e5; /* Indigo-600 */
+            --gradient-mid: #7c3aed;   /* Purple-600 */
+            --gradient-end: #db2777;   /* Pink-600 */
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --shadow-color: rgba(99, 102, 241, 0.2);
+            --hero-overlay-bg: rgba(243, 244, 246, 0.85); /* Lighter overlay for better text contrast */
+            --slider-nav-bg: rgba(255, 255, 255, 0.5);
+            --slider-nav-text: #1f2937;
+            --slider-nav-hover-bg: rgba(255, 255, 255, 0.8);
+            --loader-bg: var(--bg-primary);
+            --loader-color: var(--text-accent);
+            --loader-logo-filter: none;
+             /* Contact Form Specific */
+            --input-bg: #ffffff;
+            --input-text: var(--text-primary);
+            --input-border: #d1d5db; /* Tailwind gray-300 */
+            --input-focus-ring: var(--text-accent);
+            --label-text: var(--text-primary);
+        }
+
+        .dark-mode {
+            /* Dark Theme */
+            --bg-primary: #0a0a23; /* Darker blue/purple */
+            --bg-secondary: #111827; /* Tailwind gray-900 */
+            --bg-accent: #1f2937; /* Tailwind gray-800 */
+            --text-primary: #e0e0ff; /* Light Purple/White */
+            --text-secondary: #9ca3af; /* Tailwind gray-400 */
+            --text-accent: #8b5cf6; /* Violet-500 */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-start: #6366f1; /* Indigo-500 */
+            --gradient-mid: #a855f7;   /* Purple-500 */
+            --gradient-end: #ec4899;   /* Pink-500 */
+            --glass-bg: rgba(31, 41, 55, 0.5); /* gray-800 with alpha */
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(99, 102, 241, 0.3);
+            --hero-overlay-bg: rgba(10, 10, 35, 0.85); /* Darker overlay */
+            --slider-nav-bg: rgba(31, 41, 55, 0.5);
+            --slider-nav-text: #e0e0ff;
+            --slider-nav-hover-bg: rgba(31, 41, 55, 0.8);
+            --loader-bg: var(--bg-primary);
+            --loader-color: var(--text-accent);
+            --loader-logo-filter: brightness(0) invert(1);
+            /* Contact Form Specific - Dark Mode */
+            --input-bg: #1f2937; /* Tailwind gray-800 */
+            --input-text: var(--text-primary);
+            --input-border: #4b5563; /* Tailwind gray-600 */
+            --input-focus-ring: var(--text-accent);
+            --label-text: var(--text-primary);
+        }
+
+        /* --- Base Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body::before { /* Subtle background pattern */
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at top left, color-mix(in srgb, var(--gradient-start) 10%, transparent) 0%, transparent 40%),
+                radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--gradient-mid) 10%, transparent) 0%, transparent 40%);
+            opacity: 0.2; z-index: -1; pointer-events: none; transition: background 0.3s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text; background-clip: text; color: transparent; transition: background 0.3s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        /* --- Loading Overlay --- */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--loader-bg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10000; opacity: 1; transition: opacity 0.5s ease-out; pointer-events: auto;
+        }
+        #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+        .loader-logo-text { /* Using text as logo */
+            font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;
+            color: var(--text-accent); filter: var(--loader-logo-filter);
+        }
+        .loader-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: var(--loader-color);
+            border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;
+        }
+        .loader-text { margin-top: 15px; color: var(--text-secondary); font-size: 0.9rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- Navigation --- */
+        #main-header { transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+        #main-header.scrolled {
+            background: var(--glass-bg); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode #main-header.scrolled {
+             background: rgba(10, 10, 35, 0.8); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link {
+            color: var(--text-secondary); transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            padding: 0.5rem 0.6rem; font-size: 0.9rem; border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover { color: var(--text-accent); }
+        .nav-link.active { color: var(--text-accent); font-weight: 600; border-bottom-color: var(--text-accent); }
+        #mobile-menu { background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); }
+        .dark-mode #mobile-menu { background-color: var(--bg-secondary); }
+        #mobile-menu a { color: var(--text-primary); display: block; padding: 0.75rem 1.5rem; }
+        #mobile-menu a:hover { background-color: var(--bg-accent); }
+        #mobile-menu a.active { color: var(--text-accent); font-weight: 600; background-color: var(--bg-accent); }
+
+        /* --- Buttons --- */
+        .cta-button {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid)); color: white;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px var(--shadow-color);
+            padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; display: inline-block; text-align: center;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--shadow-color) 130%, black);
+        }
+        .cta-button-secondary {
+             background-color: var(--glass-bg); border: 1px solid var(--border-color); color: var(--text-primary);
+             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+             padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; display: inline-block; text-align: center;
+        }
+        .cta-button-secondary:hover { background-color: color-mix(in srgb, var(--bg-accent) 70%, black); }
+        .dark-mode .cta-button-secondary {
+            background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white;
+        }
+         .dark-mode .cta-button-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+         
+        .know-more-button { /* Specific style for "Know More" buttons */
+            background-color: transparent;
+            border: 2px solid var(--text-accent);
+            color: var(--text-accent);
+            transition: all 0.3s ease;
+            padding: 0.6rem 1.2rem; /* Slightly smaller padding */
+            border-radius: 0.5rem; font-weight: 500; /* Slightly less bold */
+            display: inline-block; text-align: center;
+        }
+        .know-more-button:hover {
+            background-color: var(--text-accent);
+            color: var(--bg-secondary); /* White or light background color for text */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px color-mix(in srgb, var(--shadow-color) 80%, black);
+        }
+        .dark-mode .know-more-button {
+             border-color: var(--text-accent);
+             color: var(--text-accent);
+        }
+        .dark-mode .know-more-button:hover {
+            background-color: var(--text-accent);
+            color: var(--bg-primary); /* Dark background color for text in dark mode */
+        }
+
+         .whatsapp-button {
+             background-color: #25D366; color: white;
+             padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;
+             transition: background-color 0.3s ease, transform 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+         }
+         .whatsapp-button:hover { background-color: #128C7E; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+         .floating-whatsapp { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1000; }
+
+        /* --- Cards & Glassmorphism --- */
+        .glassmorphic {
+            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color); transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .content-card { /* Generic card for services, founders, etc. */
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .dark-mode .content-card { box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        .content-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px var(--shadow-color);
+            border-color: var(--text-accent);
+        }
+        .content-card h3 { color: var(--text-primary); }
+        .content-card p { color: var(--text-secondary); }
+        .content-card .icon-bg {
+            background-color: color-mix(in srgb, var(--text-accent) 15%, transparent);
+            color: var(--text-accent);
+            border-radius: 0.5rem; /* rounded-lg */
+            width: 3rem; height: 3rem; /* w-12 h-12 */
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem; /* mb-4 */
+        }
+         .content-card .icon-bg i { font-size: 1.5rem; /* text-2xl */ }
+
+
+        /* --- Scroll Animation --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Hero Section --- */
+        #hero {
+            position: relative; min-height: 90vh; width: 100%; display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden; padding-top: 80px; /* Account for header */
+        }
+        .hero-content {
+            position: relative; z-index: 10;
+            background: var(--hero-overlay-bg);
+            padding: 2rem; border-radius: 1rem; max-width: 90%; transition: background-color 0.3s ease;
+            color: var(--text-primary);
+        }
+         .dark-mode .hero-content { color: #e0e0ff; }
+         .typed-cursor { opacity: 1; animation: typedjsBlink 0.7s infinite; color: var(--text-accent); }
+         @keyframes typedjsBlink { 50% { opacity: 0.0; } }
+
+        /* --- Theme Toggle Button --- */
+        #theme-toggle, #theme-toggle-mobile {
+            background: none; border: none; color: var(--text-secondary); cursor: pointer;
+            font-size: 1.25rem; transition: color 0.3s ease; padding: 0.5rem;
+        }
+         #theme-toggle:hover, #theme-toggle-mobile:hover { color: var(--text-accent); }
+
+        /* --- Section Padding & Know More Button Container --- */
+        section { scroll-margin-top: 70px; /* Offset for fixed header */ }
+        section:not(#hero) { padding-top: 2rem; padding-bottom: 4rem; } /* Adjusted top padding for know more button */
+        
+        .section-intro-button-container {
+            text-align: center;
+            margin-bottom: 2.5rem; /* Space between button and section title */
+            margin-top: 2rem; /* Space above the button if it's not the first element in a section wrapper */
+        }
+        section:first-of-type .section-intro-button-container { /* For the very first section after hero if it has a button */
+             margin-top: 0;
+        }
+
+
+        /* --- Founder Card Specifics --- */
+        .founder-card img {
+            border-radius: 50%;
+            width: 128px; /* w-32 */
+            height: 128px; /* h-32 */
+            object-fit: cover;
+            margin-bottom: 1rem; /* mb-4 */
+            border: 3px solid var(--text-accent);
+        }
+        .founder-card .quote {
+            font-style: italic;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--text-accent);
+            padding-left: 1rem; /* pl-4 */
+            margin: 1rem 0; /* my-4 */
+        }
+        .founder-card .links a {
+            color: var(--text-accent);
+            margin: 0 0.5rem; /* mx-2 */
+            transition: color 0.3s ease;
+        }
+        .founder-card .links a:hover { color: var(--gradient-end); }
+
+        /* --- Statistics Section --- */
+        #stats {
+            background-color: var(--bg-secondary); 
+            color: var(--text-primary); 
+            padding: 3rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .stat-item { text-align: center; position: relative; z-index: 1; }
+        .stat-number {
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            color: var(--text-accent);
+            display: block;
+            margin-bottom: 0.25rem;
+            line-height: 1.1;
+        }
+        .stat-label {
+            font-size: 0.9rem; 
+            color: var(--text-secondary);
+            display: block;
+        }
+
+
+        /* --- Testimonial Card --- */
+        .testimonial-card blockquote { border-left: 4px solid var(--text-accent); padding-left: 1rem; font-style: italic; color: var(--text-secondary); }
+        .testimonial-card cite { display: block; margin-top: 1rem; font-weight: 600; color: var(--text-primary); }
+
+        /* --- Image Slider (Swiper for Portfolio) --- */
+        #portfolio {
+            background-color: var(--bg-primary); 
+        }
+        .swiper-container {
+            width: 100%; max-width: 1200px; margin-left: auto; margin-right: auto;
+            position: relative; overflow: hidden; border-radius: 0.75rem;
+        }
+        .swiper-slide {
+            text-align: center; font-size: 18px; background: var(--bg-accent);
+            display: flex; justify-content: center; align-items: center;
+            position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+        }
+        .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .slide-caption {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(0, 0, 0, 0.7); color: #fff;
+            padding: 1rem; font-size: 0.9rem; text-align: left;
+            transition: background 0.3s ease;
+        }
+        .dark-mode .slide-caption { background: rgba(10, 10, 35, 0.8); }
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--slider-nav-text); background-color: var(--slider-nav-bg);
+            border-radius: 50%; width: 44px; height: 44px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+            --swiper-navigation-size: 20px;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover { background-color: var(--slider-nav-hover-bg); }
+        .swiper-pagination-bullet { background-color: var(--slider-nav-text); opacity: 0.7; }
+        .swiper-pagination-bullet-active { background-color: var(--text-accent); opacity: 1; }
+
+        /* --- Contact Form --- */
+        #contact-form label {
+            color: var(--label-text); display: block; margin-bottom: 0.25rem;
+            font-size: 0.875rem; font-weight: 500; transition: color 0.3s ease;
+        }
+        #contact-form input[type="text"],
+        #contact-form input[type="email"],
+        #contact-form textarea {
+            background-color: var(--input-bg); color: var(--input-text);
+            border: 1px solid var(--input-border); border-radius: 0.375rem;
+            padding: 0.5rem 0.75rem; width: 100%; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.15s ease-in-out;
+        }
+        #contact-form input[type="text"]:focus,
+        #contact-form input[type="email"]:focus,
+        #contact-form textarea:focus {
+            outline: none; border-color: var(--input-focus-ring);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-focus-ring) 25%, transparent);
+        }
+        .dark-mode #contact-form label { color: var(--label-text); }
+        .dark-mode #contact-form input[type="text"],
+        .dark-mode #contact-form input[type="email"],
+        .dark-mode #contact-form textarea {
+            background-color: var(--input-bg); color: var(--input-text); border-color: var(--input-border);
+        }
+        #contact-form ::placeholder { color: var(--text-secondary); opacity: 0.7; }
+        .dark-mode #contact-form ::placeholder { color: var(--text-secondary); opacity: 0.5; }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="loading-overlay">
+        <div class="loader-logo-text">D&K</div>
+        <div class="loader-spinner"></div>
+        <p class="loader-text">Crafting Digital Excellence...</p>
+    </div>
+
+    <a href="https://wa.me/254722512455?text=Hello%20Danco%20%26%20Khadija%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener noreferrer" class="floating-whatsapp whatsapp-button" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <span class="hidden sm:inline">Chat Now</span>
+    </a>
+
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 glassmorphic">
+        <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+            <a href="#hero" class="flex-shrink-0 flex items-center" title="Danco & Khadija Home">
+                <span class="text-xl md:text-2xl font-bold gradient-text">Danco & Khadija</span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-wrap justify-end">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#who-we-are" class="nav-link">Who We Are</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#founders" class="nav-link">Founders</a>
+                <a href="#portfolio" class="nav-link">Our Work</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button id="theme-toggle" title="Toggle Theme" class="ml-2">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+            <div class="lg:hidden flex items-center space-x-3">
+                 <button id="theme-toggle-mobile" class="text-xl" title="Toggle Theme">
+                     <i class="fas fa-sun"></i>
+                 </button>
+                 <button id="mobile-menu-button" class="focus:outline-none text-2xl" title="Toggle Mobile Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <a href="#hero" class="nav-link-mobile block px-4 py-2">Home</a>
+            <a href="#who-we-are" class="nav-link-mobile block px-4 py-2">Who We Are</a>
+            <a href="#services" class="nav-link-mobile block px-4 py-2">Services</a>
+            <a href="#founders" class="nav-link-mobile block px-4 py-2">Founders</a>
+            <a href="#portfolio" class="nav-link-mobile block px-4 py-2">Our Work</a>
+            <a href="#testimonials" class="nav-link-mobile block px-4 py-2">Testimonials</a>
+            <a href="#contact" class="nav-link-mobile block px-4 py-2">Contact</a>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container mx-auto px-6 z-10">
+            <div class="hero-content reveal max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+                    Intelligent Solutions, <span class="gradient-text" id="typed-target"></span>
+                </h1>
+                <p class="text-lg md:text-xl mb-6">
+                    A Nairobi-based freelance partnership delivering scalable, design-driven digital solutions. We blend deep technical insight with strategic design thinking to help your business thrive.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+                    <a href="#services" class="cta-button">
+                        Explore Our Services
+                    </a>
+                    <a href="#contact" class="cta-button-secondary">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="who-we-are" class="bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="section-intro-button-container reveal">
+                <a href="who_we_are.html" class="know-more-button">Discover Who We Are <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">Who We Are</h2>
+                <p class="text-lg text-secondary max-w-3xl mx-auto">
+                    We are a Nairobi-based freelance partnership specializing in delivering intelligent, scalable, and design-driven digital solutions. Our work blends deep technical insight with strategic design thinking—helping businesses of all sizes build, deploy, and grow with confidence.
+                </p>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 reveal">
+                    <img src="https://placehold.co/600x400/e0e7ff/4f46e5?text=Collaborative+Innovation" alt="Team Collaboration or Abstract Tech Design" class="rounded-lg shadow-xl w-full h-auto object-cover" loading="lazy">
+                </div>
+                <div class="lg:w-1/2 reveal" style="transition-delay: 0.2s;">
+                    <h3 class="text-2xl font-semibold mb-4 text-primary">Our Philosophy</h3>
+                    <p class="text-secondary mb-6 leading-relaxed">
+                        Born from a shared commitment to innovation and practical impact, our partnership merges cutting-edge data science with compelling digital experiences. Whether you’re launching your first product, optimizing your operations, or scaling your analytics, we’re here to help you build with clarity and purpose.
+                    </p>
+                    <p class="text-secondary leading-relaxed">
+                        We believe in building strong relationships with our clients, understanding their unique challenges, and co-creating solutions that deliver real value.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="bg-primary">
+        <div class="container mx-auto px-6">
+            <div class="section-intro-button-container reveal">
+                <a href="services.html" class="know-more-button">Explore Our Services <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">Our Services</h2>
+                <p class="text-lg text-secondary max-w-3xl mx-auto">
+                    We offer a range of services designed to empower your business with cutting-edge technology and strategic insights.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="content-card reveal" style="transition-delay: 0.1s;">
+                    <div class="icon-bg"><i class="fas fa-code"></i></div>
+                    <h3 class="text-xl font-semibold mb-3">Custom Software Development</h3>
+                    <p class="text-base leading-relaxed">
+                        Bespoke web applications, backend systems, and APIs tailored to your specific business needs, built for scalability and performance.
+                    </p>
+                </div>
+                <div class="content-card reveal" style="transition-delay: 0.2s;">
+                    <div class="icon-bg"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-xl font-semibold mb-3">Machine Learning & AI</h3>
+                    <p class="text-base leading-relaxed">
+                        Develop intelligent predictive models, data-driven insights, and AI-powered solutions to optimize processes and unlock new opportunities.
+                    </p>
+                </div>
+                <div class="content-card reveal" style="transition-delay: 0.3s;">
+                    <div class="icon-bg"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="text-xl font-semibold mb-3">Digital Strategy & Consulting</h3>
+                    <p class="text-base leading-relaxed">
+                        Research-driven business strategy, product lifecycle mapping, and digital transformation roadmaps to align your goals with measurable outcomes.
+                    </p>
+                </div>
+                <div class="content-card reveal" style="transition-delay: 0.4s;">
+                    <div class="icon-bg"><i class="fas fa-drafting-compass"></i></div>
+                    <h3 class="text-xl font-semibold mb-3">UI/UX Design & Direction</h3>
+                    <p class="text-base leading-relaxed">
+                        Crafting intuitive and compelling user experiences that speak clearly to your audience and enhance engagement.
+                    </p>
+                </div>
+                <div class="content-card reveal" style="transition-delay: 0.5s;">
+                    <div class="icon-bg"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-xl font-semibold mb-3">Data Analytics & Visualization</h3>
+                    <p class="text-base leading-relaxed">
+                        Transform raw data into actionable insights through advanced analytics, reporting dashboards, and clear visualizations.
+                    </p>
+                </div>
+                <div class="content-card reveal" style="transition-delay: 0.6s;">
+                    <div class="icon-bg"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="text-xl font-semibold mb-3">Full-Stack Web Development</h3>
+                    <p class="text-base leading-relaxed">
+                        End-to-end development of responsive and dynamic websites and web applications using modern technologies like React and Django.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="founders" class="bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="section-intro-button-container reveal">
+                <a href="founders.html" class="know-more-button">Meet The Founders <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">🧑‍💻 Meet the Founders</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="content-card founder-card text-center reveal" style="transition-delay: 0.1s;">
+                    <img src="https://placehold.co/128x128/6366f1/FFFFFF?text=DW" alt="Daniel Wanjala" class="mx-auto">
+                    <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
+                    <p class="text-accent font-medium mb-2">Lead Developer / Machine Learning Engineer</p>
+                    <p class="text-sm text-secondary mb-4">
+                        Daniel is a certified data scientist and full-stack developer, known for his ability to architect scalable software and intelligent predictive models. He’s the creator behind InvestWise Predictor, a sophisticated investment advisory engine powered by neural networks and economic data. Daniel's portfolio includes several production-ready platforms such as metcom.ke and marda.co.ke, and he brings years of experience in both backend engineering and ML workflows.
+                    </p>
+                    <p class="text-sm text-secondary mb-3"><strong>Toolkit:</strong> Python, Django, React, TensorFlow, PostgreSQL, Docker, Redis.</p>
+                    <div class="quote">
+                        <p>“I don’t just build systems. I build things people can rely on.”</p>
+                        <cite>— Daniel</cite>
+                    </div>
+                    <p class="text-sm text-secondary mb-1"><strong>Certifications & Affiliations:</strong></p>
+                    <p class="text-xs text-secondary mb-3">Moringa School, Zetech University, HackerRank (ML & Python), Udemy (Angular, JavaScript)</p>
+                    <div class="links">
+                        <a href="https://github.com/MadScie254" target="_blank" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="mailto:dmwanjal254@gmail.com" title="Email"><i class="fas fa-envelope fa-lg"></i></a>
+                    </div>
+                </div>
+
+                <div class="content-card founder-card text-center reveal" style="transition-delay: 0.2s;">
+                    <img src="https://placehold.co/128x128/EC4899/FFFFFF?text=KK" alt="Khadia Khalid" class="mx-auto">
+                    <h3 class="text-2xl font-semibold mb-1">Khadia Khalid 👩‍💼</h3>
+                    <p class="text-accent font-medium mb-2">Digital Strategy & Business Systems Partner</p>
+                    <p class="text-sm text-secondary mb-4">
+                        Khadia is a strategic thinker with a passion for transforming ideas into actionable systems. Her expertise lies in research-driven business strategy, digital storytelling, and product lifecycle mapping. At DanJa, she focuses on helping clients align their digital goals with structured delivery—balancing design, clarity, and measurable outcomes.
+                    </p>
+                     <p class="text-sm text-secondary mb-3">With an eye for detail and a background in operations and communication, Khadia helps bring projects from abstract to executable. She is the voice behind the user-first mindset in all our work—ensuring every product speaks clearly to its intended audience.</p>
+                    <div class="quote">
+                        <p>“If a solution isn’t clear, it won’t last. My job is to keep it clear and keep it moving.”</p>
+                        <cite>— Khadia</cite>
+                    </div>
+                    <p class="text-sm text-secondary mb-1"><strong>Focus Areas:</strong></p>
+                    <ul class="text-xs text-secondary list-disc list-inside text-left inline-block mb-3">
+                        <li>UI/UX direction</li>
+                        <li>Market & client research</li>
+                        <li>Product development frameworks</li>
+                        <li>Systems documentation</li>
+                        <li>SME and NGO onboarding strategy</li>
+                    </ul>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="bg-primary">
+        <div class="container mx-auto px-6">
+             <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 reveal">Our Journey So Far</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="50">0</span> <span class="stat-label">Projects Delivered</span>
+                </div>
+                <div class="stat-item reveal" style="transition-delay: 0.1s;">
+                    <span class="stat-number" data-target="30">0</span> <span class="stat-label">Happy Clients</span>
+                </div>
+                <div class="stat-item reveal" style="transition-delay: 0.2s;">
+                    <span class="stat-number" data-target="5">0</span>+ <span class="stat-label">Years of Combined Experience</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="section-intro-button-container reveal">
+                <a href="portfolio.html" class="know-more-button">View Our Portfolio <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal">Our Work Highlights</h2>
+            <p class="text-lg text-secondary text-center max-w-3xl mx-auto mb-12 reveal" style="transition-delay: 0.1s;">
+                Glimpses into some of the projects and platforms we've helped build and shape.
+            </p>
+            <div class="swiper-container reveal" style="transition-delay: 0.2s;">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://placehold.co/1200x675/4f46e5/ffffff?text=InvestWise+Predictor" alt="InvestWise Predictor Project" loading="lazy">
+                        <div class="slide-caption">
+                            <strong>InvestWise Predictor:</strong> A sophisticated investment advisory engine powered by neural networks and economic data.
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                         <img src="https://placehold.co/1200x675/7c3aed/ffffff?text=metcom.ke" alt="metcom.ke Project" loading="lazy">
+                         <div class="slide-caption">
+                            <strong>metcom.ke:</strong> A production-ready platform showcasing robust backend engineering and user interface design.
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                         <img src="https://placehold.co/1200x675/db2777/ffffff?text=marda.co.ke" alt="marda.co.ke Project" loading="lazy">
+                         <div class="slide-caption">
+                            <strong>marda.co.ke:</strong> Another example of a deployed platform demonstrating full-stack development capabilities.
+                        </div>
+                    </div>
+                     <div class="swiper-slide">
+                         <img src="https://placehold.co/1200x675/10b981/ffffff?text=Digital+Strategy+Success" alt="Digital Strategy Project" loading="lazy">
+                         <div class="slide-caption">
+                            <strong>SME Digital Transformation:</strong> Strategic guidance and system implementation for a growing small business, enhancing their online presence and operational efficiency.
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="bg-primary">
+        <div class="container mx-auto px-6">
+             <div class="section-intro-button-container reveal">
+                <a href="testimonials.html" class="know-more-button">Read Client Stories <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal">What Our Clients Say</h2>
+             <p class="text-lg text-secondary text-center max-w-3xl mx-auto mb-12 reveal" style="transition-delay: 0.1s;">
+                We're passionate about delivering results. Here's what some of our clients have to say about their experience working with us.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card content-card reveal" style="transition-delay: 0.2s;">
+                    <blockquote class="mb-4">
+                        "Working with Danco & Khadija was a fantastic experience. Their technical expertise combined with strategic thinking helped us launch our platform successfully."
+                    </blockquote>
+                    <cite>- A. N., Startup Founder</cite>
+                </div>
+                <div class="testimonial-card content-card reveal" style="transition-delay: 0.3s;">
+                    <blockquote class="mb-4">
+                        "The machine learning model they developed has significantly improved our operational efficiency. Highly professional and results-oriented."
+                    </blockquote>
+                    <cite>- B. O., Operations Manager</cite>
+                </div>
+                <div class="testimonial-card content-card reveal" style="transition-delay: 0.4s;">
+                     <blockquote class="mb-4">
+                        "Khadija's insights into digital strategy were invaluable. Our project was managed flawlessly from concept to execution."
+                    </blockquote>
+                    <cite>- C. P., Marketing Director</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="section-intro-button-container reveal">
+                <a href="contact.html" class="know-more-button">Get In Touch With Us <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal">Let's Build Something Amazing Together</h2>
+            <p class="text-lg text-secondary text-center max-w-3xl mx-auto mb-12 reveal" style="transition-delay: 0.1s;">
+                Have a project in mind? Need to scale your analytics or develop a new digital product? We'd love to hear from you. Reach out for a consultation.
+            </p>
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2 reveal" style="transition-delay: 0.2s;">
+                    <form id="contact-form" action="mailto:dmwanjal254@gmail.com" method="post" enctype="text/plain" class="space-y-6">
+                        <div>
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="Name" required placeholder="Your Full Name">
+                        </div>
+                        <div>
+                            <label for="email">Your Email Address</label>
+                             <input type="email" id="email" name="Email" required placeholder="your.email@example.com">
+                        </div>
+                         <div>
+                            <label for="company">Company Name (Optional)</label>
+                             <input type="text" id="company" name="Company" placeholder="Your Company">
+                        </div>
+                         <div>
+                            <label for="subject">Subject</label>
+                             <input type="text" id="subject" name="Subject" required value="Project Inquiry - Danco & Khadija" placeholder="Briefly, what is this about?">
+                        </div>
+                        <div>
+                            <label for="message">Your Message / Inquiry</label>
+                             <textarea id="message" name="Message" rows="5" required placeholder="Tell us about your project or question..."></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="cta-button w-full">Send Inquiry</button>
+                        </div>
+                         <p id="form-status" class="text-xs text-secondary text-center mt-4">
+                            Note: This will open your default email client. For a quicker response, use our WhatsApp chat.
+                         </p>
+                    </form>
+                </div>
+                <div class="lg:w-1/2 reveal" style="transition-delay: 0.3s;">
+                    <h3 class="text-2xl font-semibold mb-4 text-primary">Contact Information</h3>
+                    <div class="space-y-4 text-secondary">
+                        <p><i class="fas fa-map-marker-alt mr-2 text-accent"></i> Nairobi, Kenya (Remote First)</p>
+                        <p><i class="fas fa-phone-alt mr-2 text-accent"></i> +254 722 512 455 (Daniel)</p>
+                        <p><i class="fas fa-envelope mr-2 text-accent"></i> <a href="mailto:dmwanjal254@gmail.com" class="hover:text-accent transition-colors">dmwanjal254@gmail.com</a></p>
+                        <p><i class="fab fa-whatsapp mr-2 text-accent"></i> <a href="https://wa.me/254722512455?text=Hello%20Danco%20%26%20Khadija%2C%20I%27m%20interested%20in%20your%20services." target="_blank" class="hover:text-accent transition-colors">Chat with us on WhatsApp</a></p>
+                    </div>
+                     <div class="mt-8">
+                         <h4 class="text-xl font-semibold mb-3 text-primary">Connect with Us</h4>
+                         <div class="flex space-x-4">
+                            <a href="https://github.com/MadScie254" target="_blank" class="text-secondary hover:text-accent transition-colors text-2xl" title="Daniel's GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" class="text-secondary hover:text-accent transition-colors text-2xl" title="Daniel's LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 dark:bg-black text-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-white">Danco & Khadija</h5>
+                    <p class="text-sm leading-relaxed">Intelligent, scalable, and design-driven digital solutions from Nairobi, Kenya.</p>
+                 </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-white">Quick Links</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#hero" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="who_we_are.html" class="hover:text-white transition-colors">Who We Are</a></li>
+                        <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="founders.html" class="hover:text-white transition-colors">Founders</a></li>
+                        <li><a href="portfolio.html" class="hover:text-white transition-colors">Our Work</a></li>
+                        <li><a href="testimonials.html" class="hover:text-white transition-colors">Testimonials</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-white">Our Focus</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li>Data Science & ML</li>
+                        <li>Full-Stack Development</li>
+                        <li>Digital Strategy</li>
+                        <li>UI/UX Design</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-white">Get In Touch</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt mr-2 opacity-70"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-phone-alt mr-2 opacity-70"></i> +254 722 512 455</li>
+                        <li><i class="fas fa-envelope mr-2 opacity-70"></i> <a href="mailto:dmwanjal254@gmail.com" class="hover:text-white transition-colors">dmwanjal254@gmail.com</a></li>
+                         <li>
+                            <div class="flex space-x-4 mt-3">
+                                <a href="https://github.com/MadScie254" target="_blank" class="hover:text-white transition-colors" title="Daniel's GitHub"><i class="fab fa-github"></i></a>
+                                <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" class="hover:text-white transition-colors" title="Daniel's LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-sm">
+                <p>&copy; <span id="current-year"></span> Danco & Khadija. All Rights Reserved.</p>
+                <p class="mt-1">Designed with <i class="fas fa-heart text-red-500"></i> by Danco Analytics. For more information contact 0742007277.</p>
+                 <p class="mt-1">Building the Future, Together.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const body = document.body;
+        const header = document.getElementById('main-header');
+        const headerHeight = header ? header.offsetHeight : 70; 
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        // --- Loading Overlay ---
+        window.onload = () => {
+            setTimeout(() => {
+                if (loadingOverlay) {
+                    loadingOverlay.classList.add('hidden');
+                }
+            }, 300); 
+        };
+
+        // --- Theme Management ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const sunIconClass = 'fa-sun';
+        const moonIconClass = 'fa-moon';
+        let currentTheme = localStorage.getItem('theme') || 'light';
+
+        const applyTheme = (theme) => {
+            const iconToAdd = theme === 'dark' ? sunIconClass : moonIconClass;
+            const iconToRemove = theme === 'dark' ? moonIconClass : sunIconClass;
+            body.classList.toggle('dark-mode', theme === 'dark');
+            [themeToggle, themeToggleMobile].forEach(button => {
+                if (button) {
+                    const iconElement = button.querySelector('i');
+                    if (iconElement) {
+                        iconElement.classList.remove(iconToRemove);
+                        iconElement.classList.add(iconToAdd);
+                    }
+                }
+            });
+        };
+
+        const toggleTheme = () => {
+            currentTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', currentTheme);
+            applyTheme(currentTheme);
+        };
+
+        applyTheme(currentTheme);
+        if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+        // --- Mobile Menu ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = mobileMenuButton ? mobileMenuButton.querySelector('i') : null;
+
+        if (mobileMenuButton && mobileMenu && mobileMenuIcon) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuIcon.classList.toggle('fa-bars');
+                mobileMenuIcon.classList.toggle('fa-times');
+            });
+            const mobileLinks = mobileMenu.querySelectorAll('a.nav-link-mobile');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => { // No check for href starting with #, close for all mobile link clicks
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIcon.classList.remove('fa-times');
+                    mobileMenuIcon.classList.add('fa-bars');
+                });
+            });
+        }
+
+        // --- Header Scroll Effect ---
+        if (header) {
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+        }
+
+        // --- Scroll Reveal Animation ---
+        const revealElements = document.querySelectorAll('.reveal');
+        if ("IntersectionObserver" in window) {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.05 }); // Lowered threshold for earlier reveal
+            revealElements.forEach(el => revealObserver.observe(el));
+        } else { 
+            revealElements.forEach(el => el.classList.add('visible'));
+        }
+
+        // --- Typed.js Initialization ---
+        const typedTarget = document.getElementById('typed-target');
+        if (typedTarget && typeof Typed !== 'undefined') {
+            try {
+                new Typed('#typed-target', {
+                    strings: ['Driven by Design.', 'Powered by Data.', 'Built for Scale.', 'Focused on Impact.'],
+                    typeSpeed: 50, backSpeed: 30, backDelay: 2000, loop: true, smartBackspace: true
+                });
+            } catch (error) { console.error("Typed.js Error:", error); typedTarget.textContent = 'Driven by Design.'; }
+        } else if (typedTarget) { typedTarget.textContent = 'Driven by Design.'; }
+
+
+        // --- Animated Counters for Stats Section ---
+        const statsSection = document.getElementById('stats'); 
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let statsAnimated = false;
+
+        const animateStat = (element) => {
+            const target = parseFloat(element.getAttribute('data-target'));
+            const duration = 1500; const stepTime = 20;
+            const totalSteps = duration / stepTime;
+            const increment = target / totalSteps;
+            let current = 0;
+
+            const step = () => {
+                current += increment;
+                if (current >= target) {
+                    element.innerText = Math.floor(target).toLocaleString();
+                } else {
+                    element.innerText = Math.floor(current).toLocaleString();
+                    setTimeout(step, stepTime);
+                }
+            };
+            step();
+        };
+
+        if ("IntersectionObserver" in window && statsSection && statNumbers.length > 0) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !statsAnimated) {
+                        statNumbers.forEach(num => animateStat(num));
+                        statsAnimated = true;
+                        statsObserver.unobserve(statsSection); 
+                    }
+                });
+            }, { threshold: 0.5 });
+            statsObserver.observe(statsSection);
+        } else { 
+            statNumbers.forEach(num => {
+                const target = parseFloat(num.getAttribute('data-target'));
+                num.innerText = Math.floor(target).toLocaleString();
+            });
+        }
+
+
+        // --- Scrollspy for Navigation Highlighting ---
+        const navLinks = document.querySelectorAll('header nav a.nav-link'); // More specific selector for desktop
+        const mobileNavLinks = document.querySelectorAll('#mobile-menu a.nav-link-mobile');
+        const allNavLinks = [...navLinks, ...mobileNavLinks];
+        const sections = document.querySelectorAll('section[id]');
+
+        const activateLink = (targetId) => {
+            allNavLinks.forEach(link => {
+                // Check if the link's href matches the targetId (including the #)
+                // Also handle cases where link href might be just "#sectionId" or full URL "#sectionId"
+                const linkHref = link.getAttribute('href');
+                const isActive = linkHref === `#${targetId}` || linkHref.endsWith(`#${targetId}`);
+                link.classList.toggle('active', isActive);
+            });
+        };
+        
+        if (sections.length > 0 && "IntersectionObserver" in window) {
+            const scrollSpyObserver = new IntersectionObserver((entries) => {
+                let highestVisibleSectionId = null;
+                let minTop = Infinity;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const rect = entry.target.getBoundingClientRect();
+                        if (rect.top >= 0 && rect.top <= (window.innerHeight * 0.6) && rect.top < minTop) {
+                            minTop = rect.top;
+                            highestVisibleSectionId = entry.target.getAttribute('id');
+                        }
+                    }
+                });
+
+                if (highestVisibleSectionId) {
+                    activateLink(highestVisibleSectionId);
+                } else {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) { 
+                        activateLink('contact');
+                    } else if (window.scrollY < sections[0].offsetTop - headerHeight * 1.5) { 
+                        activateLink('hero');
+                    } else {
+                        let lastPassedSectionId = null;
+                        for (let i = sections.length - 1; i >= 0; i--) {
+                            if (sections[i].getBoundingClientRect().top < headerHeight + 50) {
+                                lastPassedSectionId = sections[i].getAttribute('id');
+                                break;
+                            }
+                        }
+                        if(lastPassedSectionId) activateLink(lastPassedSectionId);
+                        else if (window.scrollY < 50) activateLink('hero'); // Default to hero if nothing else fits
+                    }
+                }
+            }, { 
+                rootMargin: `-${headerHeight -1}px 0px -${window.innerHeight * 0.4 -1}px 0px`, 
+                threshold: 0 
+            });
+
+            sections.forEach(section => { scrollSpyObserver.observe(section); });
+        }
+         if (window.scrollY < 50 && sections.length > 0 && sections[0].id === 'hero') activateLink('hero');
+
+
+        // --- Swiper Slider Initialization for Portfolio ---
+        if (typeof Swiper !== 'undefined' && document.querySelector('.swiper-container')) {
+            try {
+                new Swiper('.swiper-container', {
+                    loop: true,
+                    autoplay: { delay: 4000, disableOnInteraction: false },
+                    slidesPerView: 1,
+                    spaceBetween: 20, 
+                    pagination: { el: '.swiper-pagination', clickable: true },
+                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                    effect: 'fade', 
+                    fadeEffect: { crossFade: true },
+                });
+            } catch (error) { console.error("Swiper Error:", error); }
+        } else { console.warn("Swiper library not loaded or no swiper-container found."); }
+
+
+        // --- Footer Current Year ---
+        const currentYearSpan = document.getElementById('current-year');
+        if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
+        
+        // --- Footer Links to other HTML pages (for "Know More" buttons) ---
+        // This is for the footer quick links, to ensure they also point to the new pages
+        const footerQuickLinks = document.querySelectorAll('footer .grid div:nth-child(2) ul li a');
+        footerQuickLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#') && href !== '#hero') { // Keep #hero as is
+                const sectionName = href.substring(1);
+                // Check if it's one of the sections that should have a separate page
+                if (['who-we-are', 'services', 'founders', 'portfolio', 'testimonials', 'contact'].includes(sectionName)) {
+                    link.setAttribute('href', `${sectionName}.html`);
+                }
+            }
+        });
+
+
+    }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
