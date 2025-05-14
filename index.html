@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danco & Khadija - Intelligent Digital Solutions & Advanced Analytics</title>
+    <title>Danco & Khadija - Intelligent Digital Solutions, Advanced Analytics & Research</title>
     <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,6 +48,7 @@
             --label-text: var(--text-primary);
             --skill-icon-bg: #e0e7ff; /* Light Indigo for icon background */
             --skill-icon-text: var(--text-accent);
+            --publication-card-bg: var(--bg-secondary);
         }
 
         .dark-mode {
@@ -79,6 +80,7 @@
             --label-text: var(--text-primary);
             --skill-icon-bg: #312e81; /* Dark Indigo for icon background */
             --skill-icon-text: #c7d2fe; /* Light Indigo text for icons */
+            --publication-card-bg: var(--bg-accent); /* Darker background for publication cards in dark mode */
         }
 
         /* --- Base Styles --- */
@@ -321,7 +323,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex; flex-direction: column; height: 100%; /* For equal height cards */
+            display: flex; flex-direction: column; height: 100%; 
         }
         .dark-mode .process-step { box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
         .process-step:hover {
@@ -344,34 +346,34 @@
         #tech-skills { background-color: var(--bg-primary); }
         .skill-category { margin-bottom: 2.5rem; }
         .skill-category h3 {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 600; /* font-semibold */
+            font-size: 1.5rem; 
+            font-weight: 600; 
             color: var(--text-primary);
-            margin-bottom: 1.5rem; /* mb-6 */
+            margin-bottom: 1.5rem; 
             text-align: center;
             position: relative;
-            padding-bottom: 0.5rem; /* pb-2 */
+            padding-bottom: 0.5rem; 
         }
-        .skill-category h3::after { /* Underline effect */
+        .skill-category h3::after { 
             content: '';
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             bottom: 0;
-            width: 60px; /* Adjust width as needed */
+            width: 60px; 
             height: 3px;
             background-color: var(--text-accent);
             border-radius: 2px;
         }
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive grid */
-            gap: 1.5rem; /* gap-6 */
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+            gap: 1.5rem; 
         }
         .skill-item-icon {
             background-color: var(--bg-secondary);
-            border-radius: 0.5rem; /* rounded-lg */
-            padding: 1rem; /* p-4 */
+            border-radius: 0.5rem; 
+            padding: 1rem; 
             text-align: center;
             border: 1px solid var(--border-color);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -381,21 +383,86 @@
             transform: translateY(-4px);
             box-shadow: 0 6px 12px var(--shadow-color);
         }
-        .skill-item-icon i { /* Devicon icons */
-            font-size: 3rem; /* text-5xl */
-            color: var(--skill-icon-text); /* Use variable for icon color */
-            margin-bottom: 0.5rem; /* mb-2 */
-            display: block; /* Ensure margin bottom works */
-             background-color: var(--skill-icon-bg); /* Background for the icon itself */
+        .skill-item-icon i { 
+            font-size: 3rem; 
+            color: var(--skill-icon-text); 
+            margin-bottom: 0.5rem; 
+            display: block; 
+             background-color: var(--skill-icon-bg); 
              padding: 0.5rem;
-             border-radius: 0.375rem; /* rounded-md */
-             display: inline-block; /* To make padding work around icon */
-
+             border-radius: 0.375rem; 
+             display: inline-block; 
         }
         .skill-item-icon span {
-            font-size: 0.8rem; /* text-xs */
+            font-size: 0.8rem; 
             color: var(--text-secondary);
-            display: block; /* Make span take full width for centering */
+            display: block; 
+        }
+        .tech-stack-cta {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+
+        /* --- Publications Section --- */
+        #publications { background-color: var(--bg-accent); }
+        .publication-card {
+            background-color: var(--publication-card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .publication-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+        .publication-card h4 {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .publication-card .authors {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .publication-card .venue {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .publication-card .venue strong { font-weight: 500; color: var(--text-primary); }
+        .publication-card .abstract-preview {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            max-height: 4.8em; /* Approx 3 lines, adjust as needed */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* For multi-line ellipsis (works in WebKit, some Firefox with -moz-orient) */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .publication-card .read-more-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--text-accent);
+            color: white;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .publication-card .read-more-btn:hover {
+            background-color: color-mix(in srgb, var(--text-accent) 85%, black);
         }
 
 
@@ -404,24 +471,24 @@
         .testimonial-card cite { display: block; margin-top: 1rem; font-weight: 600; color: var(--text-primary); }
 
         /* --- Image Slider (Swiper for Portfolio) --- */
-        #portfolio { background-color: var(--bg-secondary); /* Changed background */ }
+        #portfolio { background-color: var(--bg-secondary); }
         .swiper-container {
             width: 100%; max-width: 1200px; margin-left: auto; margin-right: auto;
             position: relative; overflow: hidden; border-radius: 0.75rem;
         }
         .swiper-slide {
             text-align: center; font-size: 18px; background: var(--bg-accent);
-            display: flex; flex-direction: column; /* To stack image and caption/button */
+            display: flex; flex-direction: column; 
             justify-content: center; align-items: center;
             position: relative; aspect-ratio: 16 / 9; overflow: hidden;
         }
         .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
-        .slide-content-overlay { /* New overlay for caption and button */
+        .slide-content-overlay { 
             position: absolute;
             bottom: 0; left: 0; right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
             color: #fff;
-            padding: 1.5rem; /* Increased padding */
+            padding: 1.5rem; 
             text-align: left;
             transition: background 0.3s ease;
         }
@@ -434,11 +501,11 @@
             background-color: var(--text-accent);
             color: white;
             padding: 0.4rem 0.8rem;
-            border-radius: 0.375rem; /* rounded-md */
+            border-radius: 0.375rem; 
             font-size: 0.8rem;
             font-weight: 500;
             text-decoration: none;
-            display: inline-flex; /* To align icon and text */
+            display: inline-flex; 
             align-items: center;
             transition: background-color 0.3s ease;
         }
@@ -515,6 +582,7 @@
                 <a href="#tech-skills" class="nav-link">Expertise</a>
                 <a href="#founders" class="nav-link">Founders</a>
                 <a href="#portfolio" class="nav-link">Our Work</a>
+                <a href="#publications" class="nav-link">Publications</a>
                 <a href="#testimonials" class="nav-link">Testimonials</a>
                 <a href="#contact" class="nav-link">Contact</a>
                 <button id="theme-toggle" title="Toggle Theme" class="ml-2">
@@ -538,6 +606,7 @@
             <a href="#tech-skills" class="nav-link-mobile block px-4 py-2">Expertise</a>
             <a href="#founders" class="nav-link-mobile block px-4 py-2">Founders</a>
             <a href="#portfolio" class="nav-link-mobile block px-4 py-2">Our Work</a>
+            <a href="#publications" class="nav-link-mobile block px-4 py-2">Publications</a>
             <a href="#testimonials" class="nav-link-mobile block px-4 py-2">Testimonials</a>
             <a href="#contact" class="nav-link-mobile block px-4 py-2">Contact</a>
         </div>
@@ -776,6 +845,12 @@
                     <div class="skill-item-icon"><i class="devicon-linux-plain colored"></i><span>Linux</span></div>
                 </div>
             </div>
+             <div class="tech-stack-cta reveal">
+                <p class="text-lg text-secondary mb-6 max-w-2xl mx-auto">
+                    This diverse toolkit allows us to craft bespoke solutions tailored to your unique challenges. Curious how these technologies can elevate your project?
+                </p>
+                <a href="#contact" class="cta-button">Discuss Your Project <i class="fas fa-comments ml-2"></i></a>
+            </div>
         </div>
     </section>
 
@@ -927,6 +1002,59 @@
         </div>
     </section>
 
+    <section id="publications" class="bg-accent">
+        <div class="container mx-auto px-6">
+            <div class="section-intro-button-container reveal">
+                <a href="publications.html" class="know-more-button">View All Publications <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3 text-primary">Our Research & Publications</h2>
+                <p class="text-lg text-secondary max-w-3xl mx-auto">
+                    We believe in contributing to the broader knowledge community. Explore some of our research papers, articles, and conference presentations where we share insights and advancements in data science, machine learning, and digital innovation.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="publication-card reveal" style="transition-delay: 0.1s;">
+                    <h4>Advancements in Predictive Modeling for Financial Markets</h4>
+                    <p class="authors">Wanjala, D., Khalid, K., & Doe, J.</p>
+                    <p class="venue"><strong>Journal of Advanced Data Analytics</strong>, Vol. 5, Issue 2, pp. 112-130 (2024)</p>
+                    <p class="abstract-preview">
+                        This paper explores novel neural network architectures for predicting stock market trends, incorporating sentiment analysis from news feeds and economic indicators. We demonstrate improved accuracy over traditional models...
+                    </p>
+                    <a href="#" class="read-more-btn">Read More <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+                <div class="publication-card reveal" style="transition-delay: 0.2s;">
+                    <h4>Scalable Architectures for Real-Time Data Processing in IoT</h4>
+                    <p class="authors">Khalid, K., Wanjala, D., & Smith, A.</p>
+                    <p class="venue">Proceedings of the <strong>International Conference on Big Data and Cloud Computing (ICBDCC 2023)</strong>, Nairobi, Kenya</p>
+                    <p class="abstract-preview">
+                        We present a distributed system architecture using Kafka and Spark Streaming for ingesting and analyzing high-velocity data from IoT devices, focusing on applications in smart city infrastructure...
+                    </p>
+                    <a href="#" class="read-more-btn">View Presentation <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+                <div class="publication-card reveal" style="transition-delay: 0.3s;">
+                    <h4>The Role of User-Centric Design in AI Product Adoption</h4>
+                    <p class="authors">Wanjala, D., & Khalid, K.</p>
+                    <p class="venue"><strong>UX & AI Today Magazine</strong>, October 2023 Edition</p>
+                    <p class="abstract-preview">
+                        An insightful article discussing the critical intersection of user experience design and artificial intelligence, highlighting best practices for creating AI-driven products that are intuitive, trustworthy, and readily adopted by users...
+                    </p>
+                    <a href="#" class="read-more-btn">Read Article <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+                 <div class="publication-card reveal" style="transition-delay: 0.4s;">
+                    <h4>Ethical Considerations in Deploying Machine Learning Models</h4>
+                    <p class="authors">Khalid, K., & Wanjala, D.</p>
+                    <p class="venue"><strong>AI Ethics & Society Workshop (AIES 2024)</strong>, Virtual Conference</p>
+                    <p class="abstract-preview">
+                        This workshop paper delves into the complex ethical challenges associated with deploying ML models in sensitive domains, proposing a framework for responsible AI development and governance...
+                    </p>
+                    <a href="#" class="read-more-btn">View Paper <i class="fas fa-external-link-alt ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <section id="testimonials" class="bg-primary">
         <div class="container mx-auto px-6">
              <div class="section-intro-button-container reveal">
@@ -1041,6 +1169,7 @@
                         <li><a href="tech_stack.html" class="hover:text-white transition-colors">Our Expertise</a></li>
                         <li><a href="founders.html" class="hover:text-white transition-colors">The Founders</a></li>
                         <li><a href="portfolio.html" class="hover:text-white transition-colors">Portfolio Highlights</a></li>
+                        <li><a href="publications.html" class="hover:text-white transition-colors">Publications</a></li>
                         <li><a href="testimonials.html" class="hover:text-white transition-colors">Client Voices</a></li>
                         <li><a href="contact.html" class="hover:text-white transition-colors">Contact Us</a></li>
                     </ul>
@@ -1155,18 +1284,15 @@
         }
 
         // --- Scroll Reveal Animation ---
-        // This observer handles general reveal animations. Skill bars are not handled here anymore.
         const revealElements = document.querySelectorAll('.reveal');
         if ("IntersectionObserver" in window) {
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        // For general elements, we can unobserve after reveal if desired
-                        // revealObserver.unobserve(entry.target); 
                     }
                 });
-            }, { threshold: 0.05 }); // Lower threshold for earlier reveal
+            }, { threshold: 0.05 }); 
             revealElements.forEach(el => revealObserver.observe(el));
         } else { 
             revealElements.forEach(el => el.classList.add('visible'));
@@ -1291,7 +1417,7 @@
             try {
                 new Swiper('.swiper-container', {
                     loop: true,
-                    autoplay: { delay: 4500, disableOnInteraction: false }, // Slightly longer delay
+                    autoplay: { delay: 4500, disableOnInteraction: false }, 
                     slidesPerView: 1,
                     spaceBetween: 20, 
                     pagination: { el: '.swiper-pagination', clickable: true },
@@ -1313,10 +1439,9 @@
             const href = link.getAttribute('href');
             if (href && href.startsWith('#') && href !== '#hero') { 
                 let sectionName = href.substring(1).replace(/-/g, '_'); 
-                // Special case for tech-skills to tech_stack.html
-                if (sectionName === 'tech_skills') sectionName = 'tech_stack';
+                if (sectionName === 'tech_skills') sectionName = 'tech_stack'; // Handle specific case
 
-                if (['who_we_are', 'services', 'our_process', 'tech_stack', 'founders', 'portfolio', 'testimonials', 'contact'].includes(sectionName)) {
+                if (['who_we_are', 'services', 'our_process', 'tech_stack', 'founders', 'portfolio', 'publications', 'testimonials', 'contact'].includes(sectionName)) {
                     link.setAttribute('href', `${sectionName}.html`);
                 }
             }
