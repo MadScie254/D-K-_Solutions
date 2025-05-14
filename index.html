@@ -414,6 +414,8 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* For better alignment of content */
+            flex-direction: column;
         }
         .publication-card:hover {
             transform: translateY(-5px) scale(1.01);
@@ -442,12 +444,12 @@
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 1rem;
-            max-height: 4.8em; /* Approx 3 lines, adjust as needed */
+            flex-grow: 1; /* Allow abstract to take available space */
+            max-height: 6.3em; /* Approx 3-4 lines, adjust as needed */
             overflow: hidden;
             text-overflow: ellipsis;
-            /* For multi-line ellipsis (works in WebKit, some Firefox with -moz-orient) */
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4; /* Increased to 4 lines */
             -webkit-box-orient: vertical;
         }
         .publication-card .read-more-btn {
@@ -460,6 +462,8 @@
             font-size: 0.875rem;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            margin-top: auto; /* Push button to bottom if card height varies */
+            align-self: flex-start; /* Align button to the left */
         }
         .publication-card .read-more-btn:hover {
             background-color: color-mix(in srgb, var(--text-accent) 85%, black);
@@ -564,7 +568,7 @@
         <p class="loader-text">Crafting Digital Excellence...</p>
     </div>
 
-    <a href="https://wa.me/254722512455?text=Hello%20Danco%20%26%20Khadija%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener noreferrer" class="floating-whatsapp whatsapp-button" title="Chat on WhatsApp">
+    <a href="https://wa.me/254778087730?text=Hello%20Danco%20%26%20Khadija%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener noreferrer" class="floating-whatsapp whatsapp-button" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp text-2xl"></i>
         <span class="hidden sm:inline">Chat Now</span>
     </a>
@@ -883,9 +887,9 @@
                     <p class="text-sm text-secondary mb-1"><strong>Certifications & Affiliations:</strong></p>
                     <p class="text-xs text-secondary mb-3">Moringa School (Data Science & Software Engineering), Zetech University (BSc. IT), HackerRank (ML & Python Proficiencies), Udemy (Advanced Angular, Full-Stack JavaScript Specializations)</p>
                     <div class="links">
-                        <a href="https://github.com/MadScie254" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
-                        <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                        <a href="mailto:dmwanjal254@gmail.com" title="Email"><i class="fas fa-envelope fa-lg"></i></a>
+                        <a href="https://github.com/MadScie254" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="mailto:dmwanjal254@gmail.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
                     </div>
                 </div>
 
@@ -1015,40 +1019,40 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="publication-card reveal" style="transition-delay: 0.1s;">
-                    <h4>Advancements in Predictive Modeling for Financial Markets</h4>
-                    <p class="authors">Wanjala, D., Khalid, K., & Doe, J.</p>
-                    <p class="venue"><strong>Journal of Advanced Data Analytics</strong>, Vol. 5, Issue 2, pp. 112-130 (2024)</p>
+                    <h4>Logarithms & Algorithms: The Invisible Engines of AI & Data Science</h4>
+                    <p class="authors">Daniel Wanjala</p>
+                    <p class="venue"><strong>LinkedIn Pulse Article</strong> (2024)</p>
                     <p class="abstract-preview">
-                        This paper explores novel neural network architectures for predicting stock market trends, incorporating sentiment analysis from news feeds and economic indicators. We demonstrate improved accuracy over traditional models...
+                        Delving into the fundamental mathematical concepts that power today's most advanced AI and Data Science applications. This article demystifies logarithms and algorithms for a broader audience.
                     </p>
-                    <a href="#" class="read-more-btn">Read More <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <a href="https://www.linkedin.com/pulse/logarithms-algorithms-invisible-engines-ai-data-science-wanjala-u9qgf/" target="_blank" rel="noopener noreferrer" class="read-more-btn">Read Article <i class="fas fa-external-link-alt ml-1"></i></a>
                 </div>
                 <div class="publication-card reveal" style="transition-delay: 0.2s;">
-                    <h4>Scalable Architectures for Real-Time Data Processing in IoT</h4>
-                    <p class="authors">Khalid, K., Wanjala, D., & Smith, A.</p>
-                    <p class="venue">Proceedings of the <strong>International Conference on Big Data and Cloud Computing (ICBDCC 2023)</strong>, Nairobi, Kenya</p>
+                    <h4>From Excel to Neural Networks: My Journey into Data Science</h4>
+                    <p class="authors">Daniel Wanjala</p>
+                    <p class="venue"><strong>LinkedIn Pulse Article</strong> (2024)</p>
                     <p class="abstract-preview">
-                        We present a distributed system architecture using Kafka and Spark Streaming for ingesting and analyzing high-velocity data from IoT devices, focusing on applications in smart city infrastructure...
+                        A personal account of transitioning into the field of Data Science, highlighting the learning curve, key milestones, and the shift from traditional tools to advanced machine learning techniques like neural networks.
                     </p>
-                    <a href="#" class="read-more-btn">View Presentation <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <a href="https://www.linkedin.com/pulse/from-excel-neural-networks-my-journey-data-science-daniel-wanjala-s6vjf/" target="_blank" rel="noopener noreferrer" class="read-more-btn">Read Article <i class="fas fa-external-link-alt ml-1"></i></a>
                 </div>
                 <div class="publication-card reveal" style="transition-delay: 0.3s;">
-                    <h4>The Role of User-Centric Design in AI Product Adoption</h4>
-                    <p class="authors">Wanjala, D., & Khalid, K.</p>
-                    <p class="venue"><strong>UX & AI Today Magazine</strong>, October 2023 Edition</p>
+                    <h4>Why AI Bots Leave Customers Frustrated (and How We Can Improve Them)</h4>
+                    <p class="authors">Daniel Wanjala</p>
+                    <p class="venue"><strong>LinkedIn Pulse Article</strong> (2024)</p>
                     <p class="abstract-preview">
-                        An insightful article discussing the critical intersection of user experience design and artificial intelligence, highlighting best practices for creating AI-driven products that are intuitive, trustworthy, and readily adopted by users...
+                        An analysis of common pitfalls in current AI chatbot implementations and a discussion on strategies to enhance their effectiveness and user satisfaction, drawing lessons from examples like Zuri.
                     </p>
-                    <a href="#" class="read-more-btn">Read Article <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <a href="https://www.linkedin.com/pulse/why-ai-bots-leave-customers-frustrated-improving-zuriand-wanjala-9kbhf/" target="_blank" rel="noopener noreferrer" class="read-more-btn">Read Article <i class="fas fa-external-link-alt ml-1"></i></a>
                 </div>
                  <div class="publication-card reveal" style="transition-delay: 0.4s;">
-                    <h4>Ethical Considerations in Deploying Machine Learning Models</h4>
-                    <p class="authors">Khalid, K., & Wanjala, D.</p>
-                    <p class="venue"><strong>AI Ethics & Society Workshop (AIES 2024)</strong>, Virtual Conference</p>
+                    <h4>Frappe Framework Concepts for Beginners to Intermediate</h4>
+                    <p class="authors">Daniel Wanjala</p>
+                    <p class="venue"><strong>LinkedIn Pulse Article</strong> (2024)</p>
                     <p class="abstract-preview">
-                        This workshop paper delves into the complex ethical challenges associated with deploying ML models in sensitive domains, proposing a framework for responsible AI development and governance...
+                        This article provides a comprehensive overview of the Frappe Framework, covering essential concepts tailored for individuals ranging from beginners to those with intermediate experience in web development and ERP systems.
                     </p>
-                    <a href="#" class="read-more-btn">View Paper <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <a href="https://www.linkedin.com/pulse/frappe-framework-concepts-beginners-intermediate-daniel-wanjala-wki5f/" target="_blank" rel="noopener noreferrer" class="read-more-btn">Read Article <i class="fas fa-external-link-alt ml-1"></i></a>
                 </div>
             </div>
         </div>
@@ -1129,7 +1133,7 @@
                     <h3 class="text-2xl font-semibold mb-6 text-primary">Alternative Ways to Connect & Share Details</h3>
                     <div class="space-y-4 text-secondary mb-8">
                         <p><i class="fas fa-map-marker-alt mr-2 text-accent w-5 text-center"></i> Nairobi, Kenya (Primarily Remote Collaboration)</p>
-                        <p><i class="fas fa-phone-alt mr-2 text-accent w-5 text-center"></i> +254 722 512 455 (Daniel Wanjala)</p>
+                        <p><i class="fas fa-phone-alt mr-2 text-accent w-5 text-center"></i> +254 742 007 277 (Daniel Wanjala)</p>
                         <p><i class="fas fa-envelope mr-2 text-accent w-5 text-center"></i> <a href="mailto:dmwanjal254@gmail.com" class="hover:text-accent transition-colors">dmwanjal254@gmail.com</a></p>
                         <p><i class="fab fa-whatsapp mr-2 text-accent w-5 text-center"></i> <a href="https://wa.me/254742007277?text=Hello%20Danco%20%26%20Khadija%2C%20I%27m%20interested%20in%20your%20services." target="_blank" class="hover:text-accent transition-colors">Initiate a WhatsApp Chat</a></p>
                     </div>
@@ -1190,9 +1194,9 @@
                         <li><i class="fas fa-map-marker-alt mr-2 opacity-70"></i> Nairobi, Kenya</li>
                         <li><i class="fas fa-phone-alt mr-2 opacity-70"></i> +254 722 512 455</li>
                         <li><i class="fas fa-envelope mr-2 opacity-70"></i> <a href="mailto:dmwanjal254@gmail.com" class="hover:text-white transition-colors">dmwanjal254@gmail.com</a></li>
-                        <li>
+                         <li>
                             <div class="flex space-x-4 mt-3">
-                                <a href="https://github.com/MadScie254" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="Daniel's GitHub"><i class="fab fa-github"></i></a>
+                                <a href="https://github.com/MadScie254" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" title="Daniel's GitHub"><i class="fab fa-github"></i></a>
                                 <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" title="Daniel's LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                             </div>
                         </li>
@@ -1439,7 +1443,7 @@
             const href = link.getAttribute('href');
             if (href && href.startsWith('#') && href !== '#hero') { 
                 let sectionName = href.substring(1).replace(/-/g, '_'); 
-                if (sectionName === 'tech_skills') sectionName = 'tech_stack'; // Handle specific case
+                if (sectionName === 'tech_skills') sectionName = 'tech_stack'; 
 
                 if (['who_we_are', 'services', 'our_process', 'tech_stack', 'founders', 'portfolio', 'publications', 'testimonials', 'contact'].includes(sectionName)) {
                     link.setAttribute('href', `${sectionName}.html`);
@@ -1453,4 +1457,3 @@
 
 </body>
 </html>
-<!-- End of HTML Document -->
