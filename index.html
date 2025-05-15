@@ -15,7 +15,13 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
         /* --- Theme Variables --- */
@@ -34,7 +40,7 @@
             --glass-bg: rgba(255, 255, 255, 0.6);
             --glass-border: rgba(255, 255, 255, 0.7);
             --shadow-color: rgba(99, 102, 241, 0.2);
-            --hero-overlay-bg: rgba(243, 244, 246, 0.85); 
+            --hero-overlay-bg: rgba(243, 244, 246, 0.75); /* Adjusted transparency */
             --slider-nav-bg: rgba(255, 255, 255, 0.5);
             --slider-nav-text: #1f2937;
             --slider-nav-hover-bg: rgba(255, 255, 255, 0.8);
@@ -66,7 +72,7 @@
             --glass-bg: rgba(31, 41, 55, 0.5); 
             --glass-border: rgba(255, 255, 255, 0.1);
             --shadow-color: rgba(99, 102, 241, 0.3);
-            --hero-overlay-bg: rgba(10, 10, 35, 0.85); 
+            --hero-overlay-bg: rgba(10, 10, 35, 0.75); /* Adjusted transparency */
             --slider-nav-bg: rgba(31, 41, 55, 0.5);
             --slider-nav-text: #e0e0ff;
             --slider-nav-hover-bg: rgba(31, 41, 55, 0.8);
@@ -97,7 +103,7 @@
             background:
                 radial-gradient(ellipse at top left, color-mix(in srgb, var(--gradient-start) 10%, transparent) 0%, transparent 40%),
                 radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--gradient-mid) 10%, transparent) 0%, transparent 40%);
-            opacity: 0.2; z-index: -1; pointer-events: none; transition: background 0.3s ease;
+            opacity: 0.2; z-index: -2; pointer-events: none; transition: background 0.3s ease;
         }
 
         .gradient-text {
@@ -109,22 +115,107 @@
 
         /* --- Loading Overlay --- */
         #loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--loader-bg);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 10000; opacity: 1; transition: opacity 0.5s ease-out; pointer-events: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--loader-bg), color-mix(in srgb, var(--loader-bg) 80%, black));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.7s ease-out, visibility 0.7s;
+            visibility: visible;
         }
-        #loading-overlay.hidden { opacity: 0; pointer-events: none; }
-        .loader-logo-text { 
-            font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;
-            color: var(--text-accent); filter: var(--loader-logo-filter);
+
+        #loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
-        .loader-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: var(--loader-color);
-            border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;
+        
+        .loader-content {
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: loadIn 0.5s 0.2s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .loader-text { margin-top: 15px; color: var(--text-secondary); font-size: 0.9rem; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes loadIn {
+            to { transform: scale(1); opacity: 1;}
+        }
+
+        .loader-logo-text {
+            font-size: 3.5rem; /* Adjusted size */
+            font-weight: 800;
+            margin-bottom: 25px; /* Adjusted margin */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: var(--loader-logo-filter);
+            animation: logoPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+        }
+
+        #lottie-container { margin: 0 auto 20px; }
+
+        .loading-progress {
+            width: 220px; /* Adjusted width */
+            margin: 25px auto;
+        }
+
+        .progress-bar-bg { /* Renamed and styled background */
+            height: 6px; /* Adjusted height */
+            background-color: color-mix(in srgb, var(--text-accent) 20%, transparent);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill { /* Renamed and styled fill */
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%; /* Starts at 0, controlled by JS */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid));
+            border-radius: 3px;
+            transition: width 0.1s ease-out; /* Smooth transition for JS updates */
+        }
+        
+        .progress-text {
+            margin-top: 10px; /* Adjusted margin */
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .loader-text { /* Main loading text below spinner/progress */
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 1rem; /* Adjusted size */
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-tips {
+            margin-top: 25px; /* Adjusted margin */
+            min-height: 40px; /* Ensure space for tip text */
+        }
+
+        .tip-text {
+            font-size: 0.85rem; /* Adjusted size */
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out; /* Smooth fade for tips */
+        }
 
         /* --- Navigation --- */
         #main-header { transition: background-color 0.3s ease, box-shadow 0.3s ease; }
@@ -251,18 +342,43 @@
 
         /* --- Hero Section --- */
         #hero {
-            position: relative; min-height: 90vh; width: 100%; display: flex; align-items: center; justify-content: center;
-            text-align: center; overflow: hidden; padding-top: 80px; 
+            position: relative; /* For positioning #globe-container within it */
+            min-height: 90vh; width: 100%; display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden; padding-top: 100px; 
         }
         .hero-content {
-            position: relative; z-index: 10;
-            background: var(--hero-overlay-bg);
-            padding: 2rem; border-radius: 1rem; max-width: 90%; transition: background-color 0.3s ease;
+            position: relative; 
+            z-index: 2; /* Ensure hero content is above globe */
+            background: var(--hero-overlay-bg); /* Uses updated transparent variable */
+            backdrop-filter: blur(5px); /* Slightly less blur if overlay is more transparent */
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem; 
+            border-radius: 1.25rem; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); 
             color: var(--text-primary);
+            max-width: 90%; 
         }
-         .dark-mode .hero-content { color: #e0e0ff; }
+         .dark-mode .hero-content { 
+             color: #e0e0ff;
+             background: var(--hero-overlay-bg); /* Uses updated transparent variable for dark mode */
+         }
          .typed-cursor { opacity: 1; animation: typedjsBlink 0.7s infinite; color: var(--text-accent); }
          @keyframes typedjsBlink { 50% { opacity: 0.0; } }
+        
+        /* Sparkle animation for Hero */
+        .sparkle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1; /* Sparkles behind hero-content, but potentially above globe if needed */
+            animation-name: sparkleAnim;
+            animation-timing-function: infinite;
+            animation-iteration-count: alternate;
+        }
+        @keyframes sparkleAnim {
+            0% { transform: scale(1) translateY(0px); opacity: 0.2; }
+            100% { transform: scale(1.3) translateY(-10px); opacity: 0.7; }
+        }
 
         /* --- Theme Toggle Button --- */
         #theme-toggle, #theme-toggle-mobile {
@@ -558,14 +674,44 @@
         #contact-form ::placeholder { color: var(--text-secondary); opacity: 0.7; }
         .dark-mode #contact-form ::placeholder { color: var(--text-secondary); opacity: 0.5; }
 
+        /* Globe Container Styling - Now specific to Hero section */
+        #hero #globe-container {
+            position: absolute; /* Positioned within the hero section */
+            top: 0;
+            left: 0;
+            width: 100%; /* Full width of hero */
+            height: 100%; /* Full height of hero */
+            z-index: 0;   /* Behind hero-content */
+            pointer-events: auto; /* Allow interaction with globe if it's specifically targeted */
+            overflow: hidden;
+        }
+        
+        /* Removed duplicated .hero-content styles, using the ones defined earlier for #hero .hero-content */
+        
+        @media (max-width: 900px) {
+            /* #globe-container { height: 60vh; } /* This might be too small, let's keep it full VH */
+            .hero-content { padding: 2rem 1rem; }
+        }
     </style>
 </head>
 <body class="antialiased">
+    <!-- Globe container is NOT first anymore, it will be inside #hero -->
 
     <div id="loading-overlay">
-        <div class="loader-logo-text">D&K</div>
-        <div class="loader-spinner"></div>
-        <p class="loader-text">Crafting Digital Excellence...</p>
+        <div class="loader-content">
+            <div class="loader-logo-text">D&K</div>
+            <div id="lottie-container" style="width: 150px; height: 150px;"></div> <!-- Adjusted Lottie size -->
+            <div class="loading-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill"></div>
+                </div>
+                <div class="progress-text">Loading <span class="progress-percentage">0%</span></div>
+            </div>
+            <p class="loader-text">Crafting Digital Excellence...</p>
+            <div class="loading-tips">
+                <p class="tip-text"></p>
+            </div>
+        </div>
     </div>
 
     <a href="https://wa.me/254778087730?text=Hello%20Danco%20%26%20Khadija%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener noreferrer" class="floating-whatsapp whatsapp-button" title="Chat on WhatsApp">
@@ -617,21 +763,56 @@
     </header>
 
     <section id="hero">
+        <!-- Globe container moved inside #hero -->
+        <div id="globe-container"></div> 
+
         <div class="container mx-auto px-6 z-10">
-            <div class="hero-content reveal max-w-3xl mx-auto">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+            <div class="hero-content reveal max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
                     Intelligent Solutions, <span class="gradient-text" id="typed-target"></span>
                 </h1>
-                <p class="text-lg md:text-xl mb-6">
+                <p class="text-lg md:text-xl mb-8">
                     A Nairobi-based freelance partnership delivering scalable, design-driven digital solutions. We blend deep technical insight with strategic design thinking to help your business thrive from concept to deployment and beyond.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+                <div class="hero-stats grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-item text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">50+</div>
+                        <div class="text-sm text-secondary">Projects Delivered</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">30+</div>
+                        <div class="text-sm text-secondary">Happy Clients</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">5+</div>
+                        <div class="text-sm text-secondary">Years Experience</div>
+                    </div>
+                    <div class="stat-item text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">100%</div>
+                        <div class="text-sm text-secondary">Client Satisfaction</div>
+                    </div>
+                </div>
+                <div class="hero-buttons">
                     <a href="#services" class="cta-button">
                         Explore Our Services
                     </a>
-                    <a href="#contact" class="cta-button-secondary">
+                    <a href="#contact" class="cta-button" style="background: var(--bg-accent); color: var(--text-primary);">
                         Get In Touch
                     </a>
+                </div>
+                <div class="mt-12 flex items-center justify-center gap-8">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span class="text-sm">24/7 Support</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-shield-alt text-blue-500"></i>
+                        <span class="text-sm">Secure Solutions</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-rocket text-purple-500"></i>
+                        <span class="text-sm">Fast Delivery</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -881,7 +1062,7 @@
                     <p class="text-sm text-secondary mb-3"><strong>Core Toolkit:</strong> Python, Django, React, TensorFlow, PostgreSQL, Docker, Redis.</p>
                     
                     <div class="quote">
-                        <p>“I don’t just build systems; I architect solutions. My focus is on creating robust, intelligent platforms that people can truly rely on, day in and day out, to solve real-world problems and drive progress.”</p>
+                        <p>"I don't just build systems; I architect solutions. My focus is on creating robust, intelligent platforms that people can truly rely on, day in and day out, to solve real-world problems and drive progress."</p>
                         <cite>— Daniel</cite>
                     </div>
                     <p class="text-sm text-secondary mb-1"><strong>Certifications & Affiliations:</strong></p>
@@ -903,7 +1084,7 @@
                      <p class="text-sm text-secondary mb-3">Possessing a keen eye for detail and a rich background in operations and strategic communication, Khadia excels in guiding projects from their abstract ideation phase to concrete, executable realities. She is the unwavering voice behind the user-first mindset that permeates all our work, ensuring every product and solution we deliver speaks with utmost clarity and precision to its intended audience, fostering engagement and driving adoption.</p>
 
                     <div class="quote">
-                        <p>“If a solution isn’t crystal clear and strategically sound, it simply won’t endure. My core mission is to maintain that clarity, drive momentum, and ensure every initiative moves forward with purpose and impact.”</p>
+                        <p>"If a solution isn't crystal clear and strategically sound, it simply won't endure. My core mission is to maintain that clarity, drive momentum, and ensure every initiative moves forward with purpose and impact."</p>
                         <cite>— Khadia</cite>
                     </div>
                     <p class="text-sm text-secondary mb-1"><strong>Focus Areas:</strong></p>
@@ -1215,244 +1396,513 @@
     document.addEventListener('DOMContentLoaded', () => {
         const body = document.body;
         const header = document.getElementById('main-header');
-        const headerHeight = header ? header.offsetHeight : 70; 
         const loadingOverlay = document.getElementById('loading-overlay');
+        const lottieContainer = document.getElementById('lottie-container');
+        const progressFill = document.querySelector('.progress-bar-fill');
+        const progressTextElement = document.querySelector('.progress-percentage');
+        const tipTextElement = document.querySelector('.tip-text');
+        const globeContainer = document.getElementById('globe-container'); // This will now find it inside #hero
 
-        // --- Loading Overlay ---
-        window.onload = () => {
-            setTimeout(() => {
-                if (loadingOverlay) {
-                    loadingOverlay.classList.add('hidden');
-                }
-            }, 300); 
-        };
+        // --- 1. Preloader Logic ---
+        function initPreloader() {
+            if (!loadingOverlay || !lottieContainer || !progressFill || !progressTextElement || !tipTextElement) {
+                console.warn("Preloader elements not found.");
+                if (loadingOverlay) loadingOverlay.classList.add('hidden'); // Hide if parts are missing
+                return;
+            }
 
-        // --- Theme Management ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-        const sunIconClass = 'fa-sun';
-        const moonIconClass = 'fa-moon';
-        let currentTheme = localStorage.getItem('theme') || 'light';
-
-        const applyTheme = (theme) => {
-            const iconToAdd = theme === 'dark' ? sunIconClass : moonIconClass;
-            const iconToRemove = theme === 'dark' ? moonIconClass : sunIconClass;
-            body.classList.toggle('dark-mode', theme === 'dark');
-            [themeToggle, themeToggleMobile].forEach(button => {
-                if (button) {
-                    const iconElement = button.querySelector('i');
-                    if (iconElement) {
-                        iconElement.classList.remove(iconToRemove);
-                        iconElement.classList.add(iconToAdd);
-                    }
-                }
-            });
-        };
-
-        const toggleTheme = () => {
-            currentTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
-            localStorage.setItem('theme', currentTheme);
-            applyTheme(currentTheme);
-        };
-
-        applyTheme(currentTheme);
-        if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
-        if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
-
-        // --- Mobile Menu ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuIcon = mobileMenuButton ? mobileMenuButton.querySelector('i') : null;
-
-        if (mobileMenuButton && mobileMenu && mobileMenuIcon) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                mobileMenuIcon.classList.toggle('fa-bars');
-                mobileMenuIcon.classList.toggle('fa-times');
-            });
-            const mobileLinks = mobileMenu.querySelectorAll('a.nav-link-mobile');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => { 
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuIcon.classList.remove('fa-times');
-                    mobileMenuIcon.classList.add('fa-bars');
-                });
-            });
-        }
-
-        // --- Header Scroll Effect ---
-        if (header) {
-            window.addEventListener('scroll', () => {
-                header.classList.toggle('scrolled', window.scrollY > 50);
-            });
-        }
-
-        // --- Scroll Reveal Animation ---
-        const revealElements = document.querySelectorAll('.reveal');
-        if ("IntersectionObserver" in window) {
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.05 }); 
-            revealElements.forEach(el => revealObserver.observe(el));
-        } else { 
-            revealElements.forEach(el => el.classList.add('visible'));
-        }
-
-
-        // --- Typed.js Initialization ---
-        const typedTarget = document.getElementById('typed-target');
-        if (typedTarget && typeof Typed !== 'undefined') {
+            // Lottie animation
             try {
-                new Typed('#typed-target', {
-                    strings: ['Driven by Design.', 'Powered by Data.', 'Built for Scale.', 'Focused on Impact.'],
-                    typeSpeed: 50, backSpeed: 30, backDelay: 2000, loop: true, smartBackspace: true
+                lottie.loadAnimation({
+                    container: lottieContainer,
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'https://assets2.lottiefiles.com/packages/lf20_qmfs6c3i.json' // A different, potentially lighter animation
                 });
-            } catch (error) { console.error("Typed.js Error:", error); typedTarget.textContent = 'Driven by Design.'; }
-        } else if (typedTarget) { typedTarget.textContent = 'Driven by Design.'; }
+            } catch (e) {
+                console.error("Lottie animation failed to load:", e);
+            }
+            
+            // Progress bar and percentage
+            let percent = 0;
+            const progressInterval = setInterval(() => {
+                percent += Math.floor(Math.random() * 5) + 1;
+                if (percent > 100) percent = 100;
+                progressFill.style.width = percent + '%';
+                progressTextElement.textContent = percent + '%';
+                if (percent === 100) {
+                    clearInterval(progressInterval);
+                }
+            }, 80);
 
+            // Rotating tips
+            const tips = [
+                "Building with passion and precision.",
+                "Transforming ideas into digital realities.",
+                "Your success is our priority.",
+                "Innovation at the core of what we do.",
+                "Scalable solutions for a growing world."
+            ];
+            let tipIndex = 0;
+            function showNextTip() {
+                tipTextElement.style.opacity = 0;
+                setTimeout(() => {
+                    tipTextElement.textContent = tips[tipIndex];
+                    tipTextElement.style.opacity = 1;
+                    tipIndex = (tipIndex + 1) % tips.length;
+                }, 500); // After fade out
+            }
+            showNextTip(); // Initial tip
+            setInterval(showNextTip, 4000); // Change tip every 4 seconds
 
-        // --- Animated Counters for Stats Section ---
-        const statsSection = document.getElementById('stats'); 
-        const statNumbers = document.querySelectorAll('.stat-number');
-        let statsAnimated = false;
+            // Hide preloader
+            window.addEventListener('load', () => {
+                 // Ensure minimum display time for preloader + wait for 100%
+                const minDisplayTime = 2000; // 2 seconds
+                const startTime = Date.now();
 
-        const animateStat = (element) => {
-            const target = parseFloat(element.getAttribute('data-target'));
-            const duration = 1500; const stepTime = 20;
-            const totalSteps = duration / stepTime;
-            const increment = target / totalSteps;
-            let current = 0;
+                function attemptHidePreloader() {
+                    const elapsedTime = Date.now() - startTime;
+                    if (percent >= 100 && elapsedTime >= minDisplayTime) {
+                        loadingOverlay.classList.add('hidden');
+                    } else {
+                        setTimeout(attemptHidePreloader, 200); // Check again shortly
+                    }
+                }
+                attemptHidePreloader();
+            });
+        }
 
-            const step = () => {
-                current += increment;
-                if (current >= target) {
-                    element.innerText = Math.floor(target).toLocaleString();
-                } else {
-                    element.innerText = Math.floor(current).toLocaleString();
-                    setTimeout(step, stepTime);
+        // --- 2. Theme Management ---
+        function initTheme() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const sunIconClass = 'fa-sun';
+            const moonIconClass = 'fa-moon';
+            let currentTheme = localStorage.getItem('theme') || 'light';
+
+            const applyTheme = (theme) => {
+                const iconToAdd = theme === 'dark' ? sunIconClass : moonIconClass;
+                const iconToRemove = theme === 'dark' ? moonIconClass : sunIconClass;
+                body.classList.toggle('dark-mode', theme === 'dark');
+                [themeToggle, themeToggleMobile].forEach(button => {
+                    if (button) {
+                        const iconElement = button.querySelector('i');
+                        if (iconElement) {
+                            iconElement.classList.remove(iconToRemove);
+                            iconElement.classList.add(iconToAdd);
+                        }
+                    }
+                });
+                // Re-initialize globe if it exists and is part of the hero section
+                if (typeof initGlobe === 'function' && globeContainer && globeContainer.closest('#hero')) {
+                    setTimeout(initGlobe, 50); 
                 }
             };
-            step();
-        };
 
-        if ("IntersectionObserver" in window && statsSection && statNumbers.length > 0) {
-            const statsObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !statsAnimated) {
-                        statNumbers.forEach(num => animateStat(num));
-                        statsAnimated = true;
-                        statsObserver.unobserve(statsSection); 
-                    }
-                });
-            }, { threshold: 0.5 });
-            statsObserver.observe(statsSection);
-        } else { 
-            statNumbers.forEach(num => {
-                const target = parseFloat(num.getAttribute('data-target'));
-                num.innerText = Math.floor(target).toLocaleString();
-            });
+            const toggleTheme = () => {
+                currentTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', currentTheme);
+                applyTheme(currentTheme);
+            };
+
+            applyTheme(currentTheme);
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
         }
 
+        // --- 3. Mobile Menu ---
+        function initMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = mobileMenuButton ? mobileMenuButton.querySelector('i') : null;
 
-        // --- Scrollspy for Navigation Highlighting ---
-        const navLinks = document.querySelectorAll('header nav a.nav-link'); 
-        const mobileNavLinks = document.querySelectorAll('#mobile-menu a.nav-link-mobile');
-        const allNavLinks = [...navLinks, ...mobileNavLinks];
-        const sections = document.querySelectorAll('section[id]');
+            if (mobileMenuButton && mobileMenu && mobileMenuIcon) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenuIcon.classList.toggle('fa-bars');
+                    mobileMenuIcon.classList.toggle('fa-times');
+                });
+                const mobileLinks = mobileMenu.querySelectorAll('a'); // More generic selector
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => { 
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuIcon.classList.remove('fa-times');
+                        mobileMenuIcon.classList.add('fa-bars');
+                    });
+                });
+            }
+        }
 
-        const activateLink = (targetId) => {
-            allNavLinks.forEach(link => {
-                const linkHref = link.getAttribute('href');
-                const isActive = linkHref === `#${targetId}` || linkHref.endsWith(`#${targetId}`);
-                link.classList.toggle('active', isActive);
-            });
-        };
-        
-        if (sections.length > 0 && "IntersectionObserver" in window) {
-            const scrollSpyObserver = new IntersectionObserver((entries) => {
-                let highestVisibleSectionId = null;
-                let minTop = Infinity;
+        // --- 4. Header Scroll Effect ---
+        function initHeaderScroll() {
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            }
+        }
 
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const rect = entry.target.getBoundingClientRect();
-                        if (rect.top >= 0 && rect.top <= (window.innerHeight * 0.6) && rect.top < minTop) {
-                            minTop = rect.top;
-                            highestVisibleSectionId = entry.target.getAttribute('id');
+        // --- 5. Scroll Reveal Animation ---
+        function initScrollReveal() {
+            const revealElements = document.querySelectorAll('.reveal');
+            if ("IntersectionObserver" in window) {
+                const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            // Optional: unobserve after reveal to save resources
+                            // revealObserver.unobserve(entry.target); 
                         }
+                    });
+                }, { threshold: 0.1 }); // Adjusted threshold
+                revealElements.forEach(el => revealObserver.observe(el));
+            } else { 
+                revealElements.forEach(el => el.classList.add('visible')); // Fallback for older browsers
+            }
+        }
+
+        // --- 6. Typed.js Initialization ---
+        function initTypedJS() {
+            const typedTarget = document.getElementById('typed-target');
+            if (typedTarget && typeof Typed !== 'undefined') {
+                try {
+                    new Typed('#typed-target', {
+                        strings: ['Driven by Design.', 'Powered by Data.', 'Built for Scale.', 'Focused on Impact.'],
+                        typeSpeed: 50, backSpeed: 30, backDelay: 2000, loop: true, smartBackspace: true
+                    });
+                } catch (error) { console.error("Typed.js Error:", error); typedTarget.textContent = 'Driven by Design.'; }
+            } else if (typedTarget) { typedTarget.textContent = 'Driven by Design.'; }
+        }
+
+        // --- 7. Animated Counters for Stats Section ---
+        function initStatsCounters() {
+            const statsSection = document.getElementById('stats'); 
+            const statNumbers = document.querySelectorAll('.stat-number');
+            let statsAnimated = false;
+
+            const animateStat = (element) => {
+                const target = parseFloat(element.getAttribute('data-target'));
+                if (isNaN(target)) { console.warn("Invalid data-target for stat counter:", element); return; }
+                const duration = 1500; const stepTime = 20;
+                const totalSteps = duration / stepTime;
+                const increment = target / totalSteps;
+                let current = 0;
+
+                const step = () => {
+                    current += increment;
+                    if (current >= target) {
+                        element.innerText = Math.floor(target).toLocaleString() + (element.innerText.includes('+') ? '+' : '');
+                    } else {
+                        element.innerText = Math.floor(current).toLocaleString() + (element.innerText.includes('+') ? '+' : '');
+                        setTimeout(step, stepTime);
+                    }
+                };
+                step();
+            };
+
+            if ("IntersectionObserver" in window && statsSection && statNumbers.length > 0) {
+                const statsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !statsAnimated) {
+                            statNumbers.forEach(num => animateStat(num));
+                            statsAnimated = true;
+                            statsObserver.unobserve(statsSection); 
+                        }
+                    });
+                }, { threshold: 0.5 });
+                statsObserver.observe(statsSection);
+            } else { 
+                statNumbers.forEach(num => {
+                    const target = parseFloat(num.getAttribute('data-target'));
+                    if (!isNaN(target)) {
+                        num.innerText = Math.floor(target).toLocaleString() + (num.innerText.includes('+') ? '+' : '');
                     }
                 });
+            }
+        }
 
-                if (highestVisibleSectionId) {
-                    activateLink(highestVisibleSectionId);
-                } else {
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) { 
-                        activateLink('contact');
-                    } else if (window.scrollY < sections[0].offsetTop - headerHeight * 1.5) { 
-                        activateLink('hero');
-                    } else {
-                        let lastPassedSectionId = null;
-                        for (let i = sections.length - 1; i >= 0; i--) {
-                            if (sections[i].getBoundingClientRect().top < headerHeight + 50) {
-                                lastPassedSectionId = sections[i].getAttribute('id');
-                                break;
+        // --- 8. Scrollspy for Navigation Highlighting ---
+        function initScrollSpy() {
+            const navLinks = document.querySelectorAll('header nav a.nav-link'); 
+            const mobileNavLinks = document.querySelectorAll('#mobile-menu a.nav-link-mobile'); // Assuming mobile links have this class
+            const allNavLinks = [...navLinks, ...mobileNavLinks];
+            const sections = document.querySelectorAll('section[id]');
+            const headerHeight = header ? header.offsetHeight : 70;
+
+            const activateLink = (targetId) => {
+                allNavLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    const isActive = linkHref === `#${targetId}` || (linkHref && linkHref.endsWith(`#${targetId}`));
+                    link.classList.toggle('active', isActive);
+                });
+            };
+            
+            if (sections.length > 0 && "IntersectionObserver" in window) {
+                const scrollSpyObserver = new IntersectionObserver((entries) => {
+                    let highestVisibleSectionId = null;
+                    let minTop = Infinity;
+
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const rect = entry.target.getBoundingClientRect();
+                            // Section is considered active if its top is within the top 60% of viewport
+                            if (rect.top >= 0 && rect.top <= (window.innerHeight * 0.6) && rect.top < minTop) {
+                                minTop = rect.top;
+                                highestVisibleSectionId = entry.target.getAttribute('id');
                             }
                         }
-                        if(lastPassedSectionId) activateLink(lastPassedSectionId);
-                        else if (window.scrollY < 50) activateLink('hero'); 
+                    });
+
+                    if (highestVisibleSectionId) {
+                        activateLink(highestVisibleSectionId);
+                    } else {
+                         // Fallback logic if no section is "highest" (e.g., scrolled past all or before first)
+                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 && sections.length > 0) { 
+                            activateLink(sections[sections.length -1].id); // Highlight last section if at bottom
+                        } else if (window.scrollY < sections[0].offsetTop - headerHeight * 1.5 && sections.length > 0) { 
+                            activateLink(sections[0].id); // Highlight first section if at top
+                        } else { // Try to find the last passed section
+                            let lastPassedSectionId = null;
+                            for (let i = sections.length - 1; i >= 0; i--) {
+                                if (sections[i].getBoundingClientRect().top < headerHeight + 50) {
+                                    lastPassedSectionId = sections[i].getAttribute('id');
+                                    break;
+                                }
+                            }
+                            if(lastPassedSectionId) activateLink(lastPassedSectionId);
+                            else if (window.scrollY < 50 && sections.length > 0 && sections[0].id === 'hero') activateLink('hero');
+                        }
+                    }
+                }, { 
+                    rootMargin: `-${headerHeight -1}px 0px -${window.innerHeight * 0.4 -1}px 0px`, 
+                    threshold: 0 // Trigger as soon as any part of section enters/leaves viewport based on rootMargin
+                });
+
+                sections.forEach(section => { scrollSpyObserver.observe(section); });
+            }
+            // Initial check for hero link
+            if (window.scrollY < 50 && sections.length > 0 && sections[0].id === 'hero') activateLink('hero');
+        }
+
+        // --- 9. Swiper Slider Initialization for Portfolio ---
+        function initSwiper() {
+            if (typeof Swiper !== 'undefined' && document.querySelector('.swiper-container')) {
+                try {
+                    new Swiper('.swiper-container', {
+                        loop: true,
+                        autoplay: { delay: 4500, disableOnInteraction: false }, 
+                        slidesPerView: 1,
+                        spaceBetween: 20, 
+                        pagination: { el: '.swiper-pagination', clickable: true },
+                        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                        effect: 'fade', 
+                        fadeEffect: { crossFade: true },
+                    });
+                } catch (error) { console.error("Swiper Error:", error); }
+            } else { console.warn("Swiper library not loaded or no swiper-container found."); }
+        }
+
+        // --- 10. Footer Current Year & Links ---
+        function initFooter() {
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
+            
+            const footerQuickLinks = document.querySelectorAll('footer .grid div:nth-child(2) ul li a');
+            footerQuickLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#') && href !== '#hero') { 
+                    let sectionName = href.substring(1).replace(/-/g, '_'); 
+                    if (sectionName === 'tech_skills') sectionName = 'tech_stack'; 
+
+                    if (['who_we_are', 'services', 'our_process', 'tech_stack', 'founders', 'portfolio', 'publications', 'testimonials', 'contact'].includes(sectionName)) {
+                        // This logic seems to intend to change hash links to page links.
+                        // For a single-page app, this might not be desired.
+                        // link.setAttribute('href', `${sectionName}.html`); 
                     }
                 }
-            }, { 
-                rootMargin: `-${headerHeight -1}px 0px -${window.innerHeight * 0.4 -1}px 0px`, 
-                threshold: 0 
             });
-
-            sections.forEach(section => { scrollSpyObserver.observe(section); });
         }
-         if (window.scrollY < 50 && sections.length > 0 && sections[0].id === 'hero') activateLink('hero');
 
+        // --- 11. 3D Globe ---
+        let globe, scene, camera, renderer, controls; // Make controls accessible
+        function initGlobe() {
+            if (!THREE) { console.error("Three.js not loaded."); return; }
+            // Ensure globeContainer is specifically the one inside #hero
+            const heroGlobeContainer = document.querySelector('#hero #globe-container');
+            if (!heroGlobeContainer) { console.warn("Hero globe container not found. Globe will not render."); return; }
 
-        // --- Swiper Slider Initialization for Portfolio ---
-        if (typeof Swiper !== 'undefined' && document.querySelector('.swiper-container')) {
-            try {
-                new Swiper('.swiper-container', {
-                    loop: true,
-                    autoplay: { delay: 4500, disableOnInteraction: false }, 
-                    slidesPerView: 1,
-                    spaceBetween: 20, 
-                    pagination: { el: '.swiper-pagination', clickable: true },
-                    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-                    effect: 'fade', 
-                    fadeEffect: { crossFade: true },
-                });
-            } catch (error) { console.error("Swiper Error:", error); }
-        } else { console.warn("Swiper library not loaded or no swiper-container found."); }
-
-
-        // --- Footer Current Year ---
-        const currentYearSpan = document.getElementById('current-year');
-        if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
-        
-        // --- Footer Links to other HTML pages (for "Know More" buttons) ---
-        const footerQuickLinks = document.querySelectorAll('footer .grid div:nth-child(2) ul li a');
-        footerQuickLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href && href.startsWith('#') && href !== '#hero') { 
-                let sectionName = href.substring(1).replace(/-/g, '_'); 
-                if (sectionName === 'tech_skills') sectionName = 'tech_stack'; 
-
-                if (['who_we_are', 'services', 'our_process', 'tech_stack', 'founders', 'portfolio', 'publications', 'testimonials', 'contact'].includes(sectionName)) {
-                    link.setAttribute('href', `${sectionName}.html`);
-                }
+            // Clear previous globe if any
+            while (heroGlobeContainer.firstChild) {
+                heroGlobeContainer.removeChild(heroGlobeContainer.firstChild);
             }
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, heroGlobeContainer.offsetWidth / heroGlobeContainer.offsetHeight, 0.1, 1000);
+            camera.position.z = 3.5; 
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(heroGlobeContainer.offsetWidth, heroGlobeContainer.offsetHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            heroGlobeContainer.appendChild(renderer.domElement);
+
+            // OrbitControls for interaction
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 2.2; // Min zoom
+            controls.maxDistance = 10;  // Max zoom
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.4; // Slower auto-rotation
+            controls.enablePan = false; // Disable panning to keep globe centered
+
+            const globeGeometry = new THREE.SphereGeometry(1.25, 64, 64);
+            const textureLoader = new THREE.TextureLoader();
+            
+            const isDarkMode = body.classList.contains('dark-mode');
+            const earthTexturePath = isDarkMode ? 
+                'https://cdn.jsdelivr.net/gh/stemkoski/stemkoski.github.com/Three.js/images/earth-night.jpg' : // Night map with city lights
+                'https://cdn.jsdelivr.net/gh/stemkoski/stemkoski.github.com/Three.js/images/earth-day.jpg';    // Clear day map
+
+            const earthTexture = textureLoader.load(earthTexturePath, 
+                () => { console.log("Globe texture loaded."); renderer.render(scene, camera); },
+                undefined, 
+                (err) => console.error("Error loading globe texture:", err)
+            );
+            
+            const globeMaterial = new THREE.MeshStandardMaterial({
+                map: earthTexture,
+                metalness: 0.1, // Less metallic for a more map-like feel
+                roughness: 0.8, // More matte
+                transparent: true,
+                opacity: 0.99,
+                emissive: isDarkMode ? 0x101020 : 0x000000, 
+                emissiveMap: isDarkMode ? earthTexture : null
+            });
+            globe = new THREE.Mesh(globeGeometry, globeMaterial);
+            scene.add(globe);
+
+            // Marker for Nairobi
+            const markerGeometry = new THREE.SphereGeometry(0.025, 16, 16); // Small sphere
+            const markerMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xff4500, // Bright orange-red
+                transparent: true,
+                opacity: 0.8,
+             });
+            const nairobiMarker = new THREE.Mesh(markerGeometry, markerMaterial);
+
+            // Convert Lat/Lon to Cartesian coordinates for Nairobi (-1.2921° S, 36.8219° E)
+            const lat = -1.2921;
+            const lon = 36.8219;
+            const radius = 1.25; // Globe radius
+            const phi = (90 - lat) * Math.PI / 180;
+            const theta = (lon + 180) * Math.PI / 180; // Adjust theta for texture map alignment
+
+            nairobiMarker.position.set(
+                -radius * Math.sin(phi) * Math.cos(theta),
+                radius * Math.cos(phi),
+                radius * Math.sin(phi) * Math.sin(theta)
+            );
+            nairobiMarker.lookAt(new THREE.Vector3(0,0,0)); // Orient towards center (optional)
+            globe.add(nairobiMarker); // Add marker as a child of the globe so it rotates with it
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(isDarkMode ? 0x555577 : 0xbbbbdd, 1);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, isDarkMode ? 0.7 : 1.0);
+            dirLight.position.set(5, 4, 5); // Adjusted light position
+            scene.add(dirLight);
+
+            if(isDarkMode) {
+                const subtleHemiLight = new THREE.HemisphereLight(0x303050, 0x101020, 0.5);
+                scene.add(subtleHemiLight);
+            }
+
+            let lastRenderTime = 0;
+            const renderInterval = 1000 / 60; // Target 60 FPS
+
+            function animateGlobe() {
+                requestAnimationFrame(animateGlobe);
+                const currentTime = Date.now();
+                if (currentTime - lastRenderTime < renderInterval && !controls.enabled) return;
+
+                controls.update(); // Required if enableDamping or autoRotate is true
+                renderer.render(scene, camera);
+                lastRenderTime = currentTime;
+            }
+            animateGlobe();
+
+            window.addEventListener('resize', () => {
+                if (camera && renderer && heroGlobeContainer) {
+                    camera.aspect = heroGlobeContainer.offsetWidth / heroGlobeContainer.offsetHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(heroGlobeContainer.offsetWidth, heroGlobeContainer.offsetHeight);
+                }
+            });
+        }
+        
+        // --- 12. Hero Animations (GSAP) ---
+        function initHeroAnimations() {
+            if (!gsap) { console.error("GSAP not loaded."); return; }
+
+            gsap.from('.hero-content h1', { y: 50, opacity: 0, duration: 1, delay: 0.3, ease: "power3.out" });
+            gsap.from('.hero-content p', { y: 40, opacity: 0, duration: 1, delay: 0.5, ease: "power3.out" });
+            gsap.from('.hero-stats .stat-item', {
+                y: 30, opacity: 0, stagger: 0.15, duration: 0.8, delay: 0.7, ease: "power3.out"
+            });
+            gsap.from('.hero-buttons a', {
+                scale: 0.8, opacity: 0, stagger: 0.2, duration: 0.7, delay: 1, ease: "back.out(1.7)"
+            });
+            gsap.from('.hero-content .mt-12 .flex.items-center', { // Trust indicators
+                y: 20, opacity: 0, stagger: 0.1, duration: 0.6, delay: 1.3, ease: "power2.out"
+            });
+        }
+        
+        // --- 13. Sparkles for Hero Section ---
+        function initSparkles() {
+            const heroSection = document.getElementById('hero');
+            if (!heroSection) return;
+            const numSparkles = 15; // Fewer sparkles
+            for (let i = 0; i < numSparkles; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle'; // Use the class for styling
+                sparkle.style.width = sparkle.style.height = `${Math.random() * 5 + 2}px`; // Smaller
+                sparkle.style.background = `radial-gradient(circle, #fff 0%, var(--text-accent) 70%, transparent 100%)`;
+                sparkle.style.opacity = Math.random() * 0.4 + 0.1; // More subtle
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.animationDuration = `${Math.random() * 2 + 2.5}s`; // Slightly varied duration
+                heroSection.appendChild(sparkle);
+            }
+        }
+
+
+        // Initialize all components
+        initPreloader();
+        initTheme(); // Theme needs to be set before globe for texture
+        initMobileMenu();
+        initHeaderScroll();
+        initScrollReveal();
+        initTypedJS();
+        initStatsCounters(); // Ensure counters are initialized after DOM is ready
+        initScrollSpy();
+        initSwiper();
+        initFooter();
+        
+        // Defer Globe and Hero Animations until after preloader is done (or at least a slight delay)
+        window.addEventListener('load', () => {
+            setTimeout(() => { // Give a little breathing room after load
+                // Ensure we only init globe if its container is present in the hero section
+                const heroGlobeContainerCheck = document.querySelector('#hero #globe-container');
+                if (heroGlobeContainerCheck) initGlobe();
+                initHeroAnimations();
+                initSparkles();
+            }, 200); 
         });
 
-
-    }); // End DOMContentLoaded
+    });
     </script>
 
 </body>
