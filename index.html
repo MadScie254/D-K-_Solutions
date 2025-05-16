@@ -37,10 +37,13 @@
             --gradient-start: #4f46e5; /* Indigo-600 */
             --gradient-mid: #7c3aed;   /* Purple-600 */
             --gradient-end: #db2777;   /* Pink-600 */
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.7);
-            --shadow-color: rgba(99, 102, 241, 0.2);
-            --hero-overlay-bg: rgba(243, 244, 246, 0.75); /* Adjusted transparency */
+            --gradient-start-rgb: 79, 70, 229;
+            --gradient-mid-rgb: 124, 58, 237;
+            --gradient-end-rgb: 219, 39, 119;
+            --glass-bg: rgba(255, 255, 255, 0.5); /* Slightly less transparent for nav */
+            --glass-border: rgba(255, 255, 255, 0.3); /* More subtle border */
+            --shadow-color: rgba(99, 102, 241, 0.15); /* Softer shadow */
+            --hero-overlay-bg: rgba(248, 250, 252, 0.6); /* Tailwind Slate-50, for a brighter, cleaner glass, adjusted transparency */
             --slider-nav-bg: rgba(255, 255, 255, 0.5);
             --slider-nav-text: #1f2937;
             --slider-nav-hover-bg: rgba(255, 255, 255, 0.8);
@@ -69,10 +72,13 @@
             --gradient-start: #6366f1; 
             --gradient-mid: #a855f7;   
             --gradient-end: #ec4899;   
-            --glass-bg: rgba(31, 41, 55, 0.5); 
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --shadow-color: rgba(99, 102, 241, 0.3);
-            --hero-overlay-bg: rgba(10, 10, 35, 0.75); /* Adjusted transparency */
+            --gradient-start-rgb: 99, 102, 241;
+            --gradient-mid-rgb: 168, 85, 247;
+            --gradient-end-rgb: 236, 72, 153;
+            --glass-bg: rgba(31, 41, 55, 0.4); /* Slightly less transparent for nav */
+            --glass-border: rgba(255, 255, 255, 0.15); /* More subtle border */
+            --shadow-color: rgba(124, 58, 237, 0.25); /* Purple shadow for dark mode */
+            --hero-overlay-bg: rgba(17, 24, 39, 0.5); /* Tailwind Gray-900, adjusted transparency for aurora */
             --slider-nav-bg: rgba(31, 41, 55, 0.5);
             --slider-nav-text: #e0e0ff;
             --slider-nav-hover-bg: rgba(31, 41, 55, 0.8);
@@ -350,14 +356,62 @@
             position: relative; 
             z-index: 2; /* Ensure hero content is above globe */
             background: var(--hero-overlay-bg); /* Uses updated transparent variable */
-            backdrop-filter: blur(5px); /* Slightly less blur if overlay is more transparent */
+            backdrop-filter: blur(12px); /* Increased blur for more pronounced glass */
             border: 1px solid var(--glass-border);
-            padding: 2.5rem; 
-            border-radius: 1.25rem; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); 
+            padding: 2.5rem 3rem; /* Slightly more padding */
+            border-radius: 1.5rem; /* Slightly larger radius */
+            box-shadow: 0 12px 35px var(--shadow-color), inset 0 0 1.5px rgba(255,255,255,0.3); /* Enhanced shadow and inner gleam */
             color: var(--text-primary);
             max-width: 90%; 
+            overflow: hidden; /* To contain the aurora background */
         }
+        .dark-mode .hero-content {
+            box-shadow: 0 12px 35px var(--shadow-color), inset 0 0 1.5px rgba(255,255,255,0.1);
+        }
+
+        .aurora-background {
+            position: absolute;
+            top: -50%; /* Start offset for movement */
+            left: -50%;
+            width: 200%; /* Larger than parent for movement */
+            height: 200%;
+            z-index: 0; /* Behind hero-content's direct children */
+            background: radial-gradient(ellipse at 50% 50%, rgba(var(--gradient-start-rgb), 0.12) 0%, rgba(var(--gradient-mid-rgb), 0.1) 35%, rgba(var(--gradient-end-rgb), 0.08) 70%, transparent 100%);
+            mix-blend-mode: screen; /* Experiment with 'overlay', 'soft-light', or 'screen' */
+            animation: auroraShift 45s linear infinite alternate;
+            opacity: 0.7; /* Overall opacity for the aurora effect */
+        }
+        .dark-mode .aurora-background {
+            mix-blend-mode: lighten; /* Lighten works well on dark backgrounds */
+            opacity: 0.6;
+            background: radial-gradient(ellipse at 50% 50%, rgba(var(--gradient-start-rgb), 0.15) 0%, rgba(var(--gradient-mid-rgb), 0.12) 35%, rgba(var(--gradient-end-rgb), 0.1) 70%, transparent 100%);
+        }
+
+        @keyframes auroraShift {
+            0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
+            25% { transform: translate(3%, 2%) rotate(4deg) scale(1.05); }
+            50% { transform: translate(-2%, 5%) rotate(-3deg) scale(1); }
+            75% { transform: translate(2%, -3%) rotate(5deg) scale(1.05); }
+            100% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
+        }
+
+        #hero .hero-content > * { /* Target direct children like h1, p, buttons div */
+            position: relative;
+            z-index: 1; /* Ensure they are above the aurora background */
+        }
+        #hero .hero-content h1 {
+            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .dark-mode #hero .hero-content h1 {
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+        }
+        #hero .hero-content p {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+        .dark-mode #hero .hero-content p {
+            text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+        }
+
          .dark-mode .hero-content { 
              color: #e0e0ff;
              background: var(--hero-overlay-bg); /* Uses updated transparent variable for dark mode */
@@ -768,11 +822,12 @@
 
         <div class="container mx-auto px-6 z-10">
             <div class="hero-content reveal max-w-4xl mx-auto">
+                <div class="aurora-background"></div> <!-- Added Aurora Background -->
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
                     Intelligent Solutions, <span class="gradient-text" id="typed-target"></span>
                 </h1>
                 <p class="text-lg md:text-xl mb-8">
-                    A Nairobi-based freelance partnership delivering scalable, design-driven digital solutions. We blend deep technical insight with strategic design thinking to help your business thrive from concept to deployment and beyond.
+                    A Nairobi-based freelance partnership, we are <strong>creative architects of intelligent digital experiences</strong>. We deliver scalable, design-driven solutions by masterfully blending deep technical insight with visionary strategic thinking. Partner with us to transform your concepts into thriving realities, from initial spark to impactful deployment and beyond.
                 </p>
                 <div class="hero-stats grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                     <div class="stat-item text-center">
@@ -1569,11 +1624,11 @@
             if (typedTarget && typeof Typed !== 'undefined') {
                 try {
                     new Typed('#typed-target', {
-                        strings: ['Driven by Design.', 'Powered by Data.', 'Built for Scale.', 'Focused on Impact.'],
+                        strings: ['Creative by Nature.', 'Intelligent by Design.', 'Powered by Innovation.', 'Engineered for Impact.', 'Your Vision, Amplified.'],
                         typeSpeed: 50, backSpeed: 30, backDelay: 2000, loop: true, smartBackspace: true
                     });
-                } catch (error) { console.error("Typed.js Error:", error); typedTarget.textContent = 'Driven by Design.'; }
-            } else if (typedTarget) { typedTarget.textContent = 'Driven by Design.'; }
+                } catch (error) { console.error("Typed.js Error:", error); typedTarget.textContent = 'Creative by Nature.'; }
+            } else if (typedTarget) { typedTarget.textContent = 'Creative by Nature.'; }
         }
 
         // --- 7. Animated Counters for Stats Section ---
