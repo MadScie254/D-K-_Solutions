@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danco & Khadija - Who We Are: Discover Our Team</title>
+    <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* --- Theme Variables --- */
+        :root {
+            /* Light Theme (Default) */
+            --bg-primary: #f3f4f6; /* Tailwind gray-100 */
+            --bg-secondary: #ffffff; /* White */
+            --bg-accent: #e5e7eb; /* Tailwind gray-200 */
+            --text-primary: #1f2937; /* Tailwind gray-800 */
+            --text-secondary: #4b5563; /* Tailwind gray-600 */
+            --text-accent: #0ea5e9; /* Sky-500 */
+            --border-color: rgba(0, 0, 0, 0.1);
+            --gradient-start: #1e40af; /* Blue-800 */
+            --gradient-mid: #0d9488;   /* Teal-600 */
+            --gradient-end: #047857;   /* Emerald-700 */
+            --gradient-start-rgb: 30, 64, 175;
+            --gradient-mid-rgb: 13, 148, 136;
+            --gradient-end-rgb: 4, 120, 87;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(14, 165, 233, 0.15);
+            --hero-overlay-bg: rgba(248, 250, 252, 0.6);
+            --slider-nav-bg: rgba(255, 255, 255, 0.5);
+            --slider-nav-text: #1f2937;
+            --slider-nav-hover-bg: rgba(255, 255, 255, 0.8);
+            --loader-bg: var(--bg-primary);
+            --loader-color: var(--text-accent);
+            --loader-logo-filter: none;
+            --input-bg: #ffffff;
+            --input-text: var(--text-primary);
+            --input-border: #d1d5db;
+            --input-focus-ring: var(--text-accent);
+            --label-text: var(--text-primary);
+            --skill-icon-bg: #e0f2fe; /* Light Sky for icon background */
+            --skill-icon-text: var(--text-accent);
+            --publication-card-bg: var(--bg-secondary);
+        }
+
+        .dark-mode {
+            /* Dark Theme */
+            --bg-primary: #0a0a23; 
+            --bg-secondary: #111827; /* Tailwind gray-900 */
+            --bg-accent: #1f2937; /* Tailwind gray-800 */
+            --text-primary: #e0e0ff; 
+            --text-secondary: #9ca3af; /* Tailwind gray-400 */
+            --text-accent: #38bdf8; /* Sky-400 */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-start: #2563eb; 
+            --gradient-mid: #14b8a6;   
+            --gradient-end: #059669;   
+            --gradient-start-rgb: 37, 99, 235;
+            --gradient-mid-rgb: 20, 184, 166;
+            --gradient-end-rgb: 5, 150, 105;
+            --glass-bg: rgba(31, 41, 55, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --shadow-color: rgba(56, 189, 248, 0.25);
+            --hero-overlay-bg: rgba(17, 24, 39, 0.5);
+            --slider-nav-bg: rgba(31, 41, 55, 0.5);
+            --slider-nav-text: #e0e0ff;
+            --slider-nav-hover-bg: rgba(31, 41, 55, 0.8);
+            --loader-bg: var(--bg-primary);
+            --loader-color: var(--text-accent);
+            --loader-logo-filter: brightness(0) invert(1);
+            --input-bg: #1f2937;
+            --input-text: var(--text-primary);
+            --input-border: #4b5563;
+            --input-focus-ring: var(--text-accent);
+            --label-text: var(--text-primary);
+            --skill-icon-bg: #0c4a6e; /* Dark Sky for icon background */
+            --skill-icon-text: #bae6fd; /* Light Sky text for icons */
+            --publication-card-bg: var(--bg-accent);
+        }
+
+        /* --- Base Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body::before { 
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at top left, color-mix(in srgb, var(--gradient-start) 10%, transparent) 0%, transparent 40%),
+                radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--gradient-mid) 10%, transparent) 0%, transparent 40%);
+            opacity: 0.2; z-index: -2; pointer-events: none; transition: background 0.3s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text; background-clip: text; color: transparent; transition: background 0.3s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        /* --- Loading Overlay --- */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--loader-bg), color-mix(in srgb, var(--loader-bg) 80%, black));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.7s ease-out, visibility 0.7s;
+            visibility: visible;
+        }
+
+        #loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        .loader-content {
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: loadIn 0.5s 0.2s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        @keyframes loadIn {
+            to { transform: scale(1); opacity: 1;}
+        }
+
+        .loader-logo-text {
+            font-size: 3.5rem; /* Adjusted size */
+            font-weight: 800;
+            margin-bottom: 25px; /* Adjusted margin */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: var(--loader-logo-filter);
+            animation: logoPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+        }
+
+        #lottie-container { margin: 0 auto 20px; }
+
+        .loading-progress {
+            width: 220px; /* Adjusted width */
+            margin: 25px auto;
+        }
+
+        .progress-bar-bg { /* Renamed and styled background */
+            height: 6px; /* Adjusted height */
+            background-color: color-mix(in srgb, var(--text-accent) 20%, transparent);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill { /* Renamed and styled fill */
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%; /* Starts at 0, controlled by JS */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid));
+            border-radius: 3px;
+            transition: width 0.1s ease-out; /* Smooth transition for JS updates */
+        }
+        
+        .progress-text {
+            margin-top: 10px; /* Adjusted margin */
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .loader-text { /* Main loading text below spinner/progress */
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 1rem; /* Adjusted size */
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-tips {
+            margin-top: 25px; /* Adjusted margin */
+            min-height: 40px; /* Ensure space for tip text */
+        }
+
+        .tip-text {
+            font-size: 0.85rem; /* Adjusted size */
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out; /* Smooth fade for tips */
+        }
+
+        /* --- Navigation --- */
+        #main-header { 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background: var(--bg-accent);
+            color: var(--text-primary);
+        }
+        #main-header.scrolled {
+            background: var(--bg-accent);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode #main-header.scrolled {
+            background: var(--bg-accent);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link {
+            color: var(--text-primary);
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            padding: 0.5rem 0.6rem;
+            font-size: 0.9rem;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover { color: var(--text-accent); }
+        .nav-link.active { color: var(--text-accent); font-weight: 600; border-bottom-color: var(--text-accent); }
+        #mobile-menu { background-color: var(--bg-accent); border-top: 1px solid var(--border-color); }
+        .dark-mode #mobile-menu { background-color: var(--bg-accent); }
+        #mobile-menu a { color: var(--text-primary); display: block; padding: 0.75rem 1.5rem; }
+        #mobile-menu a:hover { background-color: var(--bg-primary); }
+        #mobile-menu a.active { color: var(--text-accent); font-weight: 600; background-color: var(--bg-primary); }
+
+        /* --- Buttons --- */
+        .cta-button, .tally-button { 
+            transition: all 0.3s ease; 
+            padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; display: inline-block; text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            color: white;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+            transform: skewX(-20deg);
+        }
+        .cta-button:hover::before { left: 100%; }
+
+        .tally-button {
+            background-color: var(--bg-accent);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .tally-button:hover {
+            background-color: color-mix(in srgb, var(--bg-accent) 80%, black);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        /* --- Section Styling --- */
+        section { padding: 80px 0; position: relative; z-index: 1; }
+        .bg-primary { background-color: var(--bg-primary); }
+        .bg-secondary { background-color: var(--bg-secondary); }
+        .bg-accent { background-color: var(--bg-accent); }
+        
+        .section-intro-button-container {
+            text-align: center;
+            margin-bottom: 2.5rem; /* mb-10 */
+        }
+        .know-more-button {
+            background-color: var(--bg-accent);
+            color: var(--text-primary);
+            padding: 0.6rem 1.25rem;
+            border-radius: 9999px; /* full rounded */
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+        .know-more-button:hover {
+            background-color: color-mix(in srgb, var(--bg-accent) 80%, black);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transform: translateY(-1px);
+        }
+
+        /* --- General Content Cards --- */
+        .content-card {
+            background-color: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .dark-mode .content-card {
+            background-color: var(--bg-secondary);
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Founder Card Specifics (Skills Showcase removed) --- */
+        .founder-card img {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 4px solid var(--text-accent);
+            box-shadow: 0 0 0 8px rgba(var(--gradient-mid-rgb), 0.2);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .founder-card .quote {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 4px solid var(--text-accent);
+            background-color: var(--bg-accent);
+            border-radius: 0.5rem;
+        }
+        .founder-card .links a { color: var(--text-accent); margin: 0 0.5rem; transition: color 0.3s ease; }
+        .founder-card .links a:hover { color: var(--gradient-end); }
+
+        /* --- Stats Section --- */
+        .stat-item {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background-color: var(--bg-secondary);
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* --- Portfolio Swiper --- */
+        .swiper-container {
+            width: 100%;
+            padding-bottom: 3.5rem; /* Space for pagination */
+        }
+        .swiper-slide {
+            background-color: var(--bg-secondary);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 300px; /* Fixed height for consistency */
+            object-fit: cover;
+        }
+        .slide-content-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4), transparent);
+            color: white;
+            padding: 1.5rem;
+            padding-top: 3rem; /* More space at top for gradient */
+            transition: background 0.3s ease;
+        }
+        .swiper-slide:hover .slide-content-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
+        }
+        .slide-content-overlay h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .slide-content-overlay p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1rem;
+        }
+        .swiper-pagination-bullet {
+            background: var(--text-secondary) !important;
+            opacity: 0.6 !important;
+        }
+        .swiper-pagination-bullet-active {
+            background: var(--text-accent) !important;
+            opacity: 1 !important;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--text-primary) !important;
+            background-color: var(--slider-nav-bg) !important;
+            border-radius: 50%;
+            width: 40px !important;
+            height: 40px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: var(--slider-nav-hover-bg) !important;
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 1rem !important;
+            font-weight: 900;
+        }
+        .swiper-button-prev { left: 10px !important; }
+        .swiper-button-next { right: 10px !important; }
+
+        .github-link-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #24292e; /* GitHub dark color */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .github-link-button:hover {
+            background-color: #33383d;
+        }
+        .github-link-button i {
+            margin-right: 0.5rem;
+        }
+
+        /* --- Publications Section --- */
+        .publication-card {
+            background-color: var(--publication-card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            height: 100%; /* Ensure cards are same height */
+            display: flex;
+            flex-direction: column;
+        }
+        .publication-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        .publication-card h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .publication-card .authors {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+        .publication-card .venue {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .publication-card .abstract-preview {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1; /* Pushes button to bottom */
+        }
+        .publication-card .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-accent);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .publication-card .read-more-btn:hover {
+            color: var(--gradient-end);
+        }
+        .publication-card .read-more-btn i {
+            margin-left: 0.5rem;
+        }
+
+        /* --- Testimonials Swiper --- */
+        .testimonial-card {
+            background-color: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-style: italic;
+            color: var(--text-secondary);
+            min-height: 250px; /* Ensure consistent height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .testimonial-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .testimonial-card cite {
+            display: block;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1rem;
+        }
+        .testimonial-card .rating {
+            color: #facc15; /* Tailwind yellow-400 */
+            margin-top: 1rem;
+        }
+        .testimonial-card .rating i {
+            margin: 0 2px;
+        }
+
+        /* --- Contact Form --- */
+        .contact-form-container {
+            background-color: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--label-text);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--input-focus-ring);
+            box-shadow: 0 0 0 3px rgba(var(--gradient-start-rgb), 0.2);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--bg-accent);
+            color: var(--text-primary);
+            padding: 40px 0;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+        footer a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        footer a:hover { color: var(--text-accent); }
+        .footer-social-links a {
+            margin-right: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        .footer-social-links a:hover { color: var(--text-accent); }
+        .dark-mode footer { background-color: var(--bg-accent); }
+
+        /* --- Utility Classes & Animations --- */
+        .container { max-width: 1200px; } /* max-w-screen-xl in tailwind */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typewriter Effect (for Hero) */
+        .typed-cursor {
+            opacity: 1;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px; /* Wider for better touch */
+            height: 28px; /* Taller for better touch */
+            cursor: pointer;
+            vertical-align: middle;
+            margin-left: 1rem;
+        }
+        .toggle-switch input { display: none; }
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 28px; /* Match height for pill shape */
+            transition: 0.4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+        input:checked + .slider { background-color: var(--text-accent); }
+        input:checked + .slider:before {
+            transform: translateX(20px); /* Move 20px to the right (48-28)/2 + 20 */
+        }
+        .dark-mode-icon {
+            position: absolute;
+            left: 8px; /* Adjusted for larger switch */
+            top: 6px;
+            color: #f1c40f; /* Yellow for sun */
+            font-size: 0.8rem;
+            z-index: 1;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .light-mode-icon {
+            position: absolute;
+            right: 8px; /* Adjusted for larger switch */
+            top: 6px;
+            color: #3498db; /* Blue for moon */
+            font-size: 0.8rem;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        input:checked ~ .dark-mode-icon { opacity: 0; }
+        input:checked ~ .light-mode-icon { opacity: 1; }
+
+        /* Aurora background for hero */
+        #hero-aurora-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            opacity: 0.7; /* Adjust opacity as needed */
+        }
+        .aurora-blur {
+            position: absolute;
+            filter: blur(80px); /* Adjust blur intensity */
+            opacity: 0.6; /* Adjust individual blob opacity */
+        }
+        .aurora-blob-1 { background-color: rgba(var(--gradient-start-rgb), 0.5); width: 400px; height: 400px; border-radius: 50%; top: 10%; left: 10%; animation: aurora-move 15s infinite alternate ease-in-out; }
+        .aurora-blob-2 { background-color: rgba(var(--gradient-mid-rgb), 0.5); width: 350px; height: 350px; border-radius: 50%; top: 50%; right: 5%; animation: aurora-move 18s infinite alternate-reverse ease-in-out; }
+        .aurora-blob-3 { background-color: rgba(var(--gradient-end-rgb), 0.5); width: 300px; height: 300px; border-radius: 50%; bottom: 10%; left: 40%; animation: aurora-move 16s infinite alternate ease-in-out; }
+
+        @keyframes aurora-move {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, 30px) scale(1.05); }
+            50% { transform: translate(-30px, -20px) scale(0.95); }
+            75% { transform: translate(40px, -10px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* 3D Model */
+        #model-container {
+            width: 100%;
+            height: 500px; /* Adjust height as needed */
+            margin: 0 auto;
+            background-color: var(--bg-primary);
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: var(--bg-accent); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            border-radius: 10px;
+            border: 2px solid var(--bg-accent);
+        }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--gradient-end), var(--gradient-mid), var(--gradient-start)); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1rem; }
+            .stat-number { font-size: 2.5rem; }
+            .stat-label { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="loader-content">
+            <h1 class="loader-logo-text">DK</h1>
+            <div id="lottie-container" style="width: 150px; height: 150px;"></div>
+            <div class="loading-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBarFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Loading resources...</p>
+            </div>
+            <p class="loader-text mb-4">Crafting digital masterpieces...</p>
+            <div class="loading-tips">
+                <p id="tipDisplay" class="tip-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-10 transition-all duration-300">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold gradient-text">D-K Solutions</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="who_we_are.html" class="nav-link active">Who We Are</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="portfolio.html" class="nav-link">Portfolio</a>
+                <a href="testimonials.html" class="nav-link">Testimonials</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                    <i class="fas fa-sun dark-mode-icon"></i>
+                    <i class="fas fa-moon light-mode-icon"></i>
+                </label>
+            </div>
+            <div class="md:hidden flex items-center">
+                <label class="toggle-switch mr-4">
+                    <input type="checkbox" id="darkModeToggleMobile">
+                    <span class="slider"></span>
+                    <i class="fas fa-sun dark-mode-icon"></i>
+                    <i class="fas fa-moon light-mode-icon"></i>
+                </label>
+                <button id="mobile-menu-button" class="text-text-primary focus:outline-none">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full shadow-lg hidden">
+            <a href="index.html" class="nav-link-mobile block px-4 py-2">Home</a>
+            <a href="who_we_are.html" class="nav-link-mobile block px-4 py-2 active">Who We Are</a>
+            <a href="services.html" class="nav-link-mobile block px-4 py-2">Services</a>
+            <a href="portfolio.html" class="nav-link-mobile block px-4 py-2">Portfolio</a>
+            <a href="testimonials.html" class="nav-link-mobile block px-4 py-2">Testimonials</a>
+            <a href="contact.html" class="nav-link-mobile block px-4 py-2">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section for About Us -->
+        <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+            <!-- Aurora Background -->
+            <div id="hero-aurora-container">
+                <div class="aurora-blur aurora-blob-1"></div>
+                <div class="aurora-blur aurora-blob-2"></div>
+                <div class="aurora-blur aurora-blob-3"></div>
+            </div>
+            <div class="absolute inset-0 bg-hero-overlay-bg z-0"></div>
+
+            <div class="relative z-10 p-6 max-w-4xl mx-auto backdrop-filter backdrop-blur-lg bg-glass-bg rounded-xl shadow-lg border border-glass-border transform transition-all duration-700 ease-out opacity-0 translate-y-10" id="hero-content-who-we-are">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 gradient-text leading-tight">
+                    Unveiling the Architects of Digital Innovation
+                </h1>
+                <p class="text-lg md:text-xl text-text-secondary mb-8">
+                    At D-K Solutions, we are more than just a team; we are a collective of passionate innovators, strategic thinkers, and technical virtuosos, united by a singular vision: to craft intelligent digital solutions that propel businesses into tomorrow. Discover the brilliant minds and diverse expertise that form the bedrock of our commitment to excellence.
+                </p>
+                <a href="#our-story" class="cta-button text-lg">Journey With Us <i class="fas fa-chevron-down ml-2"></i></a>
+            </div>
+        </section>
+
+        <!-- Our Story / Philosophy Section -->
+        <section id="our-story" class="bg-primary py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Our Odyssey: A Tale of Vision and Virtue</h2>
+                    <p class="text-lg text-secondary max-w-4xl mx-auto">
+                        Every great endeavor begins with a spark of an idea, nurtured by relentless dedication and a shared purpose. Our story is one of a relentless pursuit of digital mastery, grounded in principles of integrity, innovation, and client-centricity. We believe in building not just solutions, but legacies.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="reveal" style="transition-delay: 0.1s;">
+                        <img src="assets/collaborative-innovation.jpg" alt="Team Collaboration or Abstract Tech Design" class="rounded-lg shadow-xl w-full h-auto object-cover" loading="lazy">
+                    </div>
+                    <div class="reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-3xl font-bold mb-4">The Genesis of Brilliance</h3>
+                        <p class="text-text-secondary mb-4">
+                            D-K Solutions was forged from a profound understanding of the evolving digital landscape and an unwavering commitment to empowering businesses with cutting-edge technology and insightful analytics. Our founders envisioned a consultancy where expertise met empathy, where complex challenges were transformed into elegant, impactful solutions. This ethos permeates every project we undertake, every line of code we write, and every strategy we meticulously craft. We don't just solve problems; we redefine possibilities, creating pathways to unprecedented growth and operational efficiency.
+                        </p>
+                        <p class="text-text-secondary">
+                            We pride ourselves on a culture of continuous learning and adaptation. The digital realm is a dynamic tapestry, and we ensure our knowledge and toolkits are perpetually at the forefront, guaranteeing that our clients receive not just current, but future-proof solutions. Our dedication extends beyond mere technical implementation; we integrate deeply with your vision, ensuring that our digital prowess seamlessly aligns with your business objectives, culminating in a partnership that yields not just success, but sustainable digital ascendancy.
+                        </p>
+                    </div>
+                </div>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mt-16">
+                    <div class="reveal order-2 md:order-1" style="transition-delay: 0.3s;">
+                        <h3 class="text-3xl font-bold mb-4">Our Core Philosophy: Beyond Code, Beyond Data</h3>
+                        <p class="text-text-secondary mb-4">
+                            At the heart of D-K Solutions lies a philosophy that transcends lines of code and data points. We believe in the profound human element of technology – that its true power lies in its ability to amplify human potential, streamline operations, and unlock unparalleled insights. Our approach is holistic, intertwining advanced technical acumen with a deep understanding of human behavior, market dynamics, and strategic foresight. We strive to create digital ecosystems that are not only robust and efficient but also intuitive, engaging, and transformative.
+                        </p>
+                        <p class="text-text-secondary">
+                            We operate on the premise that every client is unique, and every challenge an opportunity for bespoke innovation. This commitment to tailored excellence means we eschew one-size-fits-all solutions, instead opting for meticulously designed strategies and implementations that resonate precisely with your specific needs and aspirations. Our passion is to illuminate the path forward, transforming intricate digital landscapes into clear, navigable opportunities for your success.
+                        </p>
+                    </div>
+                    <div class="reveal order-1 md:order-2" style="transition-delay: 0.4s;">
+                        <img src="assets/vision-philosophy.jpg" alt="Vision and Philosophy" class="rounded-lg shadow-xl w-full h-auto object-cover" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="our-team" class="bg-secondary py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Meet Our Innovators: The Minds Behind the Magic</h2>
+                    <p class="text-lg text-secondary max-w-4xl mx-auto">
+                        Our collective strength is derived from the diverse expertise and unwavering dedication of our exceptional team. Each member brings a unique blend of skills, experiences, and a shared passion for digital transformation, ensuring that every solution we deliver is not just technically sound, but strategically brilliant.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12 items-start">
+                    <!-- Daniel Wanjala -->
+                    <div class="content-card founder-card text-center reveal" style="transition-delay: 0.1s;">
+                        <img src="assets/daniel-wanjala.jpg" alt="Daniel Wanjala" class="mx-auto">
+                        <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
+                        <p class="text-accent font-medium mb-2">Lead Developer / Machine Learning Engineer</p>
+                        <p class="text-sm text-secondary mb-4">
+                            Daniel is a certified data scientist and full-stack developer, celebrated for his exceptional ability to architect robust, scalable software and construct highly intelligent predictive models. He is the innovative mind behind the InvestWise Predictor, a sophisticated investment advisory engine meticulously powered by advanced neural networks and comprehensive economic data. Daniel's extensive portfolio proudly includes several production-ready platforms such as metcom.ke and marda.co.ke, reflecting years of profound experience in both intricate backend engineering and complex ML workflows. His passion lies in transforming complex data into actionable intelligence and building systems that not only function flawlessly but also drive significant business value.
+                        </p>
+                        <p class="text-sm text-secondary mb-3"><strong>Core Toolkit:</strong> Python, Django, React, TensorFlow, PostgreSQL, Docker, Redis, AWS.</p>
+                        
+                        <div class="quote">
+                            <p>"I don't just build systems; I architect solutions. My focus is on creating robust, intelligent platforms that people can truly rely on, day in and day out, to solve real-world problems and drive progress."</p>
+                            <cite>— Daniel</cite>
+                        </div>
+                        <p class="text-sm text-secondary mb-1"><strong>Certifications & Affiliations:</strong></p>
+                        <p class="text-xs text-secondary mb-3">Moringa School (Data Science & Software Engineering), Zetech University (BSc. IT), HackerRank (ML & Python Proficiencies), Udemy (Advanced Angular, Full-Stack JavaScript Specializations), AWS Certified Developer.</p>
+                        <div class="links">
+                            <a href="https://github.com/MadScie254" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                            <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="mailto:dmwanjal254@gmail.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Khadia Khalid -->
+                    <div class="content-card founder-card text-center reveal" style="transition-delay: 0.2s;">
+                        <img src="assets/khadia-khalid.jpg" alt="Khadia Khalid" class="mx-auto">
+                        <h3 class="text-2xl font-semibold mb-1">Khadia Khalid 👩‍💼</h3>
+                        <p class="text-accent font-medium mb-2">Digital Strategy & Business Systems Partner</p>
+                        <p class="text-sm text-secondary mb-4">
+                            Khadia is a visionary strategic thinker with an innate passion for meticulously transforming conceptual ideas into tangible, actionable systems. Her profound expertise is centered on research-driven business strategy, compelling digital storytelling, and precise product lifecycle mapping. Within the DanJa partnership, she dedicates her focus to empowering clients by aligning their ambitious digital goals with structured, efficient delivery—masterfully balancing innovative design, crystal-clear communication, and consistently measurable outcomes. She champions clarity and purpose in every project.
+                        </p>
+                         <p class="text-sm text-secondary mb-3">Possessing a keen eye for detail and a rich background in operations and strategic communication, Khadia excels in guiding projects from their abstract ideation phase to concrete, executable realities. She is the unwavering voice behind the user-first mindset that permeates all our work, ensuring every product and solution we deliver speaks with utmost clarity and precision to its intended audience, fostering engagement and driving adoption.</p>
+
+                        <div class="quote">
+                            <p>"If a solution isn't crystal clear and strategically sound, it simply won't endure. My core mission is to maintain that clarity, drive momentum, and ensure every initiative moves forward with purpose and impact."</p>
+                            <cite>— Khadia</cite>
+                        </div>
+                        <p class="text-sm text-secondary mb-1"><strong>Focus Areas:</strong></p>
+                        <ul class="text-xs text-secondary list-disc list-inside text-left inline-block mb-3">
+                            <li>UI/UX Direction & User Empathy</li>
+                            <li>In-depth Market & Client Research</li>
+                            <li>Agile Product Development Frameworks</li>
+                            <li>Comprehensive Systems Documentation</li>
+                            <li>SME and NGO Digital Onboarding Strategy</li>
+                            <li>Strategic Communications & Brand Messaging</li>
+                        </ul>
+                        <div class="links">
+                            <a href="#" target="_blank" rel="noopener" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                            <a href="https://linkedin.com/in/khadia-khalid" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="mailto:khadia.khalid@example.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Austin Arnold Wopata -->
+                    <div class="content-card founder-card text-center reveal" style="transition-delay: 0.3s;">
+                        <img src="assets/austin-arnold-wopata.jpg" alt="Austin Arnold Wopata" class="mx-auto">
+                        <h3 class="text-2xl font-semibold mb-1">Austin Arnold Wopata 🛡️</h3>
+                        <p class="text-accent font-medium mb-2">Cybersecurity Expert / Network Architect</p>
+                        <p class="text-sm text-secondary mb-4">
+                            Austin is a stalwart in the realm of digital defense, possessing an encyclopedic knowledge of cybersecurity protocols, network infrastructures, and ethical hacking methodologies. With a keen eye for vulnerabilities and a strategic mind for resilient architectures, Austin is instrumental in fortifying our clients' digital assets against an ever-evolving threat landscape. His expertise ensures that every solution we deploy is not only efficient and innovative but also inherently secure and compliant with the most stringent industry standards. He champions a proactive approach to security, embedding defense mechanisms from the ground up rather than as an afterthought.
+                        </p>
+                        <p class="text-sm text-secondary mb-3">Possessing an advanced understanding of complex network topologies and an unparalleled ability to dissect and secure digital pathways, Austin's contributions are pivotal in maintaining the integrity and confidentiality of sensitive data. He is adept at implementing robust security frameworks, conducting thorough penetration testing, and developing comprehensive disaster recovery plans, offering our clients peace of mind in a perpetually vulnerable digital world. His dedication to safeguarding digital frontiers is unmatched, making him an invaluable asset to our team and a trusted guardian of your digital future.</p>
+
+                        <div class="quote">
+                            <p>"In the digital age, security isn't a feature; it's the foundation. My mission is to build impregnable fortresses around your innovations, ensuring your vision thrives in an uncompromised digital environment."</p>
+                            <cite>— Austin</cite>
+                        </div>
+                        <p class="text-sm text-secondary mb-1"><strong>Key Proficiencies:</strong></p>
+                        <ul class="text-xs text-secondary list-disc list-inside text-left inline-block mb-3">
+                            <li>Network Security Architecture & Implementation</li>
+                            <li>Vulnerability Assessment & Penetration Testing (VAPT)</li>
+                            <li>Incident Response & Digital Forensics</li>
+                            <li>Cloud Security (AWS, Azure, GCP)</li>
+                            <li>Compliance & Governance (GDPR, HIPAA, ISO 27001)</li>
+                            <li>Firewall & Intrusion Detection Systems</li>
+                        </ul>
+                        <div class="links">
+                            <a href="#" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                            <a href="#" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            <a href="mailto:austin.wopata@example.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Values Section -->
+        <section id="our-values" class="bg-accent py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Values That Guide Our Journey</h2>
+                    <p class="text-lg text-secondary max-w-4xl mx-auto">
+                        Our ethos is built upon a bedrock of fundamental values that shape every decision, interaction, and innovation at D-K Solutions. These principles are not merely words, but the living essence of our collective spirit, ensuring that our work not only excels technically but also resonates with integrity and purpose.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="content-card text-center reveal" style="transition-delay: 0.1s;">
+                        <i class="fas fa-lightbulb fa-3x text-accent mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Innovation & Foresight</h3>
+                        <p class="text-text-secondary">
+                            We are relentless in our pursuit of the next big idea, constantly exploring emerging technologies and methodologies to deliver solutions that are not just contemporary, but future-proof. Our foresight ensures our clients are always a step ahead.
+                        </p>
+                    </div>
+                    <div class="content-card text-center reveal" style="transition-delay: 0.2s;">
+                        <i class="fas fa-handshake fa-3x text-accent mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Integrity & Transparency</h3>
+                        <p class="text-text-secondary">
+                            Honesty and openness form the cornerstone of our partnerships. We believe in clear communication, ethical practices, and building trust through every interaction, ensuring a relationship built on mutual respect.
+                        </p>
+                    </div>
+                    <div class="content-card text-center reveal" style="transition-delay: 0.3s;">
+                        <i class="fas fa-users fa-3x text-accent mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Collaboration & Empathy</h3>
+                        <p class="text-text-secondary">
+                            We immerse ourselves in our clients' worlds, understanding their challenges as our own. Our collaborative spirit fosters synergy, turning shared goals into remarkable achievements through collective ingenuity.
+                        </p>
+                    </div>
+                    <div class="content-card text-center reveal" style="transition-delay: 0.4s;">
+                        <i class="fas fa-cogs fa-3x text-accent mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Excellence & Precision</h3>
+                        <p class="text-text-secondary">
+                            Our commitment to unparalleled quality is unwavering. We meticulously craft every solution with precision, attention to detail, and a dedication to delivering outcomes that not only meet but exceed expectations.
+                        </p>
+                    </div>
+                    <div class="content-card text-center reveal" style="transition-delay: 0.5s;">
+                        <i class="fas fa-seedling fa-3x text-accent mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Growth & Adaptability</h3>
+                        <p class="text-text-secondary">
+                            The digital landscape is ever-evolving, and so are we. We embrace change as an opportunity for growth, constantly adapting our skills and strategies to navigate new frontiers and empower our clients to thrive.
+                        </p>
+                    </div>
+                    <div class="content-card text-center reveal" style="transition-delay: 0.6s;">
+                        <i class="fas fa-heart fa-3x text-accent mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Impact & Purpose</h3>
+                        <p class="text-text-secondary">
+                            Beyond profitability, we are driven by a desire to create meaningful impact. Our work is imbued with a sense of purpose, contributing positively to businesses and communities through transformative digital solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action / Join Our Journey -->
+        <section class="bg-primary py-20 text-center">
+            <div class="container mx-auto px-6 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Ready to Co-Create the Future?</h2>
+                <p class="text-lg text-secondary max-w-3xl mx-auto mb-8">
+                    Whether you're looking to revolutionize your digital presence, optimize complex operations, or embark on a new technological frontier, our team is poised to transform your ambitions into reality. Connect with us to begin a partnership defined by innovation, expertise, and unparalleled dedication.
+                </p>
+                <a href="contact.html" class="cta-button text-lg">Let's Build Together <i class="fas fa-rocket ml-2"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-accent py-10">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 gradient-text">D-K Solutions</h3>
+                    <p class="text-text-secondary">Intelligent Digital Solutions, Advanced Analytics & Research.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html" class="text-text-secondary hover:text-text-accent transition-colors">Home</a></li>
+                        <li><a href="who_we_are.html" class="text-text-secondary hover:text-text-accent transition-colors">Who We Are</a></li>
+                        <li><a href="services.html" class="text-text-secondary hover:text-text-accent transition-colors">Services</a></li>
+                        <li><a href="portfolio.html" class="text-text-secondary hover:text-text-accent transition-colors">Portfolio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Insights</h4>
+                    <ul>
+                        <li><a href="testimonials.html" class="text-text-secondary hover:text-text-accent transition-colors">Testimonials</a></li>
+                        <li><a href="publications.html" class="text-text-secondary hover:text-text-accent transition-colors">Publications</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                    <p class="text-text-secondary mb-2">Email: info@dksolutions.com</p>
+                    <p class="text-text-secondary mb-4">Phone: +1 (555) 123-4567</p>
+                    <div class="footer-social-links">
+                        <a href="#" target="_blank" rel="noopener" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="#" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-border-color mt-8 pt-8 text-center">
+                <p class="text-text-secondary">&copy; 2024 D-K Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Sticky Header & Dark Mode Toggle (re-used from index.html)
+        const header = document.getElementById('main-header');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeToggleMobile = document.getElementById('darkModeToggleMobile');
+        const body = document.body;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        const setDarkMode = (isDark) => {
+            if (isDark) {
+                body.classList.add('dark-mode');
+                body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.add('light-mode');
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        };
+
+        darkModeToggle.addEventListener('change', (e) => {
+            setDarkMode(e.target.checked);
+            darkModeToggleMobile.checked = e.target.checked;
+        });
+
+        darkModeToggleMobile.addEventListener('change', (e) => {
+            setDarkMode(e.target.checked);
+            darkModeToggle.checked = e.target.checked;
+        });
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            setDarkMode(true);
+            darkModeToggle.checked = true;
+            darkModeToggleMobile.checked = true;
+        } else {
+            setDarkMode(false);
+            darkModeToggle.checked = false;
+            darkModeToggleMobile.checked = false;
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Reveal Animation on Scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // Hero content animation
+        const heroContent = document.getElementById('hero-content-who-we-are');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                heroContent.classList.remove('opacity-0', 'translate-y-10');
+            }, 700); // Delay slightly to allow loading overlay to fade
+        });
+
+        // Loading Overlay Logic (re-used from index.html, simplified for this page)
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const progressText = document.getElementById('progressText');
+        const tipDisplay = document.getElementById('tipDisplay');
+        const lottieContainer = document.getElementById('lottie-container');
+
+        const tips = [
+            "Optimizing digital pathways for peak performance...",
+            "Sculpting data into actionable intelligence...",
+            "Fortifying cyber frontiers with advanced defenses...",
+            "Crafting bespoke digital experiences...",
+            "Transforming challenges into triumphs, one solution at a time...",
+            "Innovating for a smarter, more connected future..."
+        ];
+
+        let currentTipIndex = 0;
+        let tipInterval;
+
+        const displayNextTip = () => {
+            tipDisplay.style.opacity = 0;
+            setTimeout(() => {
+                tipDisplay.textContent = tips[currentTipIndex];
+                tipDisplay.style.opacity = 1;
+                currentTipIndex = (currentTipIndex + 1) % tips.length;
+            }, 500); // Wait for fade out
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lottieAnimation = lottie.loadAnimation({
+                container: lottieContainer,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'assets/loading-animation.json' // Make sure this path is correct
+            });
+
+            // Simulate loading progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                progressBarFill.style.width = progress + '%';
+                progressText.textContent = `Loading resources... ${Math.floor(progress)}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingOverlay.classList.add('hidden');
+                        clearInterval(tipInterval);
+                    }, 500); // Allow progress bar to finish animation
+                }
+            }, 150);
+
+            // Start displaying tips
+            displayNextTip();
+            tipInterval = setInterval(displayNextTip, 4000); // Change tip every 4 seconds
+        });
+    </script>
+</body>
+</html>
