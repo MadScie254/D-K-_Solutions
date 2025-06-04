@@ -22,6 +22,8 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- tsParticles CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
 
     <style>
         /* --- Theme Variables --- */
@@ -766,6 +768,82 @@
             .stat-number { font-size: 2.5rem; }
             .stat-label { font-size: 0.9rem; }
         }
+
+        /* Glassmorphism utility */
+        .glassmorphic {
+            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Hero Specific for who_we_are.html */
+        #hero {
+            min-height: 90vh;
+            padding-top: 100px; /* Adjust based on header height */
+        }
+        #hero #tsparticles-hero {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.8; /* Adjust opacity of particles */
+        }
+        #hero-content-who-we-are {
+            box-shadow: 0 12px 35px var(--shadow-color), inset 0 0 1.5px rgba(255,255,255,0.3); /* Enhanced shadow and inner gleam */
+        }
+        .dark-mode #hero-content-who-we-are {
+            box-shadow: 0 12px 35px var(--shadow-color), inset 0 0 1.5px rgba(255,255,255,0.1);
+        }
+
+        /* Our Journey & Milestones (Timeline) Section */
+        .wrap {
+            margin-top: 50px;
+        }
+        .wrap .border-2-2 {
+            border-right-width: 2px; /* Thicker line for timeline */
+        }
+        .left-timeline .reveal,
+        .right-timeline .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .left-timeline .reveal.active,
+        .right-timeline .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .left-timeline {
+            padding-right: 50%; /* Adjust for center line */
+        }
+        .right-timeline {
+            padding-left: 50%; /* Adjust for center line */
+        }
+        .left-timeline .z-20 {
+            transform: translateX(50%);
+        }
+        .right-timeline .z-20 {
+            transform: translateX(-50%);
+        }
+        @media (max-width: 768px) {
+            .wrap .border-2-2 {
+                left: 20px !important; /* Move line to left on mobile */
+            }
+            .left-timeline, .right-timeline {
+                padding-left: 60px; /* Adjust for mobile timeline */
+                padding-right: 0;
+            }
+            .left-timeline .z-20,
+            .right-timeline .z-20 {
+                transform: translateX(0) !important; /* Reset transform for mobile */
+                left: 0;
+                margin-left: -20px; /* Position icon on the line */
+            }
+            .left-timeline .order-1, .right-timeline .order-1 {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body class="light-mode">
@@ -830,23 +908,30 @@
 
     <main>
         <!-- Hero Section for About Us -->
-        <section class="relative h-screen flex items-center justify-center text-center overflow-hidden">
-            <!-- Aurora Background -->
-            <div id="hero-aurora-container">
-                <div class="aurora-blur aurora-blob-1"></div>
-                <div class="aurora-blur aurora-blob-2"></div>
-                <div class="aurora-blur aurora-blob-3"></div>
-            </div>
-            <div class="absolute inset-0 bg-hero-overlay-bg z-0"></div>
+        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden p-6 md:p-10">
+            <!-- tsParticles container -->
+            <div id="tsparticles-hero" class="absolute inset-0 z-0"></div>
 
-            <div class="relative z-10 p-6 max-w-4xl mx-auto backdrop-filter backdrop-blur-lg bg-glass-bg rounded-xl shadow-lg border border-glass-border transform transition-all duration-700 ease-out opacity-0 translate-y-10" id="hero-content-who-we-are">
-                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 gradient-text leading-tight">
+            <div class="relative z-10 p-6 md:p-8 lg:p-10 max-w-5xl mx-auto glassmorphic transform transition-all duration-700 ease-out opacity-0 translate-y-10" id="hero-content-who-we-are">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight gradient-text">
                     Unveiling the Architects of Digital Innovation
                 </h1>
-                <p class="text-lg md:text-xl text-text-secondary mb-8">
+                <p class="text-lg md:text-xl text-text-secondary mb-6 leading-relaxed">
                     At D-K Solutions, we are more than just a team; we are a collective of passionate innovators, strategic thinkers, and technical virtuosos, united by a singular vision: to craft intelligent digital solutions that propel businesses into tomorrow. Discover the brilliant minds and diverse expertise that form the bedrock of our commitment to excellence.
                 </p>
-                <a href="#our-story" class="cta-button text-lg">Journey With Us <i class="fas fa-chevron-down ml-2"></i></a>
+                <div class="mb-8 text-text-primary text-base md:text-lg">
+                    <p class="font-semibold mb-2">Our Core Strengths Include:</p>
+                    <ul class="list-disc list-inside space-y-1 max-w-md mx-auto">
+                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Cutting-edge Machine Learning & AI</li>
+                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Robust Full-Stack Development</li>
+                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Data-Driven Strategic Consulting</li>
+                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Intuitive UI/UX Design</li>
+                    </ul>
+                </div>
+                <a href="#our-story" class="cta-button text-lg group">
+                    Journey With Us 
+                    <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                </a>
             </div>
         </section>
 
@@ -986,8 +1071,106 @@
             </div>
         </section>
 
+        <!-- Our Journey & Milestones Section -->
+        <section id="our-journey" class="bg-accent py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Our Journey: A Timeline of Growth & Innovation</h2>
+                    <p class="text-lg text-secondary max-w-4xl mx-auto">
+                        From humble beginnings to pioneering new digital frontiers, our path has been marked by continuous learning, relentless innovation, and a steadfast commitment to our clients' success. Explore the key milestones that define D-K Solutions.
+                    </p>
+                </div>
+                <div class="relative wrap overflow-hidden h-full">
+                    <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+                    <!-- Timeline Item: Founding -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2018</h1>
+                        </div>
+                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
+                            <h3 class="mb-3 font-bold text-xl text-primary">The Genesis: A Vision Takes Root</h3>
+                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
+                                D-K Solutions is founded by Daniel Wanjala and Khadija Khalid, driven by a shared passion to transform complex digital challenges into elegant, impactful solutions. Initial focus on custom web development and data analytics for local businesses.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item: First Major Project -->
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2019</h1>
+                        </div>
+                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
+                            <h3 class="mb-3 font-bold text-xl text-primary">First Flagship Project Launch</h3>
+                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
+                                Successfully delivered our first major integrated digital platform for a growing e-commerce client, showcasing our full-stack capabilities and strategic approach to online presence.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item: AI/ML Integration -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2021</h1>
+                        </div>
+                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
+                            <h3 class="mb-3 font-bold text-xl text-primary">Pioneering AI & Machine Learning</h3>
+                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
+                                Expanded our service offerings to include advanced Machine Learning and AI solutions, with the successful deployment of predictive analytics models for supply chain optimization.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item: Team Expansion (Austin) -->
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2022</h1>
+                        </div>
+                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
+                            <h3 class="mb-3 font-bold text-xl text-primary">Strengthening Our Core: Cybersecurity Expertise</h3>
+                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
+                                Welcomed Austin Arnold Wopata, a seasoned Cybersecurity Expert, to the team, bolstering our capabilities in digital defense, network architecture, and robust security protocols.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item: Innovation Hub -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2023</h1>
+                        </div>
+                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
+                            <h3 class="mb-3 font-bold text-xl text-primary">Strategic Partnerships & Research Contributions</h3>
+                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
+                                Established key partnerships with academic institutions and industry leaders, leading to collaborative research and publications in emerging tech domains, solidifying our thought leadership.
+                            </p>
+                        </div>
+                    </div>
+
+                     <!-- Timeline Item: Global Reach -->
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
+                            <h1 class="mx-auto text-white font-semibold text-lg">2024</h1>
+                        </div>
+                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
+                            <h3 class="mb-3 font-bold text-xl text-primary">Expanding Horizons: Global Client Engagements</h3>
+                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
+                                Successfully expanded our client base beyond national borders, taking on international projects and demonstrating our adaptability and universal applicability of our digital solutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Our Values Section -->
-        <section id="our-values" class="bg-accent py-20">
+        <section id="our-values" class="bg-primary py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 reveal">
                     <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Values That Guide Our Journey</h2>
@@ -1130,6 +1313,8 @@
                 body.classList.remove('dark-mode');
                 localStorage.setItem('theme', 'light');
             }
+            // Re-initialize tsParticles on theme change to update colors
+            initTsParticles();
         };
 
         darkModeToggle.addEventListener('change', (e) => {
@@ -1178,7 +1363,11 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
+                    // Optional: unobserve after reveal to save resources
+                    // observer.unobserve(entry.target); 
+                } else {
+                    // Optional: remove active class if not intersecting to allow re-reveal
+                    // entry.target.classList.remove('active'); 
                 }
             });
         }, observerOptions);
@@ -1252,7 +1441,93 @@
             // Start displaying tips
             displayNextTip();
             tipInterval = setInterval(displayNextTip, 4000); // Change tip every 4 seconds
+
+            // Initialize tsParticles on DOMContentLoaded
+            initTsParticles();
         });
+
+        // tsParticles initialization function
+        function initTsParticles() {
+            const particlesContainer = document.getElementById('tsparticles-hero');
+            if (!particlesContainer || !tsParticles) {
+                console.warn("tsParticles container or library not found. Skipping particles initialization.");
+                return;
+            }
+
+            const isDarkMode = body.classList.contains('dark-mode');
+            const particleColor = isDarkMode ? "#38bdf8" : "#0ea5e9"; // text-accent color
+            const linkColor = isDarkMode ? "#14b8a6" : "#0d9488"; // gradient-mid color
+
+            tsParticles.load("tsparticles-hero", {
+                fpsLimit: 60,
+                interactivity: {
+                    events: {
+                        onHover: {
+                            enable: true,
+                            mode: "grab",
+                        },
+                        onClick: {
+                            enable: true,
+                            mode: "push",
+                        },
+                        resize: true,
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            links: {
+                                opacity: 1,
+                            },
+                        },
+                        push: {
+                            quantity: 4,
+                        },
+                    },
+                },
+                particles: {
+                    color: {
+                        value: particleColor,
+                    },
+                    links: {
+                        color: linkColor,
+                        distance: 150,
+                        enable: true,
+                        opacity: 0.5,
+                        width: 1,
+                    },
+                    collisions: {
+                        enable: true,
+                    },
+                    move: {
+                        direction: "none",
+                        enable: true,
+                        outModes: {
+                            default: "bounce",
+                        },
+                        random: false,
+                        speed: 1,
+                        straight: false,
+                    },
+                    number: {
+                        density: {
+                            enable: true,
+                            area: 800,
+                        },
+                        value: 80,
+                    },
+                    opacity: {
+                        value: 0.5,
+                    },
+                    shape: {
+                        type: "circle",
+                    },
+                    size: {
+                        value: { min: 1, max: 5 },
+                    },
+                },
+                detectRetina: true,
+            });
+        }
     </script>
 </body>
 </html>
