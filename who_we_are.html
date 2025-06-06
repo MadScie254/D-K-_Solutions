@@ -48,7 +48,6 @@
             --hero-overlay-bg: rgba(248, 250, 252, 0.6);
             --slider-nav-bg: rgba(255, 255, 255, 0.5);
             --slider-nav-text: #1f2937;
-            --slider-nav-hover-bg: rgba(255, 255, 255, 0.8);
             --loader-bg: var(--bg-primary);
             --loader-color: var(--text-accent);
             --loader-logo-filter: none;
@@ -848,22 +847,7 @@
 </head>
 <body class="light-mode">
     <!-- Loading Overlay -->
-    <div id="loading-overlay">
-        <div class="loader-content">
-            <h1 class="loader-logo-text">DK</h1>
-            <div id="lottie-container" style="width: 150px; height: 150px;"></div>
-            <div class="loading-progress">
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="progressBarFill"></div>
-                </div>
-                <p class="progress-text" id="progressText">Loading resources...</p>
-            </div>
-            <p class="loader-text mb-4">Crafting digital masterpieces...</p>
-            <div class="loading-tips">
-                <p id="tipDisplay" class="tip-text"></p>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Main Header -->
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-10 transition-all duration-300">
@@ -1382,68 +1366,6 @@
             setTimeout(() => {
                 heroContent.classList.remove('opacity-0', 'translate-y-10');
             }, 700); // Delay slightly to allow loading overlay to fade
-        });
-
-        // Loading Overlay Logic (re-used from index.html, simplified for this page)
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const progressBarFill = document.getElementById('progressBarFill');
-        const progressText = document.getElementById('progressText');
-        const tipDisplay = document.getElementById('tipDisplay');
-        const lottieContainer = document.getElementById('lottie-container');
-
-        const tips = [
-            "Optimizing digital pathways for peak performance...",
-            "Sculpting data into actionable intelligence...",
-            "Fortifying cyber frontiers with advanced defenses...",
-            "Crafting bespoke digital experiences...",
-            "Transforming challenges into triumphs, one solution at a time...",
-            "Innovating for a smarter, more connected future..."
-        ];
-
-        let currentTipIndex = 0;
-        let tipInterval;
-
-        const displayNextTip = () => {
-            tipDisplay.style.opacity = 0;
-            setTimeout(() => {
-                tipDisplay.textContent = tips[currentTipIndex];
-                tipDisplay.style.opacity = 1;
-                currentTipIndex = (currentTipIndex + 1) % tips.length;
-            }, 500); // Wait for fade out
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const lottieAnimation = lottie.loadAnimation({
-                container: lottieContainer,
-                renderer: 'svg',
-                loop: true,
-                autoplay: true,
-                path: 'assets/loading-animation.json' // Make sure this path is correct
-            });
-
-            // Simulate loading progress
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress > 100) progress = 100;
-                progressBarFill.style.width = progress + '%';
-                progressText.textContent = `Loading resources... ${Math.floor(progress)}%`;
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        loadingOverlay.classList.add('hidden');
-                        clearInterval(tipInterval);
-                    }, 500); // Allow progress bar to finish animation
-                }
-            }, 150);
-
-            // Start displaying tips
-            displayNextTip();
-            tipInterval = setInterval(displayNextTip, 4000); // Change tip every 4 seconds
-
-            // Initialize tsParticles on DOMContentLoaded
-            initTsParticles();
         });
 
         // tsParticles initialization function
