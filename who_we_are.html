@@ -847,7 +847,22 @@
 </head>
 <body class="light-mode">
     <!-- Loading Overlay -->
-    
+    <div id="loading-overlay">
+        <div class="loader-content">
+            <div class="loader-logo-text">D&K</div>
+            <div id="lottie-container" style="width: 150px; height: 150px;"></div>
+            <div class="loading-progress">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill"></div>
+                </div>
+                <div class="progress-text">Loading <span class="progress-percentage">0%</span></div>
+            </div>
+            <p class="loader-text">Crafting Digital Excellence...</p>
+            <div class="loading-tips">
+                <p class="tip-text"></p>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Header -->
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-10 transition-all duration-300">
@@ -1450,6 +1465,159 @@
                 detectRetina: true,
             });
         }
+
+        // Loading Overlay Logic
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const progressBarFill = document.querySelector('.progress-bar-fill');
+        const progressText = document.querySelector('.progress-text');
+        const tipTextElement = document.querySelector('.tip-text');
+        const lottieContainer = document.getElementById('lottie-container');
+        let animation;
+
+        const tips = [
+            "Optimizing visual assets...",
+            "Pre-loading interactive elements...",
+            "Synchronizing data streams...",
+            "Brewing fresh ideas for you...",
+            "Almost there! Thanks for your patience."
+        ];
+        let currentTipIndex = 0;
+
+        function updateLoadingProgress(progress) {
+            progressBarFill.style.width = `${progress}%`;
+            progressText.textContent = `${Math.round(progress)}% Loaded`;
+        }
+
+        function showRandomTip() {
+            tipTextElement.style.opacity = 0;
+            setTimeout(() => {
+                currentTipIndex = (currentTipIndex + 1) % tips.length;
+                tipTextElement.textContent = tips[currentTipIndex];
+                tipTextElement.style.opacity = 1;
+            }, 500);
+        }
+
+        // Simulate loading progress
+        let currentProgress = 0;
+        const interval = setInterval(() => {
+            currentProgress += Math.random() * 10; // Increment by a random small amount
+            if (currentProgress > 90) {
+                currentProgress = 90; // Cap at 90% to wait for actual load
+                clearInterval(interval);
+            }
+            updateLoadingProgress(currentProgress);
+        }, 200);
+
+        // Initialize Lottie animation
+        if (lottieContainer && lottie) {
+            animation = lottie.loadAnimation({
+                container: lottieContainer,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'assets/lottie/loading-animation.json' // Path to your Lottie animation JSON
+            });
+        }
+
+        // Hide overlay when everything is loaded
+        window.addEventListener('load', () => {
+            clearInterval(interval); // Stop simulated progress
+            updateLoadingProgress(100); // Set to 100%
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                if (animation) {
+                    animation.destroy();
+                }
+                initTsParticles(); // Initialize tsParticles after loading screen is hidden
+            }, 500); // Small delay to show 100% and then fade out
+        });
+
+        // Show tips every few seconds
+        setInterval(showRandomTip, 3000);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const header = document.getElementById('main-header');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const lottieContainer = document.getElementById('lottie-container');
+            const progressFill = document.querySelector('.progress-bar-fill');
+            const progressTextElement = document.querySelector('.progress-percentage');
+            const tipTextElement = document.querySelector('.tip-text');
+
+            // --- 1. Preloader Logic ---
+            function initPreloader() {
+                if (!loadingOverlay || !lottieContainer || !progressFill || !progressTextElement || !tipTextElement) {
+                    console.warn("Preloader elements not found.");
+                    if (loadingOverlay) loadingOverlay.classList.add('hidden');
+                    return;
+                }
+
+                // Lottie animation
+                try {
+                    lottie.loadAnimation({
+                        container: lottieContainer,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: 'https://assets2.lottiefiles.com/packages/lf20_qmfs6c3i.json'
+                    });
+                } catch (e) {
+                    console.error("Lottie animation failed to load:", e);
+                }
+                
+                // Progress bar and percentage
+                let percent = 0;
+                const progressInterval = setInterval(() => {
+                    percent += Math.floor(Math.random() * 5) + 1;
+                    if (percent > 100) percent = 100;
+                    progressFill.style.width = percent + '%';
+                    progressTextElement.textContent = percent + '%';
+                    if (percent === 100) {
+                        clearInterval(progressInterval);
+                    }
+                }, 80);
+
+                // Rotating tips
+                const tips = [
+                    "Building with passion and precision.",
+                    "Transforming ideas into digital realities.",
+                    "Your success is our priority.",
+                    "Innovation at the core of what we do.",
+                    "Scalable solutions for a growing world."
+                ];
+                let tipIndex = 0;
+                function showNextTip() {
+                    tipTextElement.style.opacity = 0;
+                    setTimeout(() => {
+                        tipTextElement.textContent = tips[tipIndex];
+                        tipTextElement.style.opacity = 1;
+                        tipIndex = (tipIndex + 1) % tips.length;
+                    }, 500);
+                }
+                showNextTip();
+                setInterval(showNextTip, 4000);
+
+                // Hide preloader
+                window.addEventListener('load', () => {
+                    const minDisplayTime = 2000;
+                    const startTime = Date.now();
+                    function attemptHidePreloader() {
+                        const elapsedTime = Date.now() - startTime;
+                        if (percent >= 100 && elapsedTime >= minDisplayTime) {
+                            loadingOverlay.classList.add('hidden');
+                        } else {
+                            setTimeout(attemptHidePreloader, 200);
+                        }
+                    }
+                    attemptHidePreloader();
+                });
+            }
+
+            // Call preloader init
+            initPreloader();
+            initTsParticles();
+        
+        });
     </script>
 </body>
 </html>
