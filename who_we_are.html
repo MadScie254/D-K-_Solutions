@@ -6,94 +6,57 @@
     <title>Danco & Khadija - Who We Are: Discover Our Team</title>
     <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
-    <!-- Core Libraries -->
+    <!-- Core & Animation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/npm/three@0.128.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- tsParticles CDN -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    
+    <!-- GSAP for Advanced Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 
     <style>
-        /* --- Theme Variables --- */
+        /* --- Theme Variables (same as original) --- */
         :root {
-            /* Light Theme (Default) */
-            --bg-primary: #f3f4f6; /* Tailwind gray-100 */
-            --bg-secondary: #ffffff; /* White */
-            --bg-accent: #e5e7eb; /* Tailwind gray-200 */
-            --text-primary: #1f2937; /* Tailwind gray-800 */
-            --text-secondary: #4b5563; /* Tailwind gray-600 */
-            --text-accent: #0ea5e9; /* Sky-500 */
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-accent: #e5e7eb;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-accent: #0ea5e9;
             --border-color: rgba(0, 0, 0, 0.1);
-            --gradient-start: #1e40af; /* Blue-800 */
-            --gradient-mid: #0d9488;   /* Teal-600 */
-            --gradient-end: #047857;   /* Emerald-700 */
-            --gradient-start-rgb: 30, 64, 175;
-            --gradient-mid-rgb: 13, 148, 136;
-            --gradient-end-rgb: 4, 120, 87;
+            --gradient-start: #1e40af;
+            --gradient-mid: #0d9488;
+            --gradient-end: #047857;
             --glass-bg: rgba(255, 255, 255, 0.5);
             --glass-border: rgba(255, 255, 255, 0.3);
             --shadow-color: rgba(14, 165, 233, 0.15);
-            --hero-overlay-bg: rgba(248, 250, 252, 0.6);
-            --slider-nav-bg: rgba(255, 255, 255, 0.5);
-            --slider-nav-text: #1f2937;
-            --loader-bg: var(--bg-primary);
-            --loader-color: var(--text-accent);
-            --loader-logo-filter: none;
-            --input-bg: #ffffff;
-            --input-text: var(--text-primary);
-            --input-border: #d1d5db;
-            --input-focus-ring: var(--text-accent);
-            --label-text: var(--text-primary);
-            --skill-icon-bg: #e0f2fe; /* Light Sky for icon background */
-            --skill-icon-text: var(--text-accent);
-            --publication-card-bg: var(--bg-secondary);
         }
 
         .dark-mode {
-            /* Dark Theme */
-            --bg-primary: #0a0a23; 
-            --bg-secondary: #111827; /* Tailwind gray-900 */
-            --bg-accent: #1f2937; /* Tailwind gray-800 */
-            --text-primary: #e0e0ff; 
-            --text-secondary: #9ca3af; /* Tailwind gray-400 */
-            --text-accent: #38bdf8; /* Sky-400 */
+            --bg-primary: #0a0a23;
+            --bg-secondary: #111827;
+            --bg-accent: #1f2937;
+            --text-primary: #e0e0ff;
+            --text-secondary: #9ca3af;
+            --text-accent: #38bdf8;
             --border-color: rgba(255, 255, 255, 0.1);
-            --gradient-start: #2563eb; 
-            --gradient-mid: #14b8a6;   
-            --gradient-end: #059669;   
-            --gradient-start-rgb: 37, 99, 235;
-            --gradient-mid-rgb: 20, 184, 166;
-            --gradient-end-rgb: 5, 150, 105;
+            --gradient-start: #2563eb;
+            --gradient-mid: #14b8a6;
+            --gradient-end: #059669;
             --glass-bg: rgba(31, 41, 55, 0.4);
             --glass-border: rgba(255, 255, 255, 0.15);
             --shadow-color: rgba(56, 189, 248, 0.25);
-            --hero-overlay-bg: rgba(17, 24, 39, 0.5);
-            --slider-nav-bg: rgba(31, 41, 55, 0.5);
-            --slider-nav-text: #e0e0ff;
-            --slider-nav-hover-bg: rgba(31, 41, 55, 0.8);
-            --loader-bg: var(--bg-primary);
-            --loader-color: var(--text-accent);
-            --loader-logo-filter: brightness(0) invert(1);
-            --input-bg: #1f2937;
-            --input-text: var(--text-primary);
-            --input-border: #4b5563;
-            --input-focus-ring: var(--text-accent);
-            --label-text: var(--text-primary);
-            --skill-icon-bg: #0c4a6e; /* Dark Sky for icon background */
-            --skill-icon-text: #bae6fd; /* Light Sky text for icons */
-            --publication-card-bg: var(--bg-accent);
         }
 
         /* --- Base Styles --- */
@@ -105,1063 +68,602 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        body::before { 
-            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background:
-                radial-gradient(ellipse at top left, color-mix(in srgb, var(--gradient-start) 10%, transparent) 0%, transparent 40%),
-                radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--gradient-mid) 10%, transparent) 0%, transparent 40%);
-            opacity: 0.2; z-index: -2; pointer-events: none; transition: background 0.3s ease;
-        }
-
         .gradient-text {
             background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            -webkit-background-clip: text; background-clip: text; color: transparent; transition: background 0.3s ease;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
 
         html { scroll-behavior: smooth; }
-
-        /* --- Loading Overlay --- */
-        #loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--loader-bg), color-mix(in srgb, var(--loader-bg) 80%, black));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 1;
-            transition: opacity 0.7s ease-out, visibility 0.7s;
-            visibility: visible;
-        }
-
-        #loading-overlay.hidden {
+        
+        /* --- General Reveal Animation Setup (to be controlled by GSAP) --- */
+        .reveal-up, .reveal-left, .reveal-right {
             opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            visibility: hidden; /* Hide from screen readers until animated */
         }
         
-        .loader-content {
-            text-align: center;
-            position: relative;
-            transform: scale(0.9);
-            opacity: 0;
-            animation: loadIn 0.5s 0.2s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        @keyframes loadIn {
-            to { transform: scale(1); opacity: 1;}
-        }
-
-        .loader-logo-text {
-            font-size: 3.5rem; /* Adjusted size */
-            font-weight: 800;
-            margin-bottom: 25px; /* Adjusted margin */
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            filter: var(--loader-logo-filter);
-            animation: logoPulse 2s infinite ease-in-out;
-        }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.9; }
-        }
-
-        #lottie-container { margin: 0 auto 20px; }
-
-        .loading-progress {
-            width: 220px; /* Adjusted width */
-            margin: 25px auto;
-        }
-
-        .progress-bar-bg { /* Renamed and styled background */
-            height: 6px; /* Adjusted height */
-            background-color: color-mix(in srgb, var(--text-accent) 20%, transparent);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar-fill { /* Renamed and styled fill */
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%; /* Starts at 0, controlled by JS */
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid));
-            border-radius: 3px;
-            transition: width 0.1s ease-out; /* Smooth transition for JS updates */
-        }
-        
-        .progress-text {
-            margin-top: 10px; /* Adjusted margin */
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        
-        .loader-text { /* Main loading text below spinner/progress */
-            margin-top: 20px;
-            color: var(--text-secondary);
-            font-size: 1rem; /* Adjusted size */
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .loading-tips {
-            margin-top: 25px; /* Adjusted margin */
-            min-height: 40px; /* Ensure space for tip text */
-        }
-
-        .tip-text {
-            font-size: 0.85rem; /* Adjusted size */
-            color: var(--text-secondary);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out; /* Smooth fade for tips */
-        }
-
         /* --- Navigation --- */
-        #main-header { 
+        #main-header {
+            background-color: var(--bg-secondary);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            background: var(--bg-accent);
-            color: var(--text-primary);
         }
         #main-header.scrolled {
-            background: var(--bg-accent);
+            background-color: var(--glass-bg);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        .dark-mode #main-header.scrolled {
-            background: var(--bg-accent);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
         .nav-link {
+            position: relative;
             color: var(--text-primary);
-            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            transition: color 0.3s ease;
             padding: 0.5rem 0.6rem;
             font-size: 0.9rem;
-            border-bottom: 2px solid transparent;
         }
-        .nav-link:hover { color: var(--text-accent); }
-        .nav-link.active { color: var(--text-accent); font-weight: 600; border-bottom-color: var(--text-accent); }
-        #mobile-menu { background-color: var(--bg-accent); border-top: 1px solid var(--border-color); }
-        .dark-mode #mobile-menu { background-color: var(--bg-accent); }
-        #mobile-menu a { color: var(--text-primary); display: block; padding: 0.75rem 1.5rem; }
-        #mobile-menu a:hover { background-color: var(--bg-primary); }
-        #mobile-menu a.active { color: var(--text-accent); font-weight: 600; background-color: var(--bg-primary); }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: var(--text-accent); font-weight: 600; }
+
+        #mobile-menu { background-color: var(--bg-accent); }
 
         /* --- Buttons --- */
-        .cta-button, .tally-button { 
+        .cta-button { 
             transition: all 0.3s ease; 
-            padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; display: inline-block; text-align: center;
-        }
-
-        .cta-button {
+            padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600;
             background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
             color: white;
             box-shadow: 0 4px 15px var(--shadow-color);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
         }
         .cta-button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 6px 20px var(--shadow-color);
         }
-        .cta-button::before {
-            content: '';
+        
+        /* --- Section Styling --- */
+        .section-header { margin-bottom: 3rem; text-align: center; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .section-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; margin-left: auto; margin-right: auto; }
+
+        @media (min-width: 768px) {
+            .section-header h2 { font-size: 3rem; }
+        }
+
+        /* --- Upgraded Founder Card --- */
+        .founder-card-container {
+            perspective: 1500px;
+        }
+        .founder-card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            background-color: transparent; /* Wrapper is transparent */
+        }
+        .founder-card .card-face {
             position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: 0.5s;
-            z-index: -1;
-            transform: skewX(-20deg);
-        }
-        .cta-button:hover::before { left: 100%; }
-
-        .tally-button {
-            background-color: var(--bg-accent);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-        .tally-button:hover {
-            background-color: color-mix(in srgb, var(--bg-accent) 80%, black);
-            color: var(--text-primary);
-            transform: translateY(-1px);
-        }
-
-        /* --- Section Styling --- */
-        section { padding: 80px 0; position: relative; z-index: 1; }
-        .bg-primary { background-color: var(--bg-primary); }
-        .bg-secondary { background-color: var(--bg-secondary); }
-        .bg-accent { background-color: var(--bg-accent); }
-        
-        .section-intro-button-container {
-            text-align: center;
-            margin-bottom: 2.5rem; /* mb-10 */
-        }
-        .know-more-button {
-            background-color: var(--bg-accent);
-            color: var(--text-primary);
-            padding: 0.6rem 1.25rem;
-            border-radius: 9999px; /* full rounded */
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            border: 1px solid var(--border-color);
-        }
-        .know-more-button:hover {
-            background-color: color-mix(in srgb, var(--bg-accent) 80%, black);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transform: translateY(-1px);
-        }
-
-        /* --- General Content Cards --- */
-        .content-card {
-            background-color: var(--bg-secondary);
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
             border-radius: 1rem;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px var(--shadow-color);
-            transition: all 0.3s ease;
             border: 1px solid var(--border-color);
-        }
-        .dark-mode .content-card {
             background-color: var(--bg-secondary);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07);
         }
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        .founder-card .card-front {
+            padding: 2.5rem;
+            z-index: 2;
+        }
+        .founder-card .card-back {
+            padding: 2.5rem;
+            transform: rotateY(180deg);
+            z-index: 1;
+            overflow-y: auto;
+        }
+        .founder-card.is-flipped {
+            transform: rotateY(180deg);
         }
 
-        /* --- Founder Card Specifics (Skills Showcase removed) --- */
         .founder-card img {
             width: 128px;
             height: 128px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.5rem auto;
             border: 4px solid var(--text-accent);
-            box-shadow: 0 0 0 8px rgba(var(--gradient-mid-rgb), 0.2);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 0 0 8px color-mix(in srgb, var(--text-accent) 20%, transparent);
+            transition: transform 0.3s ease;
         }
-        .founder-card .quote {
-            font-style: italic;
-            color: var(--text-secondary);
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-left: 4px solid var(--text-accent);
+        
+        .founder-card-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .expertise-toggle-btn {
             background-color: var(--bg-accent);
-            border-radius: 0.5rem;
-        }
-        .founder-card .links a { color: var(--text-accent); margin: 0 0.5rem; transition: color 0.3s ease; }
-        .founder-card .links a:hover { color: var(--gradient-end); }
-
-        /* --- Stats Section --- */
-        .stat-item {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-            background-color: var(--bg-secondary);
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px var(--shadow-color);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
-        }
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        .stat-label {
-            font-size: 1.1rem;
-            font-weight: 600;
             color: var(--text-primary);
-        }
-
-        /* --- Portfolio Swiper --- */
-        .swiper-container {
-            width: 100%;
-            padding-bottom: 3.5rem; /* Space for pagination */
-        }
-        .swiper-slide {
-            background-color: var(--bg-secondary);
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 20px var(--shadow-color);
-            position: relative;
-            border: 1px solid var(--border-color);
-        }
-        .swiper-slide img {
-            width: 100%;
-            height: 300px; /* Fixed height for consistency */
-            object-fit: cover;
-        }
-        .slide-content-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4), transparent);
-            color: white;
-            padding: 1.5rem;
-            padding-top: 3rem; /* More space at top for gradient */
-            transition: background 0.3s ease;
-        }
-        .swiper-slide:hover .slide-content-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
-        }
-        .slide-content-overlay h4 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .slide-content-overlay p {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 1rem;
-        }
-        .swiper-pagination-bullet {
-            background: var(--text-secondary) !important;
-            opacity: 0.6 !important;
-        }
-        .swiper-pagination-bullet-active {
-            background: var(--text-accent) !important;
-            opacity: 1 !important;
-        }
-        .swiper-button-next, .swiper-button-prev {
-            color: var(--text-primary) !important;
-            background-color: var(--slider-nav-bg) !important;
-            border-radius: 50%;
-            width: 40px !important;
-            height: 40px !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease;
-        }
-        .swiper-button-next:hover, .swiper-button-prev:hover {
-            background-color: var(--slider-nav-hover-bg) !important;
-        }
-        .swiper-button-next::after, .swiper-button-prev::after {
-            font-size: 1rem !important;
-            font-weight: 900;
-        }
-        .swiper-button-prev { left: 10px !important; }
-        .swiper-button-next { right: 10px !important; }
-
-        .github-link-button {
-            display: inline-flex;
-            align-items: center;
-            background-color: #24292e; /* GitHub dark color */
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-        .github-link-button:hover {
-            background-color: #33383d;
-        }
-        .github-link-button i {
-            margin-right: 0.5rem;
-        }
-
-        /* --- Publications Section --- */
-        .publication-card {
-            background-color: var(--publication-card-bg);
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 4px 20px var(--shadow-color);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
-            height: 100%; /* Ensure cards are same height */
-            display: flex;
-            flex-direction: column;
         }
-        .publication-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-        .publication-card h4 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-        .publication-card .authors {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
-        .publication-card .venue {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        .publication-card .abstract-preview {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            flex-grow: 1; /* Pushes button to bottom */
-        }
-        .publication-card .read-more-btn {
-            display: inline-flex;
-            align-items: center;
+        .expertise-toggle-btn:hover {
+            background-color: color-mix(in srgb, var(--text-accent) 20%, var(--bg-accent));
             color: var(--text-accent);
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        .publication-card .read-more-btn:hover {
-            color: var(--gradient-end);
-        }
-        .publication-card .read-more-btn i {
-            margin-left: 0.5rem;
+            transform: translateY(-2px);
         }
 
-        /* --- Testimonials Swiper --- */
-        .testimonial-card {
-            background-color: var(--bg-secondary);
-            border-radius: 1rem;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px var(--shadow-color);
-            border: 1px solid var(--border-color);
-            text-align: center;
-            font-style: italic;
-            color: var(--text-secondary);
-            min-height: 250px; /* Ensure consistent height */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        /* Skill bars for back of card */
+        .skill { margin-bottom: 0.75rem; }
+        .skill-name { font-weight: 600; margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-size: 0.9rem; }
+        .skill-bar-container { height: 8px; width: 100%; background-color: var(--bg-accent); border-radius: 4px; overflow: hidden; }
+        .skill-bar {
+            height: 100%;
+            width: 0; /* Animated by GSAP */
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid));
+            border-radius: 4px;
         }
-        .testimonial-card p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-        .testimonial-card cite {
-            display: block;
-            font-style: normal;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 1rem;
-        }
-        .testimonial-card .rating {
-            color: #facc15; /* Tailwind yellow-400 */
-            margin-top: 1rem;
-        }
-        .testimonial-card .rating i {
-            margin: 0 2px;
-        }
-
-        /* --- Contact Form --- */
-        .contact-form-container {
-            background-color: var(--bg-secondary);
-            border-radius: 1rem;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px var(--shadow-color);
-            border: 1px solid var(--border-color);
-            max-width: 600px;
+        
+        /* --- Upgraded Interactive Timeline --- */
+        #journey-timeline {
+            position: relative;
+            max-width: 1000px;
             margin: 0 auto;
         }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--label-text);
+        #journey-timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--bg-accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 0;
         }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
+        #timeline-progress {
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-mid));
+            top: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 1;
+            height: 0; /* Animated by GSAP ScrollTrigger */
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            visibility: hidden; /* Initially hide the container */
+        }
+        .timeline-item::after { /* The dot on the timeline */
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            right: -12px;
+            background-color: var(--bg-primary);
+            border: 4px solid var(--text-accent);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 2;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .timeline-item-left {
+            left: 0;
+        }
+        .timeline-item-right {
+            left: 50%;
+        }
+        .timeline-item-right::after {
+            left: -12px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--bg-secondary);
+            position: relative;
             border-radius: 0.5rem;
-            border: 1px solid var(--input-border);
-            background-color: var(--input-bg);
-            color: var(--input-text);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
         }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--input-focus-ring);
-            box-shadow: 0 0 0 3px rgba(var(--gradient-start-rgb), 0.2);
-        }
-        .form-group textarea { min-height: 120px; resize: vertical; }
+         .timeline-item-left .timeline-content { text-align: right; }
 
-        /* --- Footer --- */
+        .timeline-item:hover .timeline-content {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.1);
+        }
+        .timeline-item:hover::after {
+            transform: scale(1.2);
+            background-color: var(--text-accent);
+        }
+
+        .timeline-year {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-accent);
+        }
+        
+        /* Responsive Timeline */
+        @media screen and (max-width: 768px) {
+            #journey-timeline::after, #timeline-progress {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item-left, .timeline-item-right {
+                left: 0%;
+            }
+            .timeline-item-left::after, .timeline-item-right::after {
+                left: 19px; /* 31px (line) - 12px (half dot) */
+            }
+            .timeline-content, .timeline-item-left .timeline-content {
+                text-align: left;
+            }
+        }
+
+        /* --- Footer (same as original) --- */
         footer {
             background-color: var(--bg-accent);
-            color: var(--text-primary);
-            padding: 40px 0;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-        }
-        footer a {
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
-        }
-        footer a:hover { color: var(--text-accent); }
-        .footer-social-links a {
-            margin-right: 1rem;
-            color: var(--text-primary);
-            transition: color 0.3s ease;
-        }
-        .footer-social-links a:hover { color: var(--text-accent); }
-        .dark-mode footer { background-color: var(--bg-accent); }
-
-        /* --- Utility Classes & Animations --- */
-        .container { max-width: 1200px; } /* max-w-screen-xl in tailwind */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
         }
 
-        /* Typewriter Effect (for Hero) */
-        .typed-cursor {
-            opacity: 1;
-            animation: blink 0.7s infinite;
+        /* --- Hero Section (same as original) --- */
+        #hero #tsparticles-hero {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
         }
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
+        .glassmorphic {
+            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
         }
-
-        /* Toggle Switch */
+        
+        /* --- Loading Overlay (same as original) --- */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10000;
+            opacity: 1; transition: opacity 0.7s ease-out, visibility 0.7s; visibility: visible;
+        }
+        #loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        /* --- Dark Mode Toggle --- */
         .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 48px; /* Wider for better touch */
-            height: 28px; /* Taller for better touch */
-            cursor: pointer;
-            vertical-align: middle;
-            margin-left: 1rem;
+            position: relative; display: inline-block; width: 48px; height: 28px;
         }
         .toggle-switch input { display: none; }
         .slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            border-radius: 28px; /* Match height for pill shape */
-            transition: 0.4s;
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; border-radius: 28px; transition: 0.4s;
         }
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            border-radius: 50%;
-            transition: 0.4s;
+            position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
+            background-color: white; border-radius: 50%; transition: 0.4s;
         }
         input:checked + .slider { background-color: var(--text-accent); }
-        input:checked + .slider:before {
-            transform: translateX(20px); /* Move 20px to the right (48-28)/2 + 20 */
-        }
-        .dark-mode-icon {
-            position: absolute;
-            left: 8px; /* Adjusted for larger switch */
-            top: 6px;
-            color: #f1c40f; /* Yellow for sun */
-            font-size: 0.8rem;
-            z-index: 1;
-            transition: opacity 0.4s ease-in-out;
-        }
-        .light-mode-icon {
-            position: absolute;
-            right: 8px; /* Adjusted for larger switch */
-            top: 6px;
-            color: #3498db; /* Blue for moon */
-            font-size: 0.8rem;
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-        }
-        input:checked ~ .dark-mode-icon { opacity: 0; }
-        input:checked ~ .light-mode-icon { opacity: 1; }
+        input:checked + .slider:before { transform: translateX(20px); }
 
-        /* Aurora background for hero */
-        #hero-aurora-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-            opacity: 0.7; /* Adjust opacity as needed */
-        }
-        .aurora-blur {
-            position: absolute;
-            filter: blur(80px); /* Adjust blur intensity */
-            opacity: 0.6; /* Adjust individual blob opacity */
-        }
-        .aurora-blob-1 { background-color: rgba(var(--gradient-start-rgb), 0.5); width: 400px; height: 400px; border-radius: 50%; top: 10%; left: 10%; animation: aurora-move 15s infinite alternate ease-in-out; }
-        .aurora-blob-2 { background-color: rgba(var(--gradient-mid-rgb), 0.5); width: 350px; height: 350px; border-radius: 50%; top: 50%; right: 5%; animation: aurora-move 18s infinite alternate-reverse ease-in-out; }
-        .aurora-blob-3 { background-color: rgba(var(--gradient-end-rgb), 0.5); width: 300px; height: 300px; border-radius: 50%; bottom: 10%; left: 40%; animation: aurora-move 16s infinite alternate ease-in-out; }
-
-        @keyframes aurora-move {
-            0% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(20px, 30px) scale(1.05); }
-            50% { transform: translate(-30px, -20px) scale(0.95); }
-            75% { transform: translate(40px, -10px) scale(1.1); }
-            100% { transform: translate(0, 0) scale(1); }
-        }
-
-        /* 3D Model */
-        #model-container {
-            width: 100%;
-            height: 500px; /* Adjust height as needed */
-            margin: 0 auto;
-            background-color: var(--bg-primary);
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: var(--bg-accent); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            border-radius: 10px;
-            border: 2px solid var(--bg-accent);
-        }
-        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--gradient-end), var(--gradient-mid), var(--gradient-start)); }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .hero-content p { font-size: 1rem; }
-            .stat-number { font-size: 2.5rem; }
-            .stat-label { font-size: 0.9rem; }
-        }
-
-        /* Glassmorphism utility */
-        .glassmorphic {
-            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); transition: background 0.3s ease, border-color 0.3s ease;
-        }
-
-        /* Hero Specific for who_we_are.html */
-        #hero {
-            min-height: 90vh;
-            padding-top: 100px; /* Adjust based on header height */
-        }
-        #hero #tsparticles-hero {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.8; /* Adjust opacity of particles */
-        }
-        #hero-content-who-we-are {
-            box-shadow: 0 12px 35px var(--shadow-color), inset 0 0 1.5px rgba(255,255,255,0.3); /* Enhanced shadow and inner gleam */
-        }
-        .dark-mode #hero-content-who-we-are {
-            box-shadow: 0 12px 35px var(--shadow-color), inset 0 0 1.5px rgba(255,255,255,0.1);
-        }
-
-        /* Our Journey & Milestones (Timeline) Section */
-        .wrap {
-            margin-top: 50px;
-        }
-        .wrap .border-2-2 {
-            border-right-width: 2px; /* Thicker line for timeline */
-        }
-        .left-timeline .reveal,
-        .right-timeline .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .left-timeline .reveal.active,
-        .right-timeline .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .left-timeline {
-            padding-right: 50%; /* Adjust for center line */
-        }
-        .right-timeline {
-            padding-left: 50%; /* Adjust for center line */
-        }
-        .left-timeline .z-20 {
-            transform: translateX(50%);
-        }
-        .right-timeline .z-20 {
-            transform: translateX(-50%);
-        }
-        @media (max-width: 768px) {
-            .wrap .border-2-2 {
-                left: 20px !important; /* Move line to left on mobile */
-            }
-            .left-timeline, .right-timeline {
-                padding-left: 60px; /* Adjust for mobile timeline */
-                padding-right: 0;
-            }
-            .left-timeline .z-20,
-            .right-timeline .z-20 {
-                transform: translateX(0) !important; /* Reset transform for mobile */
-                left: 0;
-                margin-left: -20px; /* Position icon on the line */
-            }
-            .left-timeline .order-1, .right-timeline .order-1 {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body class="light-mode">
     <!-- Loading Overlay -->
     <div id="loading-overlay">
-        <div class="loader-content">
-            <div class="loader-logo-text">D&K</div>
-            <div id="lottie-container" style="width: 150px; height: 150px;"></div>
-            <div class="loading-progress">
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill"></div>
-                </div>
-                <div class="progress-text">Loading <span class="progress-percentage">0%</span></div>
-            </div>
-            <p class="loader-text">Crafting Digital Excellence...</p>
-            <div class="loading-tips">
-                <p class="tip-text"></p>
-            </div>
+        <div class="text-center">
+            <div id="lottie-container" style="width: 150px; height: 150px; margin: 0 auto;"></div>
+            <p class="text-lg font-semibold mt-4" style="color: var(--text-primary);">Crafting Digital Excellence...</p>
         </div>
     </div>
 
     <!-- Main Header -->
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-10 transition-all duration-300">
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-10">
         <nav class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold gradient-text">D-K Solutions</a>
-            <div class="hidden md:flex items-center space-x-6">
+            <div class="hidden lg:flex items-center space-x-2">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="who_we_are.html" class="nav-link active">Who We Are</a>
                 <a href="services.html" class="nav-link">Services</a>
-                <a href="portfolio.html" class="nav-link">Portfolio</a>
+                <a href="process.html" class="nav-link">Our Process</a>
+                <a href="expertise.html" class="nav-link">Expertise</a>
+                <a href="work.html" class="nav-link">Our Work</a>
+                <a href="publications.html" class="nav-link">Publications</a>
                 <a href="testimonials.html" class="nav-link">Testimonials</a>
                 <a href="contact.html" class="nav-link">Contact</a>
-                <label class="toggle-switch">
+                <label class="toggle-switch ml-4">
                     <input type="checkbox" id="darkModeToggle">
                     <span class="slider"></span>
-                    <i class="fas fa-sun dark-mode-icon"></i>
-                    <i class="fas fa-moon light-mode-icon"></i>
                 </label>
             </div>
-            <div class="md:hidden flex items-center">
+            <div class="lg:hidden flex items-center">
                 <label class="toggle-switch mr-4">
                     <input type="checkbox" id="darkModeToggleMobile">
                     <span class="slider"></span>
-                    <i class="fas fa-sun dark-mode-icon"></i>
-                    <i class="fas fa-moon light-mode-icon"></i>
                 </label>
                 <button id="mobile-menu-button" class="text-text-primary focus:outline-none">
                     <i class="fas fa-bars fa-lg"></i>
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full shadow-lg hidden">
-            <a href="index.html" class="nav-link-mobile block px-4 py-2">Home</a>
-            <a href="who_we_are.html" class="nav-link-mobile block px-4 py-2 active">Who We Are</a>
-            <a href="services.html" class="nav-link-mobile block px-4 py-2">Services</a>
-            <a href="portfolio.html" class="nav-link-mobile block px-4 py-2">Portfolio</a>
-            <a href="testimonials.html" class="nav-link-mobile block px-4 py-2">Testimonials</a>
-            <a href="contact.html" class="nav-link-mobile block px-4 py-2">Contact</a>
+        <div id="mobile-menu" class="lg:hidden hidden bg-secondary shadow-lg">
+             <a href="index.html" class="block px-6 py-3 text-text-primary">Home</a>
+             <a href="who_we_are.html" class="block px-6 py-3 text-text-accent font-semibold">Who We Are</a>
+             <a href="services.html" class="block px-6 py-3 text-text-primary">Services</a>
+             <a href="process.html" class="block px-6 py-3 text-text-primary">Our Process</a>
+             <a href="expertise.html" class="block px-6 py-3 text-text-primary">Expertise</a>
+             <a href="work.html" class="block px-6 py-3 text-text-primary">Our Work</a>
+             <a href="publications.html" class="block px-6 py-3 text-text-primary">Publications</a>
+             <a href="testimonials.html" class="block px-6 py-3 text-text-primary">Testimonials</a>
+             <a href="contact.html" class="block px-6 py-3 text-text-primary">Contact</a>
         </div>
     </header>
 
     <main>
-        <!-- Hero Section for About Us -->
+        <!-- Hero Section -->
         <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden p-6 md:p-10">
-            <!-- tsParticles container -->
-            <div id="tsparticles-hero" class="absolute inset-0 z-0"></div>
-
-            <div class="relative z-10 p-6 md:p-8 lg:p-10 max-w-5xl mx-auto glassmorphic transform transition-all duration-700 ease-out opacity-0 translate-y-10" id="hero-content-who-we-are">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight gradient-text">
-                    Unveiling the Architects of Digital Innovation
+            <div id="tsparticles-hero"></div>
+            <div class="relative z-10 p-8 md:p-12 max-w-5xl mx-auto glassmorphic rounded-2xl reveal-up">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight gradient-text">
+                    Architects of Digital Innovation
                 </h1>
-                <p class="text-lg md:text-xl text-text-secondary mb-6 leading-relaxed">
-                    At D-K Solutions, we are more than just a team; we are a collective of passionate innovators, strategic thinkers, and technical virtuosos, united by a singular vision: to craft intelligent digital solutions that propel businesses into tomorrow. Discover the brilliant minds and diverse expertise that form the bedrock of our commitment to excellence.
+                <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">
+                    We are a collective of passionate innovators, strategic thinkers, and technical virtuosos, united to craft intelligent digital solutions that propel businesses into tomorrow.
                 </p>
-                <div class="mb-8 text-text-primary text-base md:text-lg">
-                    <p class="font-semibold mb-2">Our Core Strengths Include:</p>
-                    <ul class="list-disc list-inside space-y-1 max-w-md mx-auto">
-                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Cutting-edge Machine Learning & AI</li>
-                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Robust Full-Stack Development</li>
-                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Data-Driven Strategic Consulting</li>
-                        <li><i class="fas fa-check-circle text-accent mr-2"></i> Intuitive UI/UX Design</li>
-                    </ul>
-                </div>
-                <a href="#our-story" class="cta-button text-lg group">
-                    Journey With Us 
-                    <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                </a>
-            </div>
-        </section>
-
-        <!-- Our Story / Philosophy Section -->
-        <section id="our-story" class="bg-primary py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Our Odyssey: A Tale of Vision and Virtue</h2>
-                    <p class="text-lg text-secondary max-w-4xl mx-auto">
-                        Every great endeavor begins with a spark of an idea, nurtured by relentless dedication and a shared purpose. Our story is one of a relentless pursuit of digital mastery, grounded in principles of integrity, innovation, and client-centricity. We believe in building not just solutions, but legacies.
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                    <div class="reveal" style="transition-delay: 0.1s;">
-                        <img src="assets/collaborative-innovation.jpg" alt="Team Collaboration or Abstract Tech Design" class="rounded-lg shadow-xl w-full h-auto object-cover" loading="lazy">
-                    </div>
-                    <div class="reveal" style="transition-delay: 0.2s;">
-                        <h3 class="text-3xl font-bold mb-4">The Genesis of Brilliance</h3>
-                        <p class="text-text-secondary mb-4">
-                            D-K Solutions was forged from a profound understanding of the evolving digital landscape and an unwavering commitment to empowering businesses with cutting-edge technology and insightful analytics. Our founders envisioned a consultancy where expertise met empathy, where complex challenges were transformed into elegant, impactful solutions. This ethos permeates every project we undertake, every line of code we write, and every strategy we meticulously craft. We don't just solve problems; we redefine possibilities, creating pathways to unprecedented growth and operational efficiency.
-                        </p>
-                        <p class="text-text-secondary">
-                            We pride ourselves on a culture of continuous learning and adaptation. The digital realm is a dynamic tapestry, and we ensure our knowledge and toolkits are perpetually at the forefront, guaranteeing that our clients receive not just current, but future-proof solutions. Our dedication extends beyond mere technical implementation; we integrate deeply with your vision, ensuring that our digital prowess seamlessly aligns with your business objectives, culminating in a partnership that yields not just success, but sustainable digital ascendancy.
-                        </p>
-                    </div>
-                </div>
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mt-16">
-                    <div class="reveal order-2 md:order-1" style="transition-delay: 0.3s;">
-                        <h3 class="text-3xl font-bold mb-4">Our Core Philosophy: Beyond Code, Beyond Data</h3>
-                        <p class="text-text-secondary mb-4">
-                            At the heart of D-K Solutions lies a philosophy that transcends lines of code and data points. We believe in the profound human element of technology – that its true power lies in its ability to amplify human potential, streamline operations, and unlock unparalleled insights. Our approach is holistic, intertwining advanced technical acumen with a deep understanding of human behavior, market dynamics, and strategic foresight. We strive to create digital ecosystems that are not only robust and efficient but also intuitive, engaging, and transformative.
-                        </p>
-                        <p class="text-text-secondary">
-                            We operate on the premise that every client is unique, and every challenge an opportunity for bespoke innovation. This commitment to tailored excellence means we eschew one-size-fits-all solutions, instead opting for meticulously designed strategies and implementations that resonate precisely with your specific needs and aspirations. Our passion is to illuminate the path forward, transforming intricate digital landscapes into clear, navigable opportunities for your success.
-                        </p>
-                    </div>
-                    <div class="reveal order-1 md:order-2" style="transition-delay: 0.4s;">
-                        <img src="assets/vision-philosophy.jpg" alt="Vision and Philosophy" class="rounded-lg shadow-xl w-full h-auto object-cover" loading="lazy">
-                    </div>
+                <div>
+                    <a href="#our-team" class="cta-button text-lg group">
+                        Meet The Team 
+                        <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Team Section -->
-        <section id="our-team" class="bg-secondary py-20">
+        <section id="our-team" class="bg-primary py-20">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Meet Our Innovators: The Minds Behind the Magic</h2>
-                    <p class="text-lg text-secondary max-w-4xl mx-auto">
-                        Our collective strength is derived from the diverse expertise and unwavering dedication of our exceptional team. Each member brings a unique blend of skills, experiences, and a shared passion for digital transformation, ensuring that every solution we deliver is not just technically sound, but strategically brilliant.
-                    </p>
+                <div class="section-header reveal-up">
+                    <h2 class="gradient-text">Meet Our Innovators</h2>
+                    <p>Our collective strength is derived from the diverse expertise and unwavering dedication of our exceptional team. Each member brings a unique blend of skills and a shared passion for digital transformation.</p>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12 items-start">
-                    <!-- Daniel Wanjala -->
-                    <div class="content-card founder-card text-center reveal" style="transition-delay: 0.1s;">
-                        <img src="assets/daniel-wanjala.jpg" alt="Daniel Wanjala" class="mx-auto">
-                        <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
-                        <p class="text-accent font-medium mb-2">Lead Developer / Machine Learning Engineer</p>
-                        <p class="text-sm text-secondary mb-4">
-                            Daniel is a certified data scientist and full-stack developer, celebrated for his exceptional ability to architect robust, scalable software and construct highly intelligent predictive models. He is the innovative mind behind the InvestWise Predictor, a sophisticated investment advisory engine meticulously powered by advanced neural networks and comprehensive economic data. Daniel's extensive portfolio proudly includes several production-ready platforms such as metcom.ke and marda.co.ke, reflecting years of profound experience in both intricate backend engineering and complex ML workflows. His passion lies in transforming complex data into actionable intelligence and building systems that not only function flawlessly but also drive significant business value.
-                        </p>
-                        <p class="text-sm text-secondary mb-3"><strong>Core Toolkit:</strong> Python, Django, React, TensorFlow, PostgreSQL, Docker, Redis, AWS.</p>
-                        
-                        <div class="quote">
-                            <p>"I don't just build systems; I architect solutions. My focus is on creating robust, intelligent platforms that people can truly rely on, day in and day out, to solve real-world problems and drive progress."</p>
-                            <cite>— Daniel</cite>
-                        </div>
-                        <p class="text-sm text-secondary mb-1"><strong>Certifications & Affiliations:</strong></p>
-                        <p class="text-xs text-secondary mb-3">Moringa School (Data Science & Software Engineering), Zetech University (BSc. IT), HackerRank (ML & Python Proficiencies), Udemy (Advanced Angular, Full-Stack JavaScript Specializations), AWS Certified Developer.</p>
-                        <div class="links">
-                            <a href="https://github.com/MadScie254" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
-                            <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                            <a href="mailto:dmwanjal254@gmail.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+
+                    <!-- Daniel Wanjala Card -->
+                    <div class="founder-card-container reveal-up">
+                        <div class="founder-card" style="min-height: 620px;">
+                            <!-- Card Front -->
+                            <div class="card-face card-front text-center">
+                                <img src="assets/daniel-wanjala.jpg" alt="Daniel Wanjala" class="mx-auto">
+                                <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
+                                <p class="text-accent font-medium mb-4">Lead Developer / ML Engineer</p>
+                                <p class="text-text-secondary mb-6">
+                                    Daniel architects robust, scalable software and intelligent predictive models. He transforms complex data into actionable intelligence, building systems that drive significant business value.
+                                </p>
+                                <div class="mt-auto">
+                                    <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
+                                        View Expertise <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="card-face card-back">
+                                <h4 class="text-xl font-bold text-center mb-4">Core Expertise</h4>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Python & Django</span><span>95%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Machine Learning (TF/PyTorch)</span><span>92%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Natural Language Processing (NLP)</span><span>88%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="88"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>React & Next.js</span><span>85%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="85"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Advanced API Design (GraphQL)</span><span>89%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="89"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Cloud & DevOps (AWS/Docker)</span><span>82%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="82"></div></div>
+                                </div>
+                                <div class="mt-auto">
+                                     <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
+                                        <i class="fas fa-arrow-left mr-2"></i> View Bio
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Khadia Khalid -->
-                    <div class="content-card founder-card text-center reveal" style="transition-delay: 0.2s;">
-                        <img src="assets/khadia-khalid.jpg" alt="Khadia Khalid" class="mx-auto">
-                        <h3 class="text-2xl font-semibold mb-1">Khadia Khalid 👩‍💼</h3>
-                        <p class="text-accent font-medium mb-2">Digital Strategy & Business Systems Partner</p>
-                        <p class="text-sm text-secondary mb-4">
-                            Khadia is a visionary strategic thinker with an innate passion for meticulously transforming conceptual ideas into tangible, actionable systems. Her profound expertise is centered on research-driven business strategy, compelling digital storytelling, and precise product lifecycle mapping. Within the DanJa partnership, she dedicates her focus to empowering clients by aligning their ambitious digital goals with structured, efficient delivery—masterfully balancing innovative design, crystal-clear communication, and consistently measurable outcomes. She champions clarity and purpose in every project.
-                        </p>
-                         <p class="text-sm text-secondary mb-3">Possessing a keen eye for detail and a rich background in operations and strategic communication, Khadia excels in guiding projects from their abstract ideation phase to concrete, executable realities. She is the unwavering voice behind the user-first mindset that permeates all our work, ensuring every product and solution we deliver speaks with utmost clarity and precision to its intended audience, fostering engagement and driving adoption.</p>
-
-                        <div class="quote">
-                            <p>"If a solution isn't crystal clear and strategically sound, it simply won't endure. My core mission is to maintain that clarity, drive momentum, and ensure every initiative moves forward with purpose and impact."</p>
-                            <cite>— Khadia</cite>
-                        </div>
-                        <p class="text-sm text-secondary mb-1"><strong>Focus Areas:</strong></p>
-                        <ul class="text-xs text-secondary list-disc list-inside text-left inline-block mb-3">
-                            <li>UI/UX Direction & User Empathy</li>
-                            <li>In-depth Market & Client Research</li>
-                            <li>Agile Product Development Frameworks</li>
-                            <li>Comprehensive Systems Documentation</li>
-                            <li>SME and NGO Digital Onboarding Strategy</li>
-                            <li>Strategic Communications & Brand Messaging</li>
-                        </ul>
-                        <div class="links">
-                            <a href="#" target="_blank" rel="noopener" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
-                            <a href="https://linkedin.com/in/khadia-khalid" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                            <a href="mailto:khadia.khalid@example.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
+                    <!-- Khadia Khalid Card -->
+                    <div class="founder-card-container reveal-up" data-reveal-delay="0.2">
+                         <div class="founder-card" style="min-height: 620px;">
+                            <!-- Card Front -->
+                            <div class="card-face card-front text-center">
+                                <img src="assets/khadia-khalid.jpg" alt="Khadia Khalid" class="mx-auto">
+                                <h3 class="text-2xl font-semibold mb-1">Khadia Khalid 👩‍💼</h3>
+                                <p class="text-accent font-medium mb-4">Digital Strategy & Systems Partner</p>
+                                <p class="text-text-secondary mb-6">
+                                    Khadia is a visionary thinker, transforming ideas into actionable systems. She aligns digital goals with efficient delivery, balancing innovation, communication, and measurable outcomes.
+                                </p>
+                                <div class="mt-auto">
+                                    <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
+                                        View Expertise <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="card-face card-back">
+                               <h4 class="text-xl font-bold text-center mb-4">Core Expertise</h4>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Go-to-Market Strategy</span><span>95%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>UI/UX & Product Design</span><span>93%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>User Journey Mapping</span><span>90%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Agile Project Management</span><span>92%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div>
+                                </div>
+                                 <div class="skill">
+                                    <div class="skill-name"><span>Data-driven Storytelling</span><span>88%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="88"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Brand Communication</span><span>85%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="85"></div></div>
+                                </div>
+                                <div class="mt-auto">
+                                     <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
+                                        <i class="fas fa-arrow-left mr-2"></i> View Bio
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Austin Arnold Wopata -->
-                    <div class="content-card founder-card text-center reveal" style="transition-delay: 0.3s;">
-                        <img src="assets/austin-arnold-wopata.jpg" alt="Austin Arnold Wopata" class="mx-auto">
-                        <h3 class="text-2xl font-semibold mb-1">Austin Arnold Wopata 🛡️</h3>
-                        <p class="text-accent font-medium mb-2">Cybersecurity Expert / Network Architect</p>
-                        <p class="text-sm text-secondary mb-4">
-                            Austin is a stalwart in the realm of digital defense, possessing an encyclopedic knowledge of cybersecurity protocols, network infrastructures, and ethical hacking methodologies. With a keen eye for vulnerabilities and a strategic mind for resilient architectures, Austin is instrumental in fortifying our clients' digital assets against an ever-evolving threat landscape. His expertise ensures that every solution we deploy is not only efficient and innovative but also inherently secure and compliant with the most stringent industry standards. He champions a proactive approach to security, embedding defense mechanisms from the ground up rather than as an afterthought.
-                        </p>
-                        <p class="text-sm text-secondary mb-3">Possessing an advanced understanding of complex network topologies and an unparalleled ability to dissect and secure digital pathways, Austin's contributions are pivotal in maintaining the integrity and confidentiality of sensitive data. He is adept at implementing robust security frameworks, conducting thorough penetration testing, and developing comprehensive disaster recovery plans, offering our clients peace of mind in a perpetually vulnerable digital world. His dedication to safeguarding digital frontiers is unmatched, making him an invaluable asset to our team and a trusted guardian of your digital future.</p>
-
-                        <div class="quote">
-                            <p>"In the digital age, security isn't a feature; it's the foundation. My mission is to build impregnable fortresses around your innovations, ensuring your vision thrives in an uncompromised digital environment."</p>
-                            <cite>— Austin</cite>
-                        </div>
-                        <p class="text-sm text-secondary mb-1"><strong>Key Proficiencies:</strong></p>
-                        <ul class="text-xs text-secondary list-disc list-inside text-left inline-block mb-3">
-                            <li>Network Security Architecture & Implementation</li>
-                            <li>Vulnerability Assessment & Penetration Testing (VAPT)</li>
-                            <li>Incident Response & Digital Forensics</li>
-                            <li>Cloud Security (AWS, Azure, GCP)</li>
-                            <li>Compliance & Governance (GDPR, HIPAA, ISO 27001)</li>
-                            <li>Firewall & Intrusion Detection Systems</li>
-                        </ul>
-                        <div class="links">
-                            <a href="#" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
-                            <a href="#" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                            <a href="mailto:austin.wopata@example.com" title="Email" rel="noopener"><i class="fas fa-envelope fa-lg"></i></a>
+                    <!-- Austin Arnold Wopata Card -->
+                    <div class="founder-card-container reveal-up" data-reveal-delay="0.4">
+                        <div class="founder-card" style="min-height: 620px;">
+                             <!-- Card Front -->
+                            <div class="card-face card-front text-center">
+                                <img src="assets/austin-arnold-wopata.jpg" alt="Austin Arnold Wopata" class="mx-auto">
+                                <h3 class="text-2xl font-semibold mb-1">Austin Arnold Wopata 🛡️</h3>
+                                <p class="text-accent font-medium mb-4">Cybersecurity & Network Architect</p>
+                                <p class="text-text-secondary mb-6">
+                                    Austin is a stalwart in digital defense, fortifying client assets against threats. He embeds proactive security from the ground up, ensuring solutions are innovative and inherently secure.
+                                </p>
+                                <div class="mt-auto">
+                                    <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
+                                        View Expertise <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Card Back -->
+                            <div class="card-face card-back">
+                                <h4 class="text-xl font-bold text-center mb-4">Core Expertise</h4>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Ethical Hacking & Red Teaming</span><span>98%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="98"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Cloud Security Architecture</span><span>94%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="94"></div></div>
+                                </div>
+                                 <div class="skill">
+                                    <div class="skill-name"><span>Zero Trust Implementation</span><span>90%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Incident Response & Forensics</span><span>95%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div>
+                                </div>
+                                 <div class="skill">
+                                    <div class="skill-name"><span>Penetration Testing (VAPT)</span><span>92%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div>
+                                </div>
+                                <div class="skill">
+                                    <div class="skill-name"><span>Compliance (GDPR/ISO 27001)</span><span>91%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div>
+                                </div>
+                                <div class="mt-auto">
+                                     <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
+                                        <i class="fas fa-arrow-left mr-2"></i> View Bio
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Our Journey & Milestones Section -->
-        <section id="our-journey" class="bg-accent py-20">
+        <!-- Our Journey Section -->
+        <section id="our-journey" class="bg-secondary py-20">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Our Journey: A Timeline of Growth & Innovation</h2>
-                    <p class="text-lg text-secondary max-w-4xl mx-auto">
-                        From humble beginnings to pioneering new digital frontiers, our path has been marked by continuous learning, relentless innovation, and a steadfast commitment to our clients' success. Explore the key milestones that define D-K Solutions.
-                    </p>
+                <div class="section-header reveal-up">
+                    <h2 class="gradient-text">A Timeline of Innovation</h2>
+                    <p>From humble beginnings to pioneering new digital frontiers, our path has been marked by continuous learning, relentless innovation, and a steadfast commitment to our clients' success.</p>
                 </div>
-                <div class="relative wrap overflow-hidden h-full">
-                    <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
-                    <!-- Timeline Item: Founding -->
-                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
-                        <div class="order-1 w-5/12"></div>
-                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
-                            <h1 class="mx-auto text-white font-semibold text-lg">2018</h1>
-                        </div>
-                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
-                            <h3 class="mb-3 font-bold text-xl text-primary">The Genesis: A Vision Takes Root</h3>
-                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
-                                D-K Solutions is founded by Daniel Wanjala and Khadija Khalid, driven by a shared passion to transform complex digital challenges into elegant, impactful solutions. Initial focus on custom web development and data analytics for local businesses.
-                            </p>
+                
+                <div id="journey-timeline">
+                    <div id="timeline-progress"></div>
+                    <!-- 2018 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">The Genesis: A Vision Takes Root</h3>
+                            <p class="timeline-year">2018</p>
+                            <p class="text-sm text-text-secondary">D-K Solutions is founded, driven by a shared passion to transform complex digital challenges into elegant, impactful solutions for local businesses.</p>
                         </div>
                     </div>
-
-                    <!-- Timeline Item: First Major Project -->
-                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
-                        <div class="order-1 w-5/12"></div>
-                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
-                            <h1 class="mx-auto text-white font-semibold text-lg">2019</h1>
-                        </div>
-                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
-                            <h3 class="mb-3 font-bold text-xl text-primary">First Flagship Project Launch</h3>
-                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
-                                Successfully delivered our first major integrated digital platform for a growing e-commerce client, showcasing our full-stack capabilities and strategic approach to online presence.
-                            </p>
+                    <!-- 2019 -->
+                     <div class="timeline-item timeline-item-right">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">First Flagship Project</h3>
+                            <p class="timeline-year">2019</p>
+                            <p class="text-sm text-text-secondary">Successfully delivered our first major integrated digital platform, showcasing our full-stack capabilities and strategic approach to e-commerce.</p>
                         </div>
                     </div>
-
-                    <!-- Timeline Item: AI/ML Integration -->
-                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
-                        <div class="order-1 w-5/12"></div>
-                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
-                            <h1 class="mx-auto text-white font-semibold text-lg">2021</h1>
-                        </div>
-                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
-                            <h3 class="mb-3 font-bold text-xl text-primary">Pioneering AI & Machine Learning</h3>
-                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
-                                Expanded our service offerings to include advanced Machine Learning and AI solutions, with the successful deployment of predictive analytics models for supply chain optimization.
-                            </p>
+                    <!-- 2020 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">Launched First SaaS Product</h3>
+                            <p class="timeline-year">2020</p>
+                            <p class="text-sm text-text-secondary">Introduced our first Software-as-a-Service solution, providing a scalable and accessible analytics platform for small to medium enterprises.</p>
                         </div>
                     </div>
-
-                    <!-- Timeline Item: Team Expansion (Austin) -->
-                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
-                        <div class="order-1 w-5/12"></div>
-                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
-                            <h1 class="mx-auto text-white font-semibold text-lg">2022</h1>
-                        </div>
-                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
-                            <h3 class="mb-3 font-bold text-xl text-primary">Strengthening Our Core: Cybersecurity Expertise</h3>
-                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
-                                Welcomed Austin Arnold Wopata, a seasoned Cybersecurity Expert, to the team, bolstering our capabilities in digital defense, network architecture, and robust security protocols.
-                            </p>
+                    <!-- 2021 -->
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">Pioneering AI & ML</h3>
+                            <p class="timeline-year">2021</p>
+                            <p class="text-sm text-text-secondary">Expanded into AI with predictive analytics models for supply chain optimization, marking a new chapter of data-driven innovation.</p>
                         </div>
                     </div>
-
-                    <!-- Timeline Item: Innovation Hub -->
-                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
-                        <div class="order-1 w-5/12"></div>
-                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
-                            <h1 class="mx-auto text-white font-semibold text-lg">2023</h1>
-                        </div>
-                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
-                            <h3 class="mb-3 font-bold text-xl text-primary">Strategic Partnerships & Research Contributions</h3>
-                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
-                                Established key partnerships with academic institutions and industry leaders, leading to collaborative research and publications in emerging tech domains, solidifying our thought leadership.
-                            </p>
+                    <!-- 2022 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">Strengthening Our Core</h3>
+                            <p class="timeline-year">2022</p>
+                            <p class="text-sm text-text-secondary">Welcomed Austin Arnold Wopata, a seasoned Cybersecurity Expert, to the team, bolstering our capabilities in digital defense.</p>
                         </div>
                     </div>
-
-                     <!-- Timeline Item: Global Reach -->
-                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
-                        <div class="order-1 w-5/12"></div>
-                        <div class="z-20 flex items-center order-1 bg-gradient-to-r from-gradient-start to-gradient-end shadow-xl w-10 h-10 rounded-full">
-                            <h1 class="mx-auto text-white font-semibold text-lg">2024</h1>
+                    <!-- 2023 -->
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">Major Open Source Contribution</h3>
+                            <p class="timeline-year">2023</p>
+                            <p class="text-sm text-text-secondary">Released a widely-adopted open-source library for data visualization, reinforcing our commitment to community and thought leadership.</p>
                         </div>
-                        <div class="order-1 bg-secondary rounded-lg shadow-xl w-5/12 px-6 py-4 reveal">
-                            <h3 class="mb-3 font-bold text-xl text-primary">Expanding Horizons: Global Client Engagements</h3>
-                            <p class="text-sm leading-snug tracking-wide text-text-secondary text-opacity-100">
-                                Successfully expanded our client base beyond national borders, taking on international projects and demonstrating our adaptability and universal applicability of our digital solutions.
-                            </p>
+                    </div>
+                     <!-- 2024 -->
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-xl mb-2 text-primary">Expanding Horizons</h3>
+                            <p class="timeline-year">2024</p>
+                            <p class="text-sm text-text-secondary">Successfully expanded our client base beyond national borders, taking on international projects and demonstrating our global adaptability.</p>
                         </div>
                     </div>
                 </div>
@@ -1171,65 +673,36 @@
         <!-- Our Values Section -->
         <section id="our-values" class="bg-primary py-20">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Values That Guide Our Journey</h2>
-                    <p class="text-lg text-secondary max-w-4xl mx-auto">
-                        Our ethos is built upon a bedrock of fundamental values that shape every decision, interaction, and innovation at D-K Solutions. These principles are not merely words, but the living essence of our collective spirit, ensuring that our work not only excels technically but also resonates with integrity and purpose.
-                    </p>
+                 <div class="section-header reveal-up">
+                    <h2 class="gradient-text">Values That Guide Us</h2>
+                    <p>Our ethos is built upon a bedrock of fundamental values that shape every decision, interaction, and innovation at D-K Solutions.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="content-card text-center reveal" style="transition-delay: 0.1s;">
+                    <div class="bg-secondary p-8 rounded-lg text-center reveal-up" style="border-left: 4px solid var(--gradient-start);">
                         <i class="fas fa-lightbulb fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Innovation & Foresight</h3>
-                        <p class="text-text-secondary">
-                            We are relentless in our pursuit of the next big idea, constantly exploring emerging technologies and methodologies to deliver solutions that are not just contemporary, but future-proof. Our foresight ensures our clients are always a step ahead.
-                        </p>
+                        <h3 class="text-2xl font-bold mb-2">Innovation</h3>
+                        <p class="text-text-secondary">We deliver solutions that are not just contemporary, but future-proof, ensuring our clients are always a step ahead.</p>
                     </div>
-                    <div class="content-card text-center reveal" style="transition-delay: 0.2s;">
+                    <div class="bg-secondary p-8 rounded-lg text-center reveal-up" data-reveal-delay="0.1" style="border-left: 4px solid var(--gradient-mid);">
                         <i class="fas fa-handshake fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Integrity & Transparency</h3>
-                        <p class="text-text-secondary">
-                            Honesty and openness form the cornerstone of our partnerships. We believe in clear communication, ethical practices, and building trust through every interaction, ensuring a relationship built on mutual respect.
-                        </p>
+                        <h3 class="text-2xl font-bold mb-2">Integrity</h3>
+                        <p class="text-text-secondary">Honesty and openness form the cornerstone of our partnerships, building trust through every single interaction.</p>
                     </div>
-                    <div class="content-card text-center reveal" style="transition-delay: 0.3s;">
+                    <div class="bg-secondary p-8 rounded-lg text-center reveal-up" data-reveal-delay="0.2" style="border-left: 4px solid var(--gradient-end);">
                         <i class="fas fa-users fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Collaboration & Empathy</h3>
-                        <p class="text-text-secondary">
-                            We immerse ourselves in our clients' worlds, understanding their challenges as our own. Our collaborative spirit fosters synergy, turning shared goals into remarkable achievements through collective ingenuity.
-                        </p>
-                    </div>
-                    <div class="content-card text-center reveal" style="transition-delay: 0.4s;">
-                        <i class="fas fa-cogs fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Excellence & Precision</h3>
-                        <p class="text-text-secondary">
-                            Our commitment to unparalleled quality is unwavering. We meticulously craft every solution with precision, attention to detail, and a dedication to delivering outcomes that not only meet but exceed expectations.
-                        </p>
-                    </div>
-                    <div class="content-card text-center reveal" style="transition-delay: 0.5s;">
-                        <i class="fas fa-seedling fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Growth & Adaptability</h3>
-                        <p class="text-text-secondary">
-                            The digital landscape is ever-evolving, and so are we. We embrace change as an opportunity for growth, constantly adapting our skills and strategies to navigate new frontiers and empower our clients to thrive.
-                        </p>
-                    </div>
-                    <div class="content-card text-center reveal" style="transition-delay: 0.6s;">
-                        <i class="fas fa-heart fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Impact & Purpose</h3>
-                        <p class="text-text-secondary">
-                            Beyond profitability, we are driven by a desire to create meaningful impact. Our work is imbued with a sense of purpose, contributing positively to businesses and communities through transformative digital solutions.
-                        </p>
+                        <h3 class="text-2xl font-bold mb-2">Collaboration</h3>
+                        <p class="text-text-secondary">We immerse ourselves in our clients' worlds, fostering synergy to turn shared goals into remarkable achievements.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action / Join Our Journey -->
-        <section class="bg-primary py-20 text-center">
-            <div class="container mx-auto px-6 reveal">
+        <!-- CTA Section -->
+        <section class="bg-secondary py-20 text-center">
+            <div class="container mx-auto px-6 reveal-up">
                 <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Ready to Co-Create the Future?</h2>
                 <p class="text-lg text-secondary max-w-3xl mx-auto mb-8">
-                    Whether you're looking to revolutionize your digital presence, optimize complex operations, or embark on a new technological frontier, our team is poised to transform your ambitions into reality. Connect with us to begin a partnership defined by innovation, expertise, and unparalleled dedication.
+                    Connect with us to begin a partnership defined by innovation, expertise, and unparalleled dedication.
                 </p>
                 <a href="contact.html" class="cta-button text-lg">Let's Build Together <i class="fas fa-rocket ml-2"></i></a>
             </div>
@@ -1245,29 +718,29 @@
                     <p class="text-text-secondary">Intelligent Digital Solutions, Advanced Analytics & Research.</p>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <h4 class="text-lg font-semibold mb-4">Explore</h4>
                     <ul>
                         <li><a href="index.html" class="text-text-secondary hover:text-text-accent transition-colors">Home</a></li>
                         <li><a href="who_we_are.html" class="text-text-secondary hover:text-text-accent transition-colors">Who We Are</a></li>
                         <li><a href="services.html" class="text-text-secondary hover:text-text-accent transition-colors">Services</a></li>
-                        <li><a href="portfolio.html" class="text-text-secondary hover:text-text-accent transition-colors">Portfolio</a></li>
+                         <li><a href="process.html" class="text-text-secondary hover:text-text-accent transition-colors">Our Process</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Insights</h4>
+                    <h4 class="text-lg font-semibold mb-4">Showcase</h4>
                     <ul>
-                        <li><a href="testimonials.html" class="text-text-secondary hover:text-text-accent transition-colors">Testimonials</a></li>
+                        <li><a href="expertise.html" class="text-text-secondary hover:text-text-accent transition-colors">Expertise</a></li>
+                        <li><a href="work.html" class="text-text-secondary hover:text-text-accent transition-colors">Our Work</a></li>
                         <li><a href="publications.html" class="text-text-secondary hover:text-text-accent transition-colors">Publications</a></li>
+                        <li><a href="testimonials.html" class="text-text-secondary hover:text-text-accent transition-colors">Testimonials</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Connect</h4>
-                    <p class="text-text-secondary mb-2">Email: info@dksolutions.com</p>
-                    <p class="text-text-secondary mb-4">Phone: +1 (555) 123-4567</p>
-                    <div class="footer-social-links">
-                        <a href="#" target="_blank" rel="noopener" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                        <a href="#" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                    <div class="space-x-4">
+                        <a href="#" target="_blank" rel="noopener" title="Twitter" class="text-text-primary hover:text-text-accent"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" target="_blank" rel="noopener" title="LinkedIn" class="text-text-primary hover:text-text-accent"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="#" target="_blank" rel="noopener" title="GitHub" class="text-text-primary hover:text-text-accent"><i class="fab fa-github fa-lg"></i></a>
                     </div>
                 </div>
             </div>
@@ -1277,101 +750,217 @@
         </div>
     </footer>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Preloader Logic ---
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const lottieContainer = document.getElementById('lottie-container');
-        const progressFill = document.querySelector('.progress-bar-fill');
-        const progressTextElement = document.querySelector('.progress-percentage');
-        const tipTextElement = document.querySelector('.tip-text');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-        function initPreloader() {
-            if (!loadingOverlay || !lottieContainer || !progressFill || !progressTextElement || !tipTextElement) {
-                if (loadingOverlay) loadingOverlay.classList.add('hidden');
-                return;
+    // --- GSAP PLUGIN REGISTRATION ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- PRELOADER ---
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const lottieContainer = document.getElementById('lottie-container');
+    
+    if (lottieContainer) {
+        lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://assets2.lottiefiles.com/packages/lf20_qmfs6c3i.json' 
+        });
+    }
+
+    window.addEventListener('load', () => {
+        // --- MASTER GSAP TIMELINE FOR INTRO ---
+        const masterTimeline = gsap.timeline({
+            onComplete: () => {
+                // Only after the intro is done, set up scroll triggers
+                setupScrollTriggers();
             }
-            // Lottie animation
-            try {
-                lottie.loadAnimation({
-                    container: lottieContainer,
-                    renderer: 'svg',
-                    loop: true,
-                    autoplay: true,
-                    path: 'https://assets2.lottiefiles.com/packages/lf20_qmfs6c3i.json'
-                });
-            } catch (e) {}
-            // Progress bar and percentage
-            let percent = 0;
-            const progressInterval = setInterval(() => {
-                percent += Math.floor(Math.random() * 5) + 1;
-                if (percent > 100) percent = 100;
-                progressFill.style.width = percent + '%';
-                progressTextElement.textContent = percent + '%';
-                if (percent === 100) {
-                    clearInterval(progressInterval);
-                }
-            }, 80);
-            // Rotating tips
-            const tips = [
-                "Building with passion and precision.",
-                "Transforming ideas into digital realities.",
-                "Your success is our priority.",
-                "Innovation at the core of what we do.",
-                "Scalable solutions for a growing world."
-            ];
-            let tipIndex = 0;
-            function showNextTip() {
-                tipTextElement.style.opacity = 0;
-                setTimeout(() => {
-                    tipTextElement.textContent = tips[tipIndex];
-                    tipTextElement.style.opacity = 1;
-                    tipIndex = (tipIndex + 1) % tips.length;
-                }, 500);
+        });
+
+        // Hide loader
+        masterTimeline.to(loadingOverlay, { 
+            opacity: 0, 
+            duration: 0.7, 
+            onComplete: () => {
+                loadingOverlay.style.display = 'none';
             }
-            showNextTip();
-            setInterval(showNextTip, 4000);
-            // Hide preloader robustly
-            window.addEventListener('load', () => {
-                const minDisplayTime = 2000;
-                const startTime = Date.now();
-                function attemptHidePreloader() {
-                    const elapsedTime = Date.now() - startTime;
-                    if (percent >= 100 && elapsedTime >= minDisplayTime) {
-                        loadingOverlay.classList.add('hidden');
-                        triggerReveal();
-                    } else {
-                        setTimeout(attemptHidePreloader, 200);
-                    }
-                }
-                attemptHidePreloader();
-            });
-            // Fallback: always hide loader after 3s
-            setTimeout(() => {
-                if (loadingOverlay) loadingOverlay.classList.add('hidden');
-                triggerReveal();
-            }, 3000);
-        }
-
-        // --- Reveal Animation Logic ---
-        function triggerReveal() {
-            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-            document.querySelectorAll('.opacity-0').forEach(el => el.classList.remove('opacity-0'));
-        }
-
-        // --- Init Preloader ---
-        initPreloader();
-
-        // --- Init tsParticles (if used) ---
-        if (typeof initTsParticles === 'function') {
-            initTsParticles();
-        }
-
-        // --- Keep your other JS logic (header, dark mode, etc.) here ---
-        // ...
+        });
+        
+        // Staggered intro animations
+        masterTimeline
+            .from("#main-header", { y: -50, opacity: 0, duration: 1, ease: 'power3.out' }, "-=0.2")
+            .from("#hero .reveal-up", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }, "-=0.7");
     });
-    </script>
+    
+    // --- DARK MODE TOGGLE ---
+    const setupDarkModeToggle = (toggleId) => {
+        const toggle = document.getElementById(toggleId);
+        if (toggle) {
+            toggle.checked = localStorage.getItem('darkMode') === 'true';
+            toggle.addEventListener('change', () => {
+                document.body.classList.toggle('dark-mode', toggle.checked);
+                // Sync other toggles
+                const otherToggleId = toggleId === 'darkModeToggle' ? 'darkModeToggleMobile' : 'darkModeToggle';
+                const otherToggle = document.getElementById(otherToggleId);
+                if (otherToggle) otherToggle.checked = toggle.checked;
+                localStorage.setItem('darkMode', toggle.checked);
+            });
+        }
+    };
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+    setupDarkModeToggle('darkModeToggle');
+    setupDarkModeToggle('darkModeToggleMobile');
+
+    // --- HEADER SCROLL EFFECT ---
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // --- MOBILE MENU ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // --- TSPARTICLES HERO BACKGROUND ---
+    if (typeof tsParticles !== 'undefined') {
+        tsParticles.load("tsparticles-hero", {
+            fpsLimit: 60,
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: "#888" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                links: { color: "#888", distance: 150, enable: true, opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out" }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { grab: { distance: 140, line_linked: { opacity: 1 } }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+    }
+
+    // --- SCROLL-TRIGGERED ANIMATIONS SETUP ---
+    function setupScrollTriggers() {
+        // Generic reveal animations
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.fromTo(elem, 
+                { y: 50, autoAlpha: 0 },
+                {
+                    duration: 1.2,
+                    y: 0,
+                    autoAlpha: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reset'
+                    },
+                    delay: elem.dataset.revealDelay || 0
+                }
+            );
+        });
+        
+        // --- FOUNDER CARD FLIP & 3D HOVER ---
+        const founderCards = document.querySelectorAll('.founder-card-container');
+        founderCards.forEach(container => {
+            const card = container.querySelector('.founder-card');
+            const toggleButtons = card.querySelectorAll('.expertise-toggle-btn');
+            
+            toggleButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isFlipped = card.classList.contains('is-flipped');
+                    card.classList.toggle('is-flipped');
+                    
+                    const skillBars = card.querySelectorAll('.skill-bar');
+                    if (!isFlipped) {
+                        gsap.to(skillBars, {
+                            width: (i, target) => `${target.dataset.width}%`,
+                            duration: 0.8,
+                            ease: 'power2.inOut',
+                            stagger: 0.1
+                        });
+                    } else {
+                        gsap.set(skillBars, { width: '0%' });
+                    }
+                });
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (card.classList.contains('is-flipped')) return;
+                let rect = container.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                let y = e.clientY - rect.top;
+                let xP = (x / rect.width - 0.5);
+                let yP = (y / rect.height - 0.5);
+                gsap.to(card, {
+                    rotationY: xP * 20, rotationX: yP * -20,
+                    ease: "power1.out", duration: 0.5
+                });
+            });
+
+            container.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotationY: 0, rotationX: 0,
+                    ease: "power1.out", duration: 1
+                });
+            });
+        });
+
+        // --- INTERACTIVE TIMELINE ANIMATION ---
+        const timelineEl = document.getElementById('journey-timeline');
+        if (timelineEl) {
+            const timelineProgress = document.getElementById('timeline-progress');
+            const timelineItems = gsap.utils.toArray(".timeline-item");
+
+            gsap.to(timelineProgress, {
+                height: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: timelineEl,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: true
+                }
+            });
+
+            timelineItems.forEach(item => {
+                const content = item.querySelector('.timeline-content');
+                const isLeft = item.classList.contains('timeline-item-left');
+                
+                // Set initial state
+                gsap.set(item, { autoAlpha: 1 }); // Make the container visible
+                gsap.set(content, { x: isLeft ? -100 : 100, autoAlpha: 0 });
+
+                // Animate based on scroll
+                gsap.to(content, {
+                    x: 0,
+                    autoAlpha: 1,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reset'
+                    }
+                });
+            });
+        }
+    }
+});
+</script>
+
 </body>
 </html>
-
-            
