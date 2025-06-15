@@ -132,32 +132,59 @@
         input:checked + .slider { background-color: var(--text-accent); }
         input:checked + .slider:before { transform: translateX(20px); }
 
-        /* Styles for heading interactivity */
+        /* Styles for heading interactivity - Button-like */
         .section-header h2.gradient-text {
             position: relative;
-            display: inline-block; /* Ensures proper positioning for pseudo-elements and transforms */
+            display: inline-block; /* Keeps it from taking full width */
             cursor: pointer;
-            background-size: 200% auto; /* Required for gradient animation */
-            transition: background-position 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth gradient shift */
-        }
+            padding: 0.6rem 1.8rem; /* Adjust padding for desired button size */
+            border-radius: 30px;    /* Pill shape for a modern button feel */
+            
+            /* Button's own background color and border */
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px -1px color-mix(in srgb, var(--shadow-color) 40%, transparent), 
+                        0 1px 3px -1px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 
-        .section-header h2.gradient-text::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px; /* Thickness of the underline */
-            bottom: -6px; /* Distance from text */
-            left: 0; /* Start underline from the left */
-            background-color: var(--text-accent); /* Use your accent color */
-            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth underline animation */
+            /* Text Gradient: Applied as a background image clipped to the text */
+            background-image: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            background-size: 250% auto; /* Increased size for more dramatic gradient shift */
+            background-position: 0% center; /* Initial position for the text gradient */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent; /* Makes the underlying text color transparent */
+            
+            /* Transitions for smooth hover/active effects */
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), /* Elastic feel for transform */
+                        box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background-color 0.3s ease,
+                        background-position 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* For text gradient animation */
+            
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            outline: none; /* Removes default focus outline if any, manage focus visibility if needed for accessibility */
         }
 
         .section-header h2.gradient-text:hover {
-            background-position: -100% center; /* Shift gradient to the other side */
+            transform: translateY(-4px) scale(1.02); /* Lift and slightly enlarge */
+            box-shadow: 0 6px 12px -2px color-mix(in srgb, var(--shadow-color) 50%, transparent), 
+                        0 3px 7px -3px color-mix(in srgb, var(--shadow-color) 35%, transparent);
+            background-color: var(--bg-accent); /* Button box background changes on hover */
+            
+            /* Animate text gradient on hover */
+            background-position: -150% center; /* Shift gradient to the other side */
         }
 
-        .section-header h2.gradient-text:hover::after {
-            width: 100%; /* Expand underline to full width */
+        .section-header h2.gradient-text:active {
+            transform: translateY(-1px) scale(0.99); /* Press down effect */
+            box-shadow: 0 1px 2px 0px color-mix(in srgb, var(--shadow-color) 30%, transparent);
+            background-color: color-mix(in srgb, var(--bg-accent) 95%, #000000 5%); /* Slightly darker button box on press */
+        }
+
+        /* The ::after pseudo-element (underline) is removed as it typically doesn't fit a button style. 
+           If you still want an underline, this can be re-added or modified. */
+        .section-header h2.gradient-text::after {
+            content: none; 
         }
     </style>
 </head>
