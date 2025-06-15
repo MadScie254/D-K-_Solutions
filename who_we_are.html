@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danco & Khadija - Who We Are: Discover Our Team</title>
+    <title>Danco & Khadija - Who We Are: A Dynamic Showcase</title>
     <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
 
     <!-- Tailwind CSS -->
@@ -17,16 +17,18 @@
     
     <!-- Core & Animation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
     
     <!-- GSAP for Advanced Animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
+    
+    <!-- Leaflet.js for Interactive Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <style>
-        /* --- Theme Variables (same as original) --- */
+        /* --- Theme Variables --- */
         :root {
             --bg-primary: #f3f4f6;
             --bg-secondary: #ffffff;
@@ -60,339 +62,105 @@
         }
 
         /* --- Base Styles --- */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
+        .gradient-text { background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end)); -webkit-background-clip: text; background-clip: text; color: transparent; }
         html { scroll-behavior: smooth; }
+        .reveal-up { opacity: 0; visibility: hidden; }
+        .searchable-section { transition: opacity 0.3s ease; }
+        .searchable-section.is-hidden { opacity: 0.2; pointer-events: none; }
         
-        /* --- General Reveal Animation Setup (to be controlled by GSAP) --- */
-        .reveal-up, .reveal-left, .reveal-right {
-            opacity: 0;
-            visibility: hidden; /* Hide from screen readers until animated */
-        }
-        
-        /* --- Navigation --- */
-        #main-header {
-            background-color: var(--bg-secondary);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        #main-header.scrolled {
-            background-color: var(--glass-bg);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .nav-link {
-            position: relative;
-            color: var(--text-primary);
-            transition: color 0.3s ease;
-            padding: 0.5rem 0.6rem;
-            font-size: 0.9rem;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--text-accent);
-            transition: width 0.3s ease;
-        }
+        /* --- Navigation & Search --- */
+        #main-header { background-color: var(--bg-secondary); transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+        #main-header.scrolled { background-color: var(--glass-bg); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .nav-link { position: relative; color: var(--text-primary); transition: color 0.3s ease; padding: 0.5rem 0.6rem; font-size: 0.85rem; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 50%; transform: translateX(-50%); background: var(--text-accent); transition: width 0.3s ease; }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
         .nav-link.active { color: var(--text-accent); font-weight: 600; }
-
         #mobile-menu { background-color: var(--bg-accent); }
+        #search-input { background-color: var(--bg-accent); color: var(--text-primary); }
 
-        /* --- Buttons --- */
-        .cta-button { 
-            transition: all 0.3s ease; 
-            padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600;
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            color: white;
-            box-shadow: 0 4px 15px var(--shadow-color);
-        }
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 20px var(--shadow-color);
-        }
-        
-        /* --- Section Styling --- */
-        .section-header { margin-bottom: 3rem; text-align: center; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
-        .section-header p { font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; margin-left: auto; margin-right: auto; }
-
-        @media (min-width: 768px) {
-            .section-header h2 { font-size: 3rem; }
-        }
-
-        /* --- Upgraded Founder Card --- */
-        .founder-card-container {
-            perspective: 1500px;
-        }
-        .founder-card {
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            background-color: transparent; /* Wrapper is transparent */
-        }
-        .founder-card .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            border-radius: 1rem;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-secondary);
-            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07);
-        }
-        .founder-card .card-front {
-            padding: 2.5rem;
-            z-index: 2;
-        }
-        .founder-card .card-back {
-            padding: 2.5rem;
-            transform: rotateY(180deg);
-            z-index: 1;
-            overflow-y: auto;
-        }
-        .founder-card.is-flipped {
-            transform: rotateY(180deg);
-        }
-
-        .founder-card img {
-            width: 128px;
-            height: 128px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1.5rem auto;
-            border: 4px solid var(--text-accent);
-            box-shadow: 0 0 0 8px color-mix(in srgb, var(--text-accent) 20%, transparent);
-            transition: transform 0.3s ease;
-        }
-        
-        .founder-card-container:hover img {
-            transform: scale(1.05);
-        }
-
-        .expertise-toggle-btn {
-            background-color: var(--bg-accent);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-        .expertise-toggle-btn:hover {
-            background-color: color-mix(in srgb, var(--text-accent) 20%, var(--bg-accent));
-            color: var(--text-accent);
-            transform: translateY(-2px);
-        }
-
-        /* Skill bars for back of card */
-        .skill { margin-bottom: 0.75rem; }
-        .skill-name { font-weight: 600; margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-size: 0.9rem; }
+        /* --- Founder Card --- */
+        .founder-card-container { perspective: 1500px; }
+        .founder-card { position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); background-color: transparent; }
+        .founder-card .card-face { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; border-radius: 1rem; border: 1px solid var(--border-color); background-color: var(--bg-secondary); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07); }
+        .founder-card .card-front { padding: 2rem; z-index: 2; }
+        .founder-card .card-back { padding: 2rem; transform: rotateY(180deg); z-index: 1; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
+        .founder-card .card-back::-webkit-scrollbar { display: none; }
+        .founder-card.is-flipped { transform: rotateY(180deg); }
+        .founder-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.5rem auto; border: 4px solid var(--text-accent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--text-accent) 20%, transparent); transition: transform 0.3s ease; }
+        .founder-card-container:hover img { transform: scale(1.05); }
+        .expertise-toggle-btn { background-color: var(--bg-accent); color: var(--text-primary); border: 1px solid var(--border-color); transition: all 0.3s ease; }
+        .expertise-toggle-btn:hover { background-color: color-mix(in srgb, var(--text-accent) 20%, var(--bg-accent)); color: var(--text-accent); transform: translateY(-2px); }
+        .skill { margin-bottom: 0.7rem; }
+        .skill-name { font-weight: 600; margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-size: 0.85rem; }
         .skill-bar-container { height: 8px; width: 100%; background-color: var(--bg-accent); border-radius: 4px; overflow: hidden; }
-        .skill-bar {
-            height: 100%;
-            width: 0; /* Animated by GSAP */
-            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid));
-            border-radius: 4px;
-        }
+        .skill-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid)); border-radius: 4px; }
+
+        /* --- Global Reach & Stats --- */
+        #global-reach-map { height: 450px; border-radius: 1rem; border: 1px solid var(--border-color); z-index: 1; }
+        .leaflet-popup-content-wrapper, .leaflet-popup-tip { background-color: var(--bg-secondary); color: var(--text-primary); }
+        .dark-mode .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(95%) contrast(90%); }
+        .stat-card { background-color: var(--bg-secondary); padding: 1.5rem; border-radius: 0.75rem; text-align: center; box-shadow: 0 8px 25px -5px rgba(0,0,0,0.05); }
+
+        /* --- NEW: Core Philosophies --- */
+        .philosophy-card { background-color: var(--bg-secondary); border-radius: 1rem; border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .philosophy-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -10px var(--shadow-color); }
+        .philosophy-content { max-height: 0; overflow: hidden; transition: max-height 0.6s ease-in-out, padding 0.6s ease-in-out; }
+        .philosophy-card.active .philosophy-content { max-height: 500px; padding-top: 1.5rem; }
+        .philosophy-card.active .philosophy-icon { transform: rotate(180deg); }
+
+        /* --- NEW: Tooling Arsenal --- */
+        .tool-card { background-color: var(--bg-secondary); border-radius: 1rem; border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px var(--shadow-color); }
+        .tool-logo { height: 48px; width: 48px; object-fit: contain; }
+
+        /* --- NEW: GitHub Activity Feed --- */
+        .activity-feed-item { border-left: 3px solid var(--border-color); transition: border-color 0.3s ease; }
+        .activity-feed-item:hover { border-left-color: var(--text-accent); }
+        #feed-spinner { display: none; }
+        #feed-spinner.loading { display: block; }
         
-        /* --- Upgraded Interactive Timeline --- */
-        #journey-timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        #journey-timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--bg-accent);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            z-index: 0;
-        }
-        #timeline-progress {
-            position: absolute;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-mid));
-            top: 0;
-            left: 50%;
-            margin-left: -2px;
-            z-index: 1;
-            height: 0; /* Animated by GSAP ScrollTrigger */
-        }
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            visibility: hidden; /* Initially hide the container */
-        }
-        .timeline-item::after { /* The dot on the timeline */
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            right: -12px;
-            background-color: var(--bg-primary);
-            border: 4px solid var(--text-accent);
-            top: 15px;
-            border-radius: 50%;
-            z-index: 2;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        .timeline-item-left {
-            left: 0;
-        }
-        .timeline-item-right {
-            left: 50%;
-        }
-        .timeline-item-right::after {
-            left: -12px;
-        }
-        .timeline-content {
-            padding: 20px 30px;
-            background-color: var(--bg-secondary);
-            position: relative;
-            border-radius: 0.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: left;
-        }
-         .timeline-item-left .timeline-content { text-align: right; }
-
-        .timeline-item:hover .timeline-content {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.1);
-        }
-        .timeline-item:hover::after {
-            transform: scale(1.2);
-            background-color: var(--text-accent);
-        }
-
-        .timeline-year {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--text-accent);
-        }
-        
-        /* Responsive Timeline */
-        @media screen and (max-width: 768px) {
-            #journey-timeline::after, #timeline-progress {
-                left: 31px;
-            }
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            .timeline-item-left, .timeline-item-right {
-                left: 0%;
-            }
-            .timeline-item-left::after, .timeline-item-right::after {
-                left: 19px; /* 31px (line) - 12px (half dot) */
-            }
-            .timeline-content, .timeline-item-left .timeline-content {
-                text-align: left;
-            }
-        }
-
-        /* --- Footer (same as original) --- */
-        footer {
-            background-color: var(--bg-accent);
-        }
-
-        /* --- Hero Section (same as original) --- */
-        #hero #tsparticles-hero {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-        }
-        .glassmorphic {
-            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-        }
-        
-        /* --- Loading Overlay (same as original) --- */
-        #loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10000;
-            opacity: 1; transition: opacity 0.7s ease-out, visibility 0.7s; visibility: visible;
-        }
+        /* --- General Boilerplate --- */
+        #hero #tsparticles-hero { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .glassmorphic { background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--glass-border); }
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 1; transition: opacity 0.7s ease-out, visibility 0.7s; visibility: visible; }
         #loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        /* --- Dark Mode Toggle --- */
-        .toggle-switch {
-            position: relative; display: inline-block; width: 48px; height: 28px;
-        }
+        .toggle-switch { position: relative; display: inline-block; width: 48px; height: 28px; }
         .toggle-switch input { display: none; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc; border-radius: 28px; transition: 0.4s;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
-            background-color: white; border-radius: 50%; transition: 0.4s;
-        }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 28px; transition: 0.4s; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: 0.4s; }
         input:checked + .slider { background-color: var(--text-accent); }
         input:checked + .slider:before { transform: translateX(20px); }
-
     </style>
 </head>
 <body class="light-mode">
-    <!-- Loading Overlay -->
-    <div id="loading-overlay">
-        <div class="text-center">
-            <div id="lottie-container" style="width: 150px; height: 150px; margin: 0 auto;"></div>
-            <p class="text-lg font-semibold mt-4" style="color: var(--text-primary);">Crafting Digital Excellence...</p>
-        </div>
-    </div>
 
-    <!-- Main Header -->
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-10">
+    <div id="loading-overlay"> <div class="text-center"> <div id="lottie-container" style="width: 150px; height: 150px; margin: 0 auto;"></div> <p class="text-lg font-semibold mt-4" style="color: var(--text-primary);">Architecting Intelligence...</p> </div> </div>
+
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 py-3 px-6 md:px-10">
         <nav class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold gradient-text">D-K Solutions</a>
-            <div class="hidden lg:flex items-center space-x-2">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="who_we_are.html" class="nav-link active">Who We Are</a>
-                <a href="services.html" class="nav-link">Services</a>
-                <a href="process.html" class="nav-link">Our Process</a>
-                <a href="expertise.html" class="nav-link">Expertise</a>
-                <a href="work.html" class="nav-link">Our Work</a>
-                <a href="publications.html" class="nav-link">Publications</a>
-                <a href="testimonials.html" class="nav-link">Testimonials</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-                <label class="toggle-switch ml-4">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="slider"></span>
-                </label>
+            <div class="hidden lg:flex items-center flex-grow">
+                <div class="flex-grow flex justify-center items-center space-x-2">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="who_we_are.html" class="nav-link active">Who We Are</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                    <a href="process.html" class="nav-link">Our Process</a>
+                    <a href="expertise.html" class="nav-link">Expertise</a>
+                    <a href="work.html" class="nav-link">Our Work</a>
+                    <a href="publications.html" class="nav-link">Publications</a>
+                    <a href="testimonials.html" class="nav-link">Testimonials</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div class="relative w-48">
+                    <input type="text" id="search-input" placeholder="Search page..." class="w-full pl-8 pr-3 py-1.5 rounded-full border border-border-color text-sm focus:outline-none focus:ring-2 focus:ring-accent">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary"></i>
+                </div>
+                <label class="toggle-switch ml-4"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
             </div>
             <div class="lg:hidden flex items-center">
-                <label class="toggle-switch mr-4">
-                    <input type="checkbox" id="darkModeToggleMobile">
-                    <span class="slider"></span>
-                </label>
-                <button id="mobile-menu-button" class="text-text-primary focus:outline-none">
-                    <i class="fas fa-bars fa-lg"></i>
-                </button>
+                <label class="toggle-switch mr-4"><input type="checkbox" id="darkModeToggleMobile"><span class="slider"></span></label>
+                <button id="mobile-menu-button" class="text-text-primary focus:outline-none"><i class="fas fa-bars fa-lg"></i></button>
             </div>
         </nav>
         <div id="mobile-menu" class="lg:hidden hidden bg-secondary shadow-lg">
@@ -409,190 +177,92 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden p-6 md:p-10">
+        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden p-6 md:p-10 searchable-section" data-search-index="hero welcome innovation vision code pioneers growth">
             <div id="tsparticles-hero"></div>
             <div class="relative z-10 p-8 md:p-12 max-w-5xl mx-auto glassmorphic rounded-2xl reveal-up">
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight gradient-text">
-                    Architects of Digital Innovation
-                </h1>
-                <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">
-                    We are a collective of passionate innovators, strategic thinkers, and technical virtuosos, united to craft intelligent digital solutions that propel businesses into tomorrow.
-                </p>
-                <div>
-                    <a href="#our-team" class="cta-button text-lg group">
-                        Meet The Team 
-                        <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                    </a>
-                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight gradient-text">The Fusion of Vision and Code</h1>
+                <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">We are more than a company; we are a brain trust of digital pioneers, data storytellers, and security custodians, dedicated to engineering bespoke solutions that redefine industries and catalyze growth.</p>
+                <div><a href="#our-team" class="cta-button text-lg group">Meet The Architects <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></a></div>
             </div>
         </section>
 
-        <!-- Team Section -->
-        <section id="our-team" class="bg-primary py-20">
+        <section id="our-team" class="bg-primary py-20 searchable-section" data-search-index="team innovators core daniel wanjala khadija khalid austin arnold wopata architect strategy security">
             <div class="container mx-auto px-6">
                 <div class="section-header reveal-up">
-                    <h2 class="gradient-text">Meet Our Innovators</h2>
-                    <p>Our collective strength is derived from the diverse expertise and unwavering dedication of our exceptional team. Each member brings a unique blend of skills and a shared passion for digital transformation.</p>
+                    <h2 class="gradient-text">Our Core Innovators</h2>
+                    <p>Our strength is not just in our technology, but in the brilliant minds that wield it. Each leader brings a profound depth of experience, a relentless drive for excellence, and a shared vision for a smarter digital future.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-
                     <!-- Daniel Wanjala Card -->
-                    <div class="founder-card-container reveal-up">
-                        <div class="founder-card" style="min-height: 620px;">
-                            <!-- Card Front -->
+                    <div class="founder-card-container reveal-up" data-search-index="daniel wanjala architect ai visionary python django deep learning llm react devops aws econometrics big data spark kafka">
+                        <div class="founder-card" style="min-height: 650px;">
                             <div class="card-face card-front text-center">
-                                <img src="assets/daniel-wanjala.jpg" alt="Daniel Wanjala" class="mx-auto">
+                                <img src="https://placehold.co/128x128/3B82F6/FFFFFF?text=DW" alt="Daniel Wanjala" class="mx-auto">
                                 <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
-                                <p class="text-accent font-medium mb-4">Lead Developer / ML Engineer</p>
-                                <p class="text-text-secondary mb-6">
-                                    Daniel architects robust, scalable software and intelligent predictive models. He transforms complex data into actionable intelligence, building systems that drive significant business value.
-                                </p>
-                                <div class="mt-auto">
-                                    <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
-                                        View Expertise <i class="fas fa-arrow-right ml-2"></i>
-                                    </button>
-                                </div>
+                                <p class="text-accent font-medium mb-4">Chief Technical Architect & AI Visionary</p>
+                                <p class="text-text-secondary mb-6 text-sm">A master polyglot in the languages of machines and data, Daniel is the chief architect of our technological marvels. He doesn't just write code; he composes symphonies of logic, designing robust, scalable systems and pioneering our foray into advanced machine learning. His work involves transforming chaotic data streams into predictive intelligence, building the very engines that power our clients' success.</p>
+                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">Unveil Expertise <i class="fas fa-arrow-right ml-2"></i></button></div>
                             </div>
-                            <!-- Card Back -->
                             <div class="card-face card-back">
-                                <h4 class="text-xl font-bold text-center mb-4">Core Expertise</h4>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Python & Django</span><span>95%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Machine Learning (TF/PyTorch)</span><span>92%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Natural Language Processing (NLP)</span><span>88%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="88"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>React & Next.js</span><span>85%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="85"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Advanced API Design (GraphQL)</span><span>89%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="89"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Cloud & DevOps (AWS/Docker)</span><span>82%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="82"></div></div>
-                                </div>
-                                <div class="mt-auto">
-                                     <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
-                                        <i class="fas fa-arrow-left mr-2"></i> View Bio
-                                    </button>
-                                </div>
+                                <h4 class="text-xl font-bold text-center mb-3">Technical Proficiencies</h4>
+                                <div class="skill"><div class="skill-name"><span>Python & Advanced Django</span><span>98%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="98"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Deep Learning (TF/PyTorch)</span><span>95%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Large Language Models (LLMs)</span><span>92%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Full-Stack React & Next.js</span><span>90%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>GraphQL & Federated APIs</span><span>91%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Cloud-Native & DevOps (AWS)</span><span>88%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="88"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Econometrics & Time-Series</span><span>93%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Big Data Engineering (Spark/Kafka)</span><span>87%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="87"></div></div></div>
+                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full"><i class="fas fa-arrow-left mr-2"></i> Return to Bio</button></div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Khadia Khalid Card -->
-                    <div class="founder-card-container reveal-up" data-reveal-delay="0.2">
-                         <div class="founder-card" style="min-height: 620px;">
-                            <!-- Card Front -->
+                    <!-- Khadija Khalid Card -->
+                    <div class="founder-card-container reveal-up" data-reveal-delay="0.2" data-search-index="khadija khalid strategy systems analyst foresight product management ux ui agile scrum data visualization consulting intelligence">
+                         <div class="founder-card" style="min-height: 650px;">
                             <div class="card-face card-front text-center">
-                                <img src="assets/khadia-khalid.jpg" alt="Khadia Khalid" class="mx-auto">
-                                <h3 class="text-2xl font-semibold mb-1">Khadia Khalid 👩‍💼</h3>
-                                <p class="text-accent font-medium mb-4">Digital Strategy & Systems Partner</p>
-                                <p class="text-text-secondary mb-6">
-                                    Khadia is a visionary thinker, transforming ideas into actionable systems. She aligns digital goals with efficient delivery, balancing innovation, communication, and measurable outcomes.
-                                </p>
-                                <div class="mt-auto">
-                                    <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
-                                        View Expertise <i class="fas fa-arrow-right ml-2"></i>
-                                    </button>
-                                </div>
+                                <img src="https://placehold.co/128x128/EC4899/FFFFFF?text=KK" alt="Khadija Khalid" class="mx-auto">
+                                <h3 class="text-2xl font-semibold mb-1">Khadija Khalid 👩‍💼</h3>
+                                <p class="text-accent font-medium mb-4">Chief Strategy Officer & Systems Analyst</p>
+                                <p class="text-text-secondary mb-6 text-sm">Khadija is the visionary conductor of our orchestra, translating abstract ideas into tangible, impactful systems. She possesses a rare dual-fluency in human-centric design and operational logistics. She masterfully aligns ambitious digital goals with ruthlessly efficient execution, ensuring that every project is a perfect synthesis of groundbreaking innovation, crystal-clear communication, and rigorously measured outcomes.</p>
+                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">Unveil Expertise <i class="fas fa-arrow-right ml-2"></i></button></div>
                             </div>
-                            <!-- Card Back -->
                             <div class="card-face card-back">
-                               <h4 class="text-xl font-bold text-center mb-4">Core Expertise</h4>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Go-to-Market Strategy</span><span>95%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>UI/UX & Product Design</span><span>93%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>User Journey Mapping</span><span>90%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Agile Project Management</span><span>92%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div>
-                                </div>
-                                 <div class="skill">
-                                    <div class="skill-name"><span>Data-driven Storytelling</span><span>88%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="88"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Brand Communication</span><span>85%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="85"></div></div>
-                                </div>
-                                <div class="mt-auto">
-                                     <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
-                                        <i class="fas fa-arrow-left mr-2"></i> View Bio
-                                    </button>
-                                </div>
+                               <h4 class="text-xl font-bold text-center mb-3">Strategic Capabilities</h4>
+                                <div class="skill"><div class="skill-name"><span>Strategic Foresight & GTM</span><span>97%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="97"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Product Lifecycle Management</span><span>94%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="94"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Behavioral UX/UI Research</span><span>91%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Agile & Scrum Mastery</span><span>95%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Data Visualization & Storytelling</span><span>90%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Digital Transformation Consulting</span><span>93%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Competitive Intelligence</span><span>92%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Stakeholder Relationship Mgt.</span><span>96%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="96"></div></div></div>
+                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full"><i class="fas fa-arrow-left mr-2"></i> Return to Bio</button></div>
                             </div>
                         </div>
                     </div>
-
                     <!-- Austin Arnold Wopata Card -->
-                    <div class="founder-card-container reveal-up" data-reveal-delay="0.4">
-                        <div class="founder-card" style="min-height: 620px;">
-                             <!-- Card Front -->
+                    <div class="founder-card-container reveal-up" data-reveal-delay="0.4" data-search-index="austin arnold wopata security ciso offensive red purple cloud zero trust forensics penetration testing grc devsecops">
+                        <div class="founder-card" style="min-height: 650px;">
                             <div class="card-face card-front text-center">
-                                <img src="assets/austin-arnold-wopata.jpg" alt="Austin Arnold Wopata" class="mx-auto">
+                                <img src="https://placehold.co/128x128/F59E0B/FFFFFF?text=AW" alt="Austin Arnold Wopata" class="mx-auto">
                                 <h3 class="text-2xl font-semibold mb-1">Austin Arnold Wopata 🛡️</h3>
-                                <p class="text-accent font-medium mb-4">Cybersecurity & Network Architect</p>
-                                <p class="text-text-secondary mb-6">
-                                    Austin is a stalwart in digital defense, fortifying client assets against threats. He embeds proactive security from the ground up, ensuring solutions are innovative and inherently secure.
-                                </p>
-                                <div class="mt-auto">
-                                    <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
-                                        View Expertise <i class="fas fa-arrow-right ml-2"></i>
-                                    </button>
-                                </div>
+                                <p class="text-accent font-medium mb-4">Chief Information Security Officer</p>
+                                <p class="text-text-secondary mb-6 text-sm">Austin is the unwavering sentinel of our digital domain, a grandmaster in the art of cyber warfare and defense. He operates on the principle of "secure by design," weaving an impenetrable fabric of security into the DNA of every project. His expertise extends from proactive threat hunting and ethical hacking to architecting resilient, zero-trust networks, ensuring that our clients' innovations are not just powerful, but invulnerable.</p>
+                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">Unveil Expertise <i class="fas fa-arrow-right ml-2"></i></button></div>
                             </div>
-                            <!-- Card Back -->
                             <div class="card-face card-back">
-                                <h4 class="text-xl font-bold text-center mb-4">Core Expertise</h4>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Ethical Hacking & Red Teaming</span><span>98%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="98"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Cloud Security Architecture</span><span>94%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="94"></div></div>
-                                </div>
-                                 <div class="skill">
-                                    <div class="skill-name"><span>Zero Trust Implementation</span><span>90%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Incident Response & Forensics</span><span>95%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div>
-                                </div>
-                                 <div class="skill">
-                                    <div class="skill-name"><span>Penetration Testing (VAPT)</span><span>92%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div>
-                                </div>
-                                <div class="skill">
-                                    <div class="skill-name"><span>Compliance (GDPR/ISO 27001)</span><span>91%</span></div>
-                                    <div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div>
-                                </div>
-                                <div class="mt-auto">
-                                     <button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">
-                                        <i class="fas fa-arrow-left mr-2"></i> View Bio
-                                    </button>
-                                </div>
+                                <h4 class="text-xl font-bold text-center mb-3">Security Competencies</h4>
+                                <div class="skill"><div class="skill-name"><span>Offensive Security (Red/Purple)</span><span>99%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="99"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Cloud Security Posture Mgt.</span><span>96%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="96"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Zero Trust Network Architecture</span><span>94%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="94"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Digital Forensics & IR</span><span>97%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="97"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Advanced Penetration Testing</span><span>95%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>GRC (GDPR, ISO 27001, NIST)</span><span>93%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>AI & ML Security</span><span>90%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div></div>
+                                <div class="skill"><div class="skill-name"><span>Automated DevSecOps Pipelines</span><span>91%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div></div>
+                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full"><i class="fas fa-arrow-left mr-2"></i> Return to Bio</button></div>
                             </div>
                         </div>
                     </div>
@@ -600,155 +270,100 @@
             </div>
         </section>
 
-        <!-- Our Journey Section -->
-        <section id="our-journey" class="bg-secondary py-20">
+        <section id="global-reach" class="bg-secondary py-20 searchable-section" data-search-index="global reach impact map stats kenya nairobi projects clients">
             <div class="container mx-auto px-6">
                 <div class="section-header reveal-up">
-                    <h2 class="gradient-text">A Timeline of Innovation</h2>
-                    <p>From humble beginnings to pioneering new digital frontiers, our path has been marked by continuous learning, relentless innovation, and a steadfast commitment to our clients' success.</p>
+                    <h2 class="gradient-text">Local Roots, Global Impact</h2>
+                    <p>From our strategic nerve center in Nairobi, we orchestrate and deploy world-class digital solutions, making a significant impact on our clients' operations and bottom line.</p>
                 </div>
-                
-                <div id="journey-timeline">
-                    <div id="timeline-progress"></div>
-                    <!-- 2018 -->
-                    <div class="timeline-item timeline-item-left">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">The Genesis: A Vision Takes Root</h3>
-                            <p class="timeline-year">2018</p>
-                            <p class="text-sm text-text-secondary">D-K Solutions is founded, driven by a shared passion to transform complex digital challenges into elegant, impactful solutions for local businesses.</p>
-                        </div>
-                    </div>
-                    <!-- 2019 -->
-                     <div class="timeline-item timeline-item-right">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">First Flagship Project</h3>
-                            <p class="timeline-year">2019</p>
-                            <p class="text-sm text-text-secondary">Successfully delivered our first major integrated digital platform, showcasing our full-stack capabilities and strategic approach to e-commerce.</p>
-                        </div>
-                    </div>
-                    <!-- 2020 -->
-                    <div class="timeline-item timeline-item-left">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">Launched First SaaS Product</h3>
-                            <p class="timeline-year">2020</p>
-                            <p class="text-sm text-text-secondary">Introduced our first Software-as-a-Service solution, providing a scalable and accessible analytics platform for small to medium enterprises.</p>
-                        </div>
-                    </div>
-                    <!-- 2021 -->
-                    <div class="timeline-item timeline-item-right">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">Pioneering AI & ML</h3>
-                            <p class="timeline-year">2021</p>
-                            <p class="text-sm text-text-secondary">Expanded into AI with predictive analytics models for supply chain optimization, marking a new chapter of data-driven innovation.</p>
-                        </div>
-                    </div>
-                    <!-- 2022 -->
-                    <div class="timeline-item timeline-item-left">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">Strengthening Our Core</h3>
-                            <p class="timeline-year">2022</p>
-                            <p class="text-sm text-text-secondary">Welcomed Austin Arnold Wopata, a seasoned Cybersecurity Expert, to the team, bolstering our capabilities in digital defense.</p>
-                        </div>
-                    </div>
-                    <!-- 2023 -->
-                    <div class="timeline-item timeline-item-right">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">Major Open Source Contribution</h3>
-                            <p class="timeline-year">2023</p>
-                            <p class="text-sm text-text-secondary">Released a widely-adopted open-source library for data visualization, reinforcing our commitment to community and thought leadership.</p>
-                        </div>
-                    </div>
-                     <!-- 2024 -->
-                    <div class="timeline-item timeline-item-left">
-                        <div class="timeline-content">
-                            <h3 class="font-bold text-xl mb-2 text-primary">Expanding Horizons</h3>
-                            <p class="timeline-year">2024</p>
-                            <p class="text-sm text-text-secondary">Successfully expanded our client base beyond national borders, taking on international projects and demonstrating our global adaptability.</p>
-                        </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2 reveal-up"><div id="global-reach-map"></div></div>
+                    <div class="space-y-6">
+                        <div class="stat-card reveal-up" data-reveal-delay="0.1"><i class="fas fa-globe-africa fa-2x text-accent mb-2"></i><h3 id="countries-served-stat" class="text-4xl font-extrabold" data-counter="1">1</h3><p class="text-text-secondary font-semibold">Country Served</p></div>
+                        <div class="stat-card reveal-up" data-reveal-delay="0.2"><i class="fas fa-project-diagram fa-2x text-accent mb-2"></i><h3 id="projects-completed-stat" class="text-4xl font-extrabold" data-counter="0">...</h3><p class="text-text-secondary font-semibold">Projects Completed</p></div>
+                        <div class="stat-card reveal-up" data-reveal-delay="0.3"><i class="fas fa-hands-helping fa-2x text-accent mb-2"></i><h3 id="clients-served-stat" class="text-4xl font-extrabold" data-counter="0">...</h3><p class="text-text-secondary font-semibold">Valued Clients</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Our Values Section -->
-        <section id="our-values" class="bg-primary py-20">
+        <section id="core-philosophies" class="bg-primary py-20 searchable-section" data-search-index="philosophy values principles data-first secure design collaboration agile">
+             <div class="container mx-auto px-6">
+                <div class="section-header reveal-up">
+                    <h2 class="gradient-text">Our Core Philosophies</h2>
+                    <p>These are the foundational principles that govern our work, our partnerships, and our pursuit of excellence. They are not just ideals; they are our operational code.</p>
+                </div>
+                <div id="philosophy-container" class="space-y-4 max-w-4xl mx-auto">
+                    <!-- Philosophies will be injected here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section id="live-activity" class="bg-secondary py-20 searchable-section" data-search-index="live github activity feed commits repository push create">
             <div class="container mx-auto px-6">
+                <div class="section-header reveal-up">
+                    <h2 class="gradient-text">Live from the Forge</h2>
+                    <p>A real-time glimpse into our ongoing work. This feed showcases the latest commits, repository creations, and contributions from our team on GitHub.</p>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <div id="github-activity-feed" class="space-y-6">
+                        <!-- Activity items will be injected here -->
+                    </div>
+                    <div id="feed-spinner" class="mt-8 text-center text-accent">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tooling-arsenal" class="bg-primary py-20 searchable-section" data-search-index="tooling arsenal technology stack frontend backend ml devops data analytics">
+             <div class="container mx-auto px-6">
+                <div class="section-header reveal-up">
+                    <h2 class="gradient-text">Our Tooling Arsenal</h2>
+                    <p>We believe in using the best tool for the job. Our technology stack is a carefully curated arsenal of best-in-class frameworks, languages, and platforms.</p>
+                </div>
+                <div id="tooling-container" class="space-y-12">
+                     <!-- Tooling categories will be injected here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section id="our-vibe" class="bg-secondary py-20 searchable-section" data-search-index="vibe music spotify playlist coding">
+            <div class="container mx-auto px-6 text-center">
                  <div class="section-header reveal-up">
-                    <h2 class="gradient-text">Values That Guide Us</h2>
-                    <p>Our ethos is built upon a bedrock of fundamental values that shape every decision, interaction, and innovation at D-K Solutions.</p>
+                    <h2 class="gradient-text">Our Coding Vibe</h2>
+                    <p>Fueling our late-night coding sessions and breakthrough moments. This is the soundtrack to our innovation.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-secondary p-8 rounded-lg text-center reveal-up" style="border-left: 4px solid var(--gradient-start);">
-                        <i class="fas fa-lightbulb fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Innovation</h3>
-                        <p class="text-text-secondary">We deliver solutions that are not just contemporary, but future-proof, ensuring our clients are always a step ahead.</p>
-                    </div>
-                    <div class="bg-secondary p-8 rounded-lg text-center reveal-up" data-reveal-delay="0.1" style="border-left: 4px solid var(--gradient-mid);">
-                        <i class="fas fa-handshake fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Integrity</h3>
-                        <p class="text-text-secondary">Honesty and openness form the cornerstone of our partnerships, building trust through every single interaction.</p>
-                    </div>
-                    <div class="bg-secondary p-8 rounded-lg text-center reveal-up" data-reveal-delay="0.2" style="border-left: 4px solid var(--gradient-end);">
-                        <i class="fas fa-users fa-3x text-accent mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Collaboration</h3>
-                        <p class="text-text-secondary">We immerse ourselves in our clients' worlds, fostering synergy to turn shared goals into remarkable achievements.</p>
-                    </div>
+                <div class="max-w-3xl mx-auto reveal-up">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWY7SO3HC2gxu?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="bg-secondary py-20 text-center">
-            <div class="container mx-auto px-6 reveal-up">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Ready to Co-Create the Future?</h2>
-                <p class="text-lg text-secondary max-w-3xl mx-auto mb-8">
-                    Connect with us to begin a partnership defined by innovation, expertise, and unparalleled dedication.
-                </p>
-                <a href="contact.html" class="cta-button text-lg">Let's Build Together <i class="fas fa-rocket ml-2"></i></a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-accent py-10">
-        <div class="container mx-auto px-6 text-center md:text-left">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 gradient-text">D-K Solutions</h3>
-                    <p class="text-text-secondary">Intelligent Digital Solutions, Advanced Analytics & Research.</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Explore</h4>
-                    <ul>
+        <footer class="bg-accent py-12">
+            <div class="container mx-auto px-6 text-center md:text-left">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div><h3 class="text-xl font-bold mb-4 gradient-text">D-K Solutions</h3><p class="text-text-secondary text-sm">Pioneering Intelligent Digital Solutions, Advanced Analytics & Fortified Security.</p></div>
+                    <div><h4 class="text-lg font-semibold mb-4">Explore</h4><ul>
                         <li><a href="index.html" class="text-text-secondary hover:text-text-accent transition-colors">Home</a></li>
                         <li><a href="who_we_are.html" class="text-text-secondary hover:text-text-accent transition-colors">Who We Are</a></li>
                         <li><a href="services.html" class="text-text-secondary hover:text-text-accent transition-colors">Services</a></li>
-                         <li><a href="process.html" class="text-text-secondary hover:text-text-accent transition-colors">Our Process</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Showcase</h4>
-                    <ul>
-                        <li><a href="expertise.html" class="text-text-secondary hover:text-text-accent transition-colors">Expertise</a></li>
                         <li><a href="work.html" class="text-text-secondary hover:text-text-accent transition-colors">Our Work</a></li>
-                        <li><a href="publications.html" class="text-text-secondary hover:text-text-accent transition-colors">Publications</a></li>
-                        <li><a href="testimonials.html" class="text-text-secondary hover:text-text-accent transition-colors">Testimonials</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
-                    <div class="space-x-4">
+                    </ul></div>
+                    <div><h4 class="text-lg font-semibold mb-4">Connect</h4><div class="space-x-4">
                         <a href="#" target="_blank" rel="noopener" title="Twitter" class="text-text-primary hover:text-text-accent"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" target="_blank" rel="noopener" title="LinkedIn" class="text-text-primary hover:text-text-accent"><i class="fab fa-linkedin-in fa-lg"></i></a>
-                        <a href="#" target="_blank" rel="noopener" title="GitHub" class="text-text-primary hover:text-text-accent"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="https://www.linkedin.com/in/daniel-wanjala-912b8b17b/" target="_blank" rel="noopener" title="LinkedIn" class="text-text-primary hover:text-text-accent"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="https://github.com/MadScie254" target="_blank" rel="noopener" title="GitHub" class="text-text-primary hover:text-text-accent"><i class="fab fa-github fa-lg"></i></a>
+                    </div></div>
+                     <div><h4 class="text-lg font-semibold mb-4">Publications</h4>
+                        <div class="space-y-2">
+                             <a href="https://orcid.org/0009-0005-1979-8555" target="_blank" rel="noopener" class="block text-sm text-text-secondary hover:text-text-accent transition-colors">View on ORCID <i class="fas fa-external-link-alt ml-1"></i></a>
+                        </div>
                     </div>
                 </div>
+                <div class="border-t border-border-color mt-8 pt-8 text-center"><p class="text-text-secondary text-sm">&copy; 2025 D-K Solutions. All rights reserved.</p></div>
             </div>
-            <div class="border-t border-border-color mt-8 pt-8 text-center">
-                <p class="text-text-secondary">&copy; 2024 D-K Solutions. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -756,209 +371,346 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- GSAP PLUGIN REGISTRATION ---
     gsap.registerPlugin(ScrollTrigger);
 
-    // --- PRELOADER ---
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const lottieContainer = document.getElementById('lottie-container');
-    
-    if (lottieContainer) {
-        lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'https://assets2.lottiefiles.com/packages/lf20_qmfs6c3i.json' 
-        });
-    }
+    // --- CONFIGURATION & DATA ---
+    const GITHUB_USERNAME = 'MadScie254';
 
-    window.addEventListener('load', () => {
-        // --- MASTER GSAP TIMELINE FOR INTRO ---
-        const masterTimeline = gsap.timeline({
-            onComplete: () => {
-                // Only after the intro is done, set up scroll triggers
-                setupScrollTriggers();
-            }
-        });
+    const PHILOSOPHIES = [
+        {
+            icon: 'fa-database',
+            title: 'Data-First Mindset',
+            description: 'We believe that data is the lifeblood of modern enterprise. Every strategy, feature, and decision is rooted in rigorous quantitative and qualitative analysis. We don\'t guess; we measure, model, and derive insight to drive predictable, optimal outcomes.'
+        },
+        {
+            icon: 'fa-shield-halved',
+            title: 'Secure by Design & Default',
+            description: 'Security is not an afterthought or a feature; it is a foundational principle woven into the fabric of every line of code we write. We build resilient, zero-trust systems designed to anticipate and neutralize threats before they materialize, ensuring enduring digital sovereignty for our clients.'
+        },
+        {
+            icon: 'fa-people-arrows',
+            title: 'Radical Collaboration',
+            description: 'True innovation occurs at the intersection of diverse perspectives. We operate as an extension of our clients\' teams, fostering an environment of radical transparency, open dialogue, and shared ownership to co-create solutions that are greater than the sum of their parts.'
+        },
+        {
+            icon: 'fa-bolt',
+            title: 'Pragmatic Agility',
+            description: 'We embrace agile methodologies not as rigid dogma, but as a flexible framework for iterative value delivery. We adapt our process to the unique contours of each project, ensuring we can pivot swiftly while maintaining an unwavering focus on the ultimate goal and delivering tangible results at every sprint.'
+        }
+    ];
 
-        // Hide loader
-        masterTimeline.to(loadingOverlay, { 
-            opacity: 0, 
-            duration: 0.7, 
-            onComplete: () => {
-                loadingOverlay.style.display = 'none';
-            }
-        });
+    const TOOLING_ARSENAL = [
+        {
+            category: 'Frontend & UI/UX',
+            tools: [
+                { name: 'React', logo: 'https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg', desc: 'Building dynamic, high-performance user interfaces with a component-based architecture.' },
+                { name: 'Next.js', logo: 'https://www.vectorlogo.zone/logos/nextjs/nextjs-icon.svg', desc: 'Enabling server-side rendering, static site generation, and powerful routing for React apps.' },
+                { name: 'Tailwind CSS', logo: 'https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg', desc: 'A utility-first CSS framework for rapid, custom UI development without leaving our HTML.' },
+                { name: 'Figma', logo: 'https://www.vectorlogo.zone/logos/figma/figma-icon.svg', desc: 'The collaborative heart of our design process, from wireframing to high-fidelity prototypes.' }
+            ]
+        },
+        {
+            category: 'Backend & Machine Learning',
+            tools: [
+                { name: 'Python', logo: 'https://www.vectorlogo.zone/logos/python/python-icon.svg', desc: 'The versatile backbone of our AI/ML and backend services, prized for its vast ecosystem.' },
+                { name: 'Django', logo: 'https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg', desc: 'Our high-level framework for secure, scalable, and rapidly developed web applications.' },
+                { name: 'TensorFlow', logo: 'https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg', desc: 'An end-to-end platform for building and deploying production-grade machine learning models.' },
+                { name: 'PostgreSQL', logo: 'https://www.vectorlogo.zone/logos/postgresql/postgresql-icon.svg', desc: 'Our open-source object-relational database of choice, renowned for its robustness and extensibility.' }
+            ]
+        },
+        {
+            category: 'DevOps & Cloud Infrastructure',
+            tools: [
+                { name: 'AWS', logo: 'https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg', desc: 'Leveraging the world\'s leading cloud platform for scalable compute, storage, and managed services.' },
+                { name: 'Docker', logo: 'https://www.vectorlogo.zone/logos/docker/docker-icon.svg', desc: 'Containerizing our applications to ensure consistency and portability across all environments.' },
+                { name: 'Kubernetes', logo: 'https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg', desc: 'Orchestrating our containerized applications for automated deployment, scaling, and management.' },
+                { name: 'Terraform', logo: 'https://www.vectorlogo.zone/logos/terraformio/terraformio-icon.svg', desc: 'Defining our infrastructure as code for versioned, repeatable, and automated provisioning.' }
+            ]
+        }
+    ];
+
+
+    // --- CORE INITIALIZATION ---
+    async function initializePage() {
+        // Parallelize API calls for speed
+        await Promise.all([
+            fetchGithubStats(),
+            fetchGithubActivity()
+        ]);
         
-        // Staggered intro animations
+        // Inject dynamic content
+        populatePhilosophies();
+        populateTooling();
+
+        // Hide preloader and start animations
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const masterTimeline = gsap.timeline({ onComplete: setupScrollTriggers });
+        masterTimeline.to(loadingOverlay, { opacity: 0, duration: 0.7, onComplete: () => loadingOverlay.style.display = 'none' });
         masterTimeline
             .from("#main-header", { y: -50, opacity: 0, duration: 1, ease: 'power3.out' }, "-=0.2")
             .from("#hero .reveal-up", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }, "-=0.7");
-    });
+        
+        // Initialize search after content is on the page
+        initializeSearch();
+    }
+
+
+    // --- API FETCHERS ---
+    async function fetchGithubStats() {
+        const projectsStatEl = document.getElementById('projects-completed-stat');
+        const clientsStatEl = document.getElementById('clients-served-stat');
+        try {
+            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+            if (!response.ok) throw new Error(`GitHub user API error: ${response.status}`);
+            const data = await response.json();
+            const repoCount = data.public_repos;
+            if (projectsStatEl) { projectsStatEl.textContent = repoCount; projectsStatEl.dataset.counter = repoCount; }
+            if (clientsStatEl) { clientsStatEl.textContent = repoCount; clientsStatEl.dataset.counter = repoCount; }
+        } catch (error) {
+            console.error("Failed to fetch GitHub stats:", error);
+            if (projectsStatEl) projectsStatEl.textContent = 'N/A';
+            if (clientsStatEl) clientsStatEl.textContent = 'N/A';
+        }
+    }
+
+    async function fetchGithubActivity() {
+        const feedContainer = document.getElementById('github-activity-feed');
+        const spinner = document.getElementById('feed-spinner');
+        if (!feedContainer || !spinner) return;
+        spinner.classList.add('loading');
+
+        try {
+            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`);
+            if (!response.ok) throw new Error(`GitHub events API error: ${response.status}`);
+            const events = await response.json();
+            
+            feedContainer.innerHTML = ''; // Clear previous content
+            let itemCount = 0;
+            events.slice(0, 5).forEach(event => { // Show latest 5 events
+                const itemHTML = formatGithubEvent(event);
+                if(itemHTML) {
+                    feedContainer.innerHTML += itemHTML;
+                    itemCount++;
+                }
+            });
+            if(itemCount === 0) {
+                 feedContainer.innerHTML = `<p class="text-text-secondary text-center">No recent public activity to display.</p>`;
+            }
+        } catch (error) {
+            console.error("Failed to fetch GitHub activity:", error);
+            feedContainer.innerHTML = `<p class="text-red-500 text-center">Could not load GitHub activity feed.</p>`;
+        } finally {
+            spinner.classList.remove('loading');
+        }
+    }
+
+    function formatGithubEvent(event) {
+        let icon, title, details = '';
+        const repoUrl = `https://github.com/${event.repo.name}`;
+        const repoName = event.repo.name;
+
+        switch(event.type) {
+            case 'PushEvent':
+                const commitCount = event.payload.commits.length;
+                if (commitCount === 0) return null; // Ignore pushes with no commits
+                icon = 'fa-arrow-up';
+                title = `Pushed ${commitCount} commit${commitCount > 1 ? 's' : ''} to`;
+                details = `<a href="${repoUrl}/commit/${event.payload.commits[0].sha}" target="_blank" rel="noopener" class="text-sm text-accent hover:underline break-all">${event.payload.commits[0].sha.substring(0,7)}: ${event.payload.commits[0].message}</a>`;
+                break;
+            case 'CreateEvent':
+                if (event.payload.ref_type !== 'repository') return null; // Only show repo creations
+                icon = 'fa-plus-circle';
+                title = 'Created a new repository';
+                break;
+            case 'PullRequestEvent':
+                if (event.payload.action !== 'opened') return null;
+                icon = 'fa-code-branch';
+                title = `Opened a pull request in`;
+                details = `<a href="${event.payload.pull_request.html_url}" target="_blank" rel="noopener" class="text-sm text-accent hover:underline">${event.payload.pull_request.title}</a>`;
+                break;
+            default:
+                return null; // Ignore other event types
+        }
+        
+        const timeAgo = getTimeAgo(new Date(event.created_at));
+        return `
+            <div class="activity-feed-item flex items-start gap-4 p-4 reveal-up">
+                <div class="mt-1"><i class="fas ${icon} text-text-secondary"></i></div>
+                <div class="flex-grow">
+                    <p class="text-text-primary font-medium">${title} <a href="${repoUrl}" target="_blank" rel="noopener" class="font-bold text-accent hover:underline">${repoName}</a></p>
+                    <div class="text-text-secondary">${details}</div>
+                    <p class="text-xs text-text-secondary mt-1">${timeAgo}</p>
+                </div>
+            </div>`;
+    }
+
+    // --- DYNAMIC CONTENT POPULATION ---
+    function populatePhilosophies() {
+        const container = document.getElementById('philosophy-container');
+        if (!container) return;
+        container.innerHTML = PHILOSOPHIES.map((p, index) => `
+            <div class="philosophy-card p-6 reveal-up" data-reveal-delay="${index * 0.1}">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <i class="fas ${p.icon} fa-2x text-accent"></i>
+                        <h3 class="text-xl font-bold">${p.title}</h3>
+                    </div>
+                    <i class="fas fa-chevron-down philosophy-icon text-text-secondary transition-transform"></i>
+                </div>
+                <div class="philosophy-content">
+                    <p class="text-text-secondary">${p.description}</p>
+                </div>
+            </div>
+        `).join('');
+
+        container.querySelectorAll('.philosophy-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const isActive = card.classList.contains('active');
+                container.querySelectorAll('.philosophy-card').forEach(c => c.classList.remove('active'));
+                if (!isActive) card.classList.add('active');
+            });
+        });
+    }
+
+    function populateTooling() {
+        const container = document.getElementById('tooling-container');
+        if (!container) return;
+        container.innerHTML = TOOLING_ARSENAL.map(category => `
+            <div class="reveal-up">
+                <h3 class="text-2xl font-bold mb-6 text-center md:text-left">${category.category}</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    ${category.tools.map(tool => `
+                        <div class="tool-card p-6 flex flex-col items-center text-center">
+                            <img src="${tool.logo}" alt="${tool.name} Logo" class="tool-logo mb-4">
+                            <h4 class="font-bold text-lg mb-2">${tool.name}</h4>
+                            <p class="text-sm text-text-secondary flex-grow">${tool.desc}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // --- CLIENT-SIDE SEARCH ---
+    function initializeSearch() {
+        const searchInput = document.getElementById('search-input');
+        const sections = document.querySelectorAll('.searchable-section');
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query === '') {
+                 sections.forEach(section => section.classList.remove('is-hidden'));
+                 return;
+            }
+            
+            sections.forEach(section => {
+                const index = section.dataset.searchIndex || '';
+                if (index.toLowerCase().includes(query)) {
+                    section.classList.remove('is-hidden');
+                } else {
+                    section.classList.add('is-hidden');
+                }
+            });
+        });
+    }
+
+    // --- UI & ANIMATIONS ---
+    function setupScrollTriggers() {
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.fromTo(elem, { y: 50, autoAlpha: 0 }, {
+                duration: 1, y: 0, autoAlpha: 1, ease: 'power3.out',
+                scrollTrigger: { trigger: elem, start: 'top 90%', toggleActions: 'play none none reset' },
+                delay: elem.dataset.revealDelay || 0
+            });
+        });
+        
+        gsap.utils.toArray('.founder-card-container').forEach(container => {
+            const card = container.querySelector('.founder-card');
+            const toggleButtons = card.querySelectorAll('.expertise-toggle-btn');
+            toggleButtons.forEach(btn => btn.addEventListener('click', (e) => {
+                e.stopPropagation(); card.classList.toggle('is-flipped');
+                if (card.classList.contains('is-flipped')) {
+                    gsap.to(card.querySelectorAll('.skill-bar'), { width: (i, t) => `${t.dataset.width}%`, duration: 0.8, ease: 'power2.inOut', stagger: 0.05 });
+                } else {
+                    gsap.set(card.querySelectorAll('.skill-bar'), { width: '0%' });
+                }
+            }));
+            container.addEventListener('mousemove', (e) => {
+                if (card.classList.contains('is-flipped')) return;
+                let r = container.getBoundingClientRect();
+                gsap.to(card, { rotationY: (e.clientX - r.left - r.width/2)/20, rotationX: (e.clientY - r.top - r.height/2)/-20, ease: "power1.out", duration: 0.5 });
+            });
+            container.addEventListener('mouseleave', () => gsap.to(card, { rotationY: 0, rotationX: 0, ease: "power1.out", duration: 1 }));
+        });
+
+        gsap.utils.toArray('[data-counter]').forEach(counter => {
+            const endValue = +counter.getAttribute('data-counter');
+            if(isNaN(endValue)) return;
+            gsap.from(counter, {
+                textContent: 0, duration: 2.5, ease: "power2.out", snap: { textContent: 1 },
+                scrollTrigger: { trigger: counter, start: "top 90%", toggleActions: "play none none reset" },
+                onUpdate: function() { counter.textContent = Math.ceil(this.targets()[0].textContent); }
+            });
+        });
+        
+        ScrollTrigger.create({ trigger: "#global-reach-map", start: "top 80%", onEnter: () => initMap(), once: true });
+    }
+
+    function initMap() {
+        const isDark = document.body.classList.contains('dark-mode');
+        const mapEl = document.getElementById('global-reach-map');
+        if (!mapEl || mapEl._leaflet_id) return;
+        window.globalReachMap = L.map('global-reach-map', { center: [1.2, 37.9], zoom: 6, scrollWheelZoom: false });
+        const tileUrl = isDark ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+        L.tileLayer(tileUrl, { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 10 }).addTo(window.globalReachMap);
+        L.circleMarker([-1.286389, 36.817223], { radius: 10, color: 'var(--text-accent)', weight: 3, fillOpacity: 0.7 }).addTo(window.globalReachMap)
+            .bindPopup(`<b>Nairobi, Kenya</b><br>D-K Solutions HQ`).openPopup();
+    }
     
-    // --- DARK MODE TOGGLE ---
-    const setupDarkModeToggle = (toggleId) => {
-        const toggle = document.getElementById(toggleId);
+    // --- UTILITY FUNCTIONS ---
+    function getTimeAgo(date) {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + " years ago";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + " months ago";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + " days ago";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + " hours ago";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + " minutes ago";
+        return Math.floor(seconds) + " seconds ago";
+    }
+
+    // --- LOTTIE & THEME SETUP ---
+    lottie.loadAnimation({ container: document.getElementById('lottie-container'), renderer: 'svg', loop: true, autoplay: true, path: 'https://assets2.lottiefiles.com/packages/lf20_y2hxPc.json' });
+    if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    ['darkModeToggle', 'darkModeToggleMobile'].forEach(id => {
+        const toggle = document.getElementById(id);
         if (toggle) {
             toggle.checked = localStorage.getItem('darkMode') === 'true';
             toggle.addEventListener('change', () => {
                 document.body.classList.toggle('dark-mode', toggle.checked);
-                // Sync other toggles
-                const otherToggleId = toggleId === 'darkModeToggle' ? 'darkModeToggleMobile' : 'darkModeToggle';
-                const otherToggle = document.getElementById(otherToggleId);
-                if (otherToggle) otherToggle.checked = toggle.checked;
+                document.getElementById(id === 'darkModeToggle' ? 'darkModeToggleMobile' : 'darkModeToggle').checked = toggle.checked;
                 localStorage.setItem('darkMode', toggle.checked);
+                if (window.tsParticles) tsParticles.load("tsparticles-hero", getParticlesConfig());
+                if(window.globalReachMap) { window.globalReachMap.remove(); initMap(); }
             });
         }
-    };
-
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-    }
-    setupDarkModeToggle('darkModeToggle');
-    setupDarkModeToggle('darkModeToggleMobile');
-
-    // --- HEADER SCROLL EFFECT ---
-    const header = document.getElementById('main-header');
-    window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // --- MOBILE MENU ---
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-
-    // --- TSPARTICLES HERO BACKGROUND ---
-    if (typeof tsParticles !== 'undefined') {
-        tsParticles.load("tsparticles-hero", {
-            fpsLimit: 60,
-            particles: {
-                number: { value: 50, density: { enable: true, value_area: 800 } },
-                color: { value: "#888" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                links: { color: "#888", distance: 150, enable: true, opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out" }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
-                modes: { grab: { distance: 140, line_linked: { opacity: 1 } }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-        });
+    // --- HEADER, MENU, PARTICLES ---
+    window.addEventListener('scroll', () => document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50));
+    document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+    function getParticlesConfig() {
+        const isDark = document.body.classList.contains('dark-mode');
+        return { fpsLimit: 60, particles: { number: { value: 60 }, color: { value: isDark ? "#4b5563" : "#9ca3af" }, links: { color: isDark ? "#4b5563" : "#9ca3af" }, shape: { type: "circle" }, opacity: { value: 0.5 }, size: { value: 3 }, move: { enable: true, speed: 1.5 } }, interactivity: { events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" } } }, };
     }
+    if (typeof tsParticles !== 'undefined') tsParticles.load("tsparticles-hero", getParticlesConfig());
 
-    // --- SCROLL-TRIGGERED ANIMATIONS SETUP ---
-    function setupScrollTriggers() {
-        // Generic reveal animations
-        gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, 
-                { y: 50, autoAlpha: 0 },
-                {
-                    duration: 1.2,
-                    y: 0,
-                    autoAlpha: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: elem,
-                        start: 'top 85%',
-                        toggleActions: 'play none none reset'
-                    },
-                    delay: elem.dataset.revealDelay || 0
-                }
-            );
-        });
-        
-        // --- FOUNDER CARD FLIP & 3D HOVER ---
-        const founderCards = document.querySelectorAll('.founder-card-container');
-        founderCards.forEach(container => {
-            const card = container.querySelector('.founder-card');
-            const toggleButtons = card.querySelectorAll('.expertise-toggle-btn');
-            
-            toggleButtons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isFlipped = card.classList.contains('is-flipped');
-                    card.classList.toggle('is-flipped');
-                    
-                    const skillBars = card.querySelectorAll('.skill-bar');
-                    if (!isFlipped) {
-                        gsap.to(skillBars, {
-                            width: (i, target) => `${target.dataset.width}%`,
-                            duration: 0.8,
-                            ease: 'power2.inOut',
-                            stagger: 0.1
-                        });
-                    } else {
-                        gsap.set(skillBars, { width: '0%' });
-                    }
-                });
-            });
-
-            container.addEventListener('mousemove', (e) => {
-                if (card.classList.contains('is-flipped')) return;
-                let rect = container.getBoundingClientRect();
-                let x = e.clientX - rect.left;
-                let y = e.clientY - rect.top;
-                let xP = (x / rect.width - 0.5);
-                let yP = (y / rect.height - 0.5);
-                gsap.to(card, {
-                    rotationY: xP * 20, rotationX: yP * -20,
-                    ease: "power1.out", duration: 0.5
-                });
-            });
-
-            container.addEventListener('mouseleave', () => {
-                gsap.to(card, {
-                    rotationY: 0, rotationX: 0,
-                    ease: "power1.out", duration: 1
-                });
-            });
-        });
-
-        // --- INTERACTIVE TIMELINE ANIMATION ---
-        const timelineEl = document.getElementById('journey-timeline');
-        if (timelineEl) {
-            const timelineProgress = document.getElementById('timeline-progress');
-            const timelineItems = gsap.utils.toArray(".timeline-item");
-
-            gsap.to(timelineProgress, {
-                height: '100%',
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: timelineEl,
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: true
-                }
-            });
-
-            timelineItems.forEach(item => {
-                const content = item.querySelector('.timeline-content');
-                const isLeft = item.classList.contains('timeline-item-left');
-                
-                // Set initial state
-                gsap.set(item, { autoAlpha: 1 }); // Make the container visible
-                gsap.set(content, { x: isLeft ? -100 : 100, autoAlpha: 0 });
-
-                // Animate based on scroll
-                gsap.to(content, {
-                    x: 0,
-                    autoAlpha: 1,
-                    duration: 0.8,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: item,
-                        start: 'top 80%',
-                        toggleActions: 'play none none reset'
-                    }
-                });
-            });
-        }
-    }
+    // --- RUN INITIALIZATION ---
+    initializePage();
 });
 </script>
 
