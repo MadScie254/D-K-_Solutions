@@ -3,27 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danco & Khadija - Who We Are: A Dynamic Showcase</title>
-    <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts & Icons -->
+    <title>Who We Are - D-K Solutions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Core & Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
-    
-    <!-- GSAP for Advanced Animations -->
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
-    <!-- Leaflet.js for Interactive Map -->
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.3.0/tsparticles.engine.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@3.3.0/tsparticles.preset.stars.min.js"></script>
+    <!-- Add Lottie Player -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
@@ -133,56 +121,62 @@
         input:checked + .slider:before { transform: translateX(20px); }
 
         /* Styles for heading interactivity - Button-like */
-        .section-header h2.gradient-text {
+        .section-header h2.gradient-text,
+        .hero-cta-button { /* Apply to both section headers and the new hero CTA */
             position: relative;
-            display: inline-block; /* Keeps it from taking full width */
+            display: inline-block; 
             cursor: pointer;
-            padding: 0.6rem 1.8rem; /* Adjust padding for desired button size */
-            border-radius: 30px;    /* Pill shape for a modern button feel */
+            padding: 0.7rem 2rem; /* Slightly increased padding */
+            border-radius: 30px;    
+            font-weight: 700; /* Bolder font */
             
-            /* Button's own background color and border */
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 5px -1px color-mix(in srgb, var(--shadow-color) 40%, transparent), 
                         0 1px 3px -1px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 
-            /* Text Gradient: Applied as a background image clipped to the text */
             background-image: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-            background-size: 250% auto; /* Increased size for more dramatic gradient shift */
-            background-position: 0% center; /* Initial position for the text gradient */
+            background-size: 250% auto; 
+            background-position: 0% center; 
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent; /* Makes the underlying text color transparent */
+            color: transparent; 
             
-            /* Transitions for smooth hover/active effects */
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), /* Elastic feel for transform */
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
                         box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
                         background-color 0.3s ease,
-                        background-position 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* For text gradient animation */
+                        background-position 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            outline: none; /* Removes default focus outline if any, manage focus visibility if needed for accessibility */
+            outline: none; 
         }
 
-        .section-header h2.gradient-text:hover {
-            transform: translateY(-4px) scale(1.02); /* Lift and slightly enlarge */
+        .section-header h2.gradient-text:hover,
+        .hero-cta-button:hover {
+            transform: translateY(-4px) scale(1.02); 
             box-shadow: 0 6px 12px -2px color-mix(in srgb, var(--shadow-color) 50%, transparent), 
                         0 3px 7px -3px color-mix(in srgb, var(--shadow-color) 35%, transparent);
-            background-color: var(--bg-accent); /* Button box background changes on hover */
-            
-            /* Animate text gradient on hover */
-            background-position: -150% center; /* Shift gradient to the other side */
+            background-color: var(--bg-accent); 
+            background-position: -150% center; 
+        }
+        
+        /* Specific hover for hero CTA to make text visible */
+        .hero-cta-button:hover {
+            color: var(--text-on-accent, #fff); /* Ensure text is visible on accent bg */
+            -webkit-background-clip: initial; /* Turn off text clipping */
+            background-clip: initial; /* Turn off text clipping */
+            /* The gradient text effect will be lost on hover for this button to ensure readability */
         }
 
-        .section-header h2.gradient-text:active {
-            transform: translateY(-1px) scale(0.99); /* Press down effect */
+
+        .section-header h2.gradient-text:active,
+        .hero-cta-button:active {
+            transform: translateY(-1px) scale(0.99); 
             box-shadow: 0 1px 2px 0px color-mix(in srgb, var(--shadow-color) 30%, transparent);
-            background-color: color-mix(in srgb, var(--bg-accent) 95%, #000000 5%); /* Slightly darker button box on press */
+            background-color: color-mix(in srgb, var(--bg-accent) 95%, #000000 5%); 
         }
 
-        /* The ::after pseudo-element (underline) is removed as it typically doesn't fit a button style. 
-           If you still want an underline, this can be re-added or modified. */
         .section-header h2.gradient-text::after {
             content: none; 
         }
@@ -215,7 +209,7 @@
             </div>
             <div class="lg:hidden flex items-center">
                 <label class="toggle-switch mr-4"><input type="checkbox" id="darkModeToggleMobile"><span class="slider"></span></label>
-                <button id="mobile-menu-button" class="text-text-primary focus:outline-none"><i class="fas fa-bars fa-lg"></i></button>
+                <button id="mobile-menu-button" class="text-text-primary focus:outline-none" aria-label="Toggle navigation menu" title="Toggle menu"><i class="fas fa-bars fa-lg"></i></button>
             </div>
         </nav>
         <div id="mobile-menu" class="lg:hidden hidden bg-secondary shadow-lg">
@@ -232,12 +226,24 @@
     </header>
 
     <main>
-        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden p-6 md:p-10 searchable-section" data-search-index="hero welcome innovation vision code pioneers growth">
-            <div id="tsparticles-hero"></div>
-            <div class="relative z-10 p-8 md:p-12 max-w-5xl mx-auto glassmorphic rounded-2xl reveal-up">
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight gradient-text">The Fusion of Vision and Code</h1>
-                <p class="text-lg md:text-xl text-text-secondary mb-8 leading-relaxed">We are more than a company; we are a brain trust of digital pioneers, data storytellers, and security custodians, dedicated to engineering bespoke solutions that redefine industries and catalyze growth.</p>
-                <div><a href="#our-team" class="cta-button text-lg group">Meet The Architects <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></a></div>
+        <section id="hero" class="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden p-6 md:p-10 searchable-section" data-search-index="hero welcome innovation vision code pioneers growth architects intelligence solutions">
+            <div id="tsparticles-hero" class="absolute inset-0 z-0"></div>
+            
+            <div class="relative z-10 flex flex-col items-center">
+                <!-- Lottie Animation Placeholder -->
+                <div id="hero-lottie-animation" style="width: 200px; height: 200px; margin-bottom: 1rem;">
+                    <!-- You'll load your Lottie animation here via JavaScript -->
+                </div>
+
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    <span class="gradient-text">Architecting</span> the Future of <span class="gradient-text">Intelligence</span>.
+                </h1>
+                <p class="text-lg md:text-xl text-text-secondary max-w-2xl mb-8">
+                    At D-K Solutions, we are more than just developers; we are visionaries and strategists crafting bespoke digital ecosystems that drive innovation and secure your future.
+                </p>
+                <a href="#our-team" class="hero-cta-button text-lg">
+                    Meet The Architects
+                </a>
             </div>
         </section>
 
@@ -485,29 +491,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- CORE INITIALIZATION ---
     async function initializePage() {
-        // Parallelize API calls for speed
-        await Promise.all([
-            fetchGithubStats(),
-            fetchGithubActivity()
-        ]);
-        
-        // Inject dynamic content
+        // Call synchronous setup functions first
         populatePhilosophies();
         populateTooling();
+        loadHeroLottieAnimation();
 
-        // Hide preloader and start animations
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const masterTimeline = gsap.timeline({ onComplete: setupScrollTriggers });
-        masterTimeline.to(loadingOverlay, { opacity: 0, duration: 0.7, onComplete: () => loadingOverlay.style.display = 'none' });
-        masterTimeline
-            .from("#main-header", { y: -50, opacity: 0, duration: 1, ease: 'power3.out' }, "-=0.2")
-            .from("#hero .reveal-up", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }, "-=0.7");
+        // List truly asynchronous operations that return Promises
+        const asyncOperations = [
+            loadParticles(), // Ensure this function is defined and returns a Promise
+            populateTeamMembers(), // Ensure this function is defined and returns a Promise
+            fetchGithubActivity(), // This is async and returns a Promise
+            loadMap()              // Ensure this function is defined and returns a Promise
+        ];
         
-        // Initialize search after content is on the page
-        initializeSearch();
+        try {
+            // Wait for all asynchronous operations.
+            // Individual catches allow Promise.all to resolve even if some fail.
+            await Promise.all(asyncOperations.map(p => 
+                Promise.resolve(p).catch(err => {
+                    console.error("A non-critical asynchronous task failed:", err);
+                    return null; // Resolve with null on error to not break Promise.all
+                })
+            ));
+            console.log("All asynchronous setup tasks have completed or handled their errors.");
+        } catch (error) {
+            // This outer catch is for unexpected errors in the Promise.all structure itself.
+            console.error("Error during the execution of Promise.all for async operations:", error);
+        } finally {
+            // This block ALWAYS runs, ensuring the preloader is hidden.
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                const masterTimeline = gsap.timeline({ 
+                    onComplete: () => {
+                        setupScrollTriggers();
+                        initializeSearch(); // Initialize search after content is ready and animations start
+                    } 
+                });
+
+                masterTimeline.to(loadingOverlay, { 
+                    opacity: 0, 
+                    duration: 0.7, 
+                    onComplete: () => {
+                        loadingOverlay.style.display = 'none';
+                        // Consider removing the overlay from DOM if no longer needed:
+                        // if (loadingOverlay.parentNode) {
+                        //     loadingOverlay.parentNode.removeChild(loadingOverlay);
+                        // }
+                    } 
+                });
+
+                // Stagger initial page animations
+                masterTimeline
+                    .from("#main-header", { y: -50, opacity: 0, duration: 1, ease: 'power3.out' }, "-=0.2")
+                    .from("#hero .reveal-up", { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }, "-=0.7");
+            } else {
+                // Fallback if loadingOverlay isn't found (e.g., already removed or ID typo)
+                console.warn("Loading overlay element not found. Running post-load scripts directly.");
+                setupScrollTriggers();
+                initializeSearch();
+            }
+        }
     }
 
-
+    function loadHeroLottieAnimation() {
+        const container = document.getElementById('hero-lottie-animation');
+        if (container) {
+            lottie.loadAnimation({
+                container: container, // the dom element that will contain the animation
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                // Replace with a path to your chosen Lottie JSON file
+                // You can find many free animations on LottieFiles.com
+                // Example: path: 'https://assets10.lottiefiles.com/packages/lf20_o1FmS2.json' // Abstract shapes
+                path: 'https://assets3.lottiefiles.com/packages/lf20_x9hfm2jp.json' // Example: A subtle tech/network animation
+            });
+        }
+    }
+    
     // --- API FETCHERS ---
     async function fetchGithubStats() {
         const projectsStatEl = document.getElementById('projects-completed-stat');

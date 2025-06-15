@@ -366,6 +366,7 @@
             position: relative; 
             z-index: 2; /* Ensure hero content is above globe */
             background: var(--hero-overlay-bg); /* Uses updated transparent variable */
+            -webkit-backdrop-filter: blur(12px); /* Safari compatibility */
             backdrop-filter: blur(12px); /* Increased blur for more pronounced glass */
             border: 1px solid var(--glass-border);
             padding: 2.5rem 3rem; /* Slightly more padding */
