@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who We Are - D-K Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-accent: #e5e7eb;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-accent: #0ea5e9;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --gradient-start: #1e40af;
+            --gradient-mid: #0d9488;
+            --gradient-end: #047857;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(14, 165, 233, 0.15);
+        }
+
+        .dark-mode {
+            --bg-primary: #0a0a23;
+            --bg-secondary: #111827;
+            --bg-accent: #1f2937;
+            --text-primary: #e0e0ff;
+            --text-secondary: #9ca3af;
+            --text-accent: #38bdf8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-start: #2563eb;
+            --gradient-mid: #14b8a6;
+            --gradient-end: #059669;
+            --glass-bg: rgba(31, 41, 55, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --shadow-color: rgba(56, 189, 248, 0.25);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
+            overflow-x: hidden; 
+            transition: background-color 0.3s ease, color 0.3s ease;
+            opacity: 0;
+        }
+        .gradient-text { background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .reveal-up { opacity: 0; transform: translateY(20px); visibility: hidden; }
+        .searchable-section { transition: opacity 0.3s ease; }
+        .searchable-section.is-hidden { opacity: 0.2; pointer-events: none; }
+        
+        #hero-headline .cursor {
+            color: var(--text-accent);
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .value-prop-card {
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .value-prop-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px -5px var(--shadow-color);
+        }
+
+        #main-header { background-color: var(--bg-secondary); transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+        #main-header.scrolled { background-color: var(--glass-bg); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .nav-link { position: relative; color: var(--text-primary); transition: color 0.3s ease; padding: 0.5rem 0.6rem; font-size: 0.85rem; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 50%; transform: translateX(-50%); background: var(--text-accent); transition: width 0.3s ease; }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: var(--text-accent); font-weight: 600; }
+        #search-input { background-color: var(--bg-accent); color: var(--text-primary); }
+
+        .founder-card-container { perspective: 1500px; }
+        .founder-card { position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); background-color: transparent; }
+        .founder-card .card-face { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; border-radius: 1rem; border: 1px solid var(--border-color); background-color: var(--bg-secondary); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07); }
+        .founder-card .card-front { padding: 2rem; z-index: 2; text-align: center; }
+        .founder-card .card-back { padding: 2rem; transform: rotateY(180deg); z-index: 1; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
+        .founder-card .card-back::-webkit-scrollbar { display: none; }
+        .founder-card.is-flipped { transform: rotateY(180deg); }
+        .founder-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.5rem auto; border: 4px solid var(--text-accent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--text-accent) 20%, transparent); transition: transform 0.3s ease; }
+        .founder-card-container:hover img { transform: scale(1.05); }
+        .expertise-toggle-btn { background-color: var(--bg-accent); color: var(--text-primary); border: 1px solid var(--border-color); transition: all 0.3s ease; }
+        .expertise-toggle-btn:hover { background-color: color-mix(in srgb, var(--text-accent) 20%, var(--bg-accent)); color: var(--text-accent); transform: translateY(-2px); }
+        .skill { margin-bottom: 0.7rem; }
+        .skill-name { font-weight: 600; margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-size: 0.85rem; }
+        .skill-bar-container { height: 8px; width: 100%; background-color: var(--bg-accent); border-radius: 4px; overflow: hidden; }
+        .skill-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid)); border-radius: 4px; transition: width 1s ease-out; }
+
+        .methodology-step { position: relative; padding-left: 2.5rem; padding-bottom: 2rem; border-left: 3px solid var(--border-color); }
+        .methodology-step:last-child { border-left: 3px solid transparent; padding-bottom: 0; }
+        .methodology-step::before { content: attr(data-step); position: absolute; left: -1.25rem; top: -0.25rem; width: 2.5rem; height: 2.5rem; background: var(--bg-primary); border: 3px solid var(--text-accent); color: var(--text-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: all 0.3s ease; }
+        .methodology-step:hover::before { transform: scale(1.1); background-color: var(--text-accent); color: var(--bg-secondary); }
+
+        .case-study-card { background: var(--bg-secondary); border-radius: 1rem; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .case-study-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -15px var(--shadow-color); }
+        
+        #quiz-container { background-color: var(--bg-secondary); padding: 2rem; border-radius: 1rem; }
+        .quiz-option { cursor: pointer; border: 2px solid var(--border-color); padding: 1rem; border-radius: 0.75rem; transition: all 0.2s ease; }
+        .quiz-option:hover { border-color: var(--text-accent); background-color: var(--bg-accent); }
+        .quiz-option.selected { border-color: var(--text-accent); background-color: color-mix(in srgb, var(--text-accent) 20%, transparent); font-weight: bold; }
+        #gemini-result-card { border: 2px dashed var(--border-color); }
+
+        #hero #tsparticles-hero { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10000; transition: opacity 0.5s ease; }
+        .toggle-switch { position: relative; display: inline-block; width: 48px; height: 28px; }
+        .toggle-switch input { display: none; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 28px; transition: 0.4s; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: 0.4s; }
+        input:checked + .slider { background-color: var(--text-accent); }
+        input:checked + .slider:before { transform: translateX(20px); }
+    </style>
+</head>
+<body class="light-mode">
+
+    <div id="loading-overlay"> <div class="text-center"> <div id="lottie-container" style="width: 150px; height: 150px; margin: 0 auto;"></div> <p class="text-lg font-semibold mt-4" style="color: var(--text-primary);">Architecting Intelligence...</p> </div> </div>
+
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 py-3 px-6 md:px-10">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold gradient-text">D-K Solutions</a>
+            <div class="hidden lg:flex items-center space-x-4">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#our-team" class="nav-link active">Who We Are</a>
+                <a href="#methodology" class="nav-link">Methodology</a>
+                <a href="#case-studies" class="nav-link">Our Work</a>
+                <a href="#tooling" class="nav-link">Tooling</a>
+                <a href="#quiz" class="nav-link">Contact</a>
+                <label class="toggle-switch ml-4"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+            </div>
+             <div class="lg:hidden flex items-center">
+                <label class="toggle-switch mr-4"><input type="checkbox" id="darkModeToggleMobile"><span class="slider"></span></label>
+                <button id="mobile-menu-button" class="text-text-primary focus:outline-none" aria-label="Toggle navigation menu" title="Toggle menu"><i class="fas fa-bars fa-lg"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden p-6 md:p-10 searchable-section">
+            <div id="tsparticles-hero"></div>
+            <div class="relative z-10 flex flex-col items-center">
+                <div id="hero-lottie-animation" style="width: 200px; height: 200px; margin-bottom: 1rem;"></div>
+                <h1 id="hero-headline" class="text-4xl md:text-6xl font-bold mb-6 text-text-primary"></h1>
+                <p class="text-lg md:text-xl text-text-secondary max-w-3xl mb-12">
+                    We don't just build software. We architect intelligent, secure, and scalable digital ecosystems that become the engine for your growth and the fortress for your data.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+                    <div class="value-prop-card text-center reveal-up" data-reveal-delay="0.2">
+                        <i class="fas fa-brain fa-2x text-text-accent mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-1">AI-Powered Analytics</h3>
+                        <p class="text-sm text-text-secondary">Transform data into predictive foresight and actionable intelligence.</p>
+                    </div>
+                    <div class="value-prop-card text-center reveal-up" data-reveal-delay="0.4">
+                        <i class="fas fa-shield-alt fa-2x text-text-accent mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-1">Fortified Security</h3>
+                        <p class="text-sm text-text-secondary">Embed zero-trust, proactive defense into your digital DNA.</p>
+                    </div>
+                    <div class="value-prop-card text-center reveal-up" data-reveal-delay="0.6">
+                        <i class="fas fa-rocket fa-2x text-text-accent mb-3"></i>
+                        <h3 class="text-lg font-semibold mb-1">Scalable Solutions</h3>
+                        <p class="text-sm text-text-secondary">Engineer cloud-native systems built for tomorrow's demand.</p>
+                    </div>
+                </div>
+                <a href="#our-team" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors"> Meet The Architects </a>
+            </div>
+        </section>
+
+        <section id="our-team" class="py-20 searchable-section" style="background-color: var(--bg-primary);">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Our Core Innovators</h2>
+                    <p class="text-lg text-text-secondary">Our strength is not just in our technology, but in the brilliant minds that wield it. Each leader brings a profound depth of experience, a relentless drive for excellence, and a shared vision for a smarter digital future.</p>
+                </div>
+                <div id="founders-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                    <!-- Founder cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="methodology" class="py-20 searchable-section" style="background-color: var(--bg-secondary);">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Our Agile Methodology</h2>
+                    <p class="text-lg text-text-secondary">A battle-tested, transparent framework for delivering exceptional results on time, every time.</p>
+                </div>
+                <div id="methodology-steps" class="max-w-3xl mx-auto">
+                    <!-- Methodology steps will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <section id="case-studies" class="py-20 searchable-section" style="background-color: var(--bg-primary);">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                     <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Impact in Action</h2>
+                    <p class="text-lg text-text-secondary">We measure our success by the success of our clients. Here's the proof.</p>
+                </div>
+                <div id="case-studies-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <!-- Case studies will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+        
+        <section id="tooling" class="py-20 searchable-section" style="background-color: var(--bg-secondary);">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Our Digital Foundry</h2>
+                    <p class="text-lg text-text-secondary">We wield a vast array of best-in-class tools and technologies to forge the perfect solution.</p>
+                </div>
+                <div id="tooling-categories" class="space-y-12">
+                    <!-- Tooling logos will be populated by JS into categories -->
+                </div>
+            </div>
+        </section>
+
+
+        <section id="quiz" class="py-20 searchable-section" style="background-color: var(--bg-primary);">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Ready for a Strategic Shift?</h2>
+                    <p class="text-lg text-text-secondary">Answer three quick questions. Our Gemini-powered AI will provide a preliminary analysis of your data challenges and potential.</p>
+                </div>
+                <div class="max-w-2xl mx-auto">
+                    <div id="quiz-container">
+                        <!-- Quiz will be populated here -->
+                    </div>
+                    <div id="gemini-result-card" class="hidden mt-8 p-6 rounded-lg" style="background-color: var(--bg-secondary);">
+                         <h3 class="font-bold text-2xl mb-4 text-center">Your Data Potential Analysis:</h3>
+                         <div id="gemini-response" class="text-text-secondary space-y-4"></div>
+                         <div class="text-center mt-6">
+                            <button id="reset-quiz" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Start Over</button>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- DATA ---
+    const founders = [
+        {
+            id: 'daniel',
+            name: "Daniel Wanjala",
+            title: "Founder & AI Visionary",
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+            bio: "Daniel is the architect of our innovation engine. With a background in applied econometrics and big data, he pioneers solutions that don't just solve problems—they anticipate them.",
+            funFact: "An avid chess player, Daniel believes the principles of foresight, strategy, and adaptation in the game are directly applicable to building resilient AI systems.",
+            expertise: [
+                { name: 'Python & Django', level: 95 },
+                { name: 'Deep Learning (TensorFlow/PyTorch)', level: 92 },
+                { name: 'Large Language Model (LLM) Integration', level: 90 },
+                { name: 'React & Modern Frontend', level: 75 },
+                { name: 'DevOps & AWS Architecture', level: 88 },
+            ]
+        },
+        {
+            id: 'khadija',
+            name: "Khadija Khalid",
+            title: "Chief Strategy & Security Officer",
+            image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
+            bio: "Khadija ensures our technical brilliance translates into strategic market advantages. Her expertise lies in fortified security protocols and aligning innovation with business objectives.",
+            funFact: "Khadija is a certified ethical hacker who spends her weekends participating in global 'capture the flag' cybersecurity competitions to keep her skills razor-sharp.",
+            expertise: [
+                { name: 'Zero-Trust Security Architecture', level: 98 },
+                { name: 'Cloud Security (Azure/GCP)', level: 94 },
+                { name: 'Go & High-Performance Computing', level: 85 },
+                { name: 'Strategic Business Development', level: 96 },
+                { name: 'Agile & Scrum Mastery', level: 90 },
+            ]
+        },
+        {
+            id: 'austin',
+            name: "Austin Arnold Wopata",
+            title: "Lead Solutions Architect",
+            image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop",
+            bio: "Austin is our master builder, turning complex architectural blueprints into robust, scalable, and elegant realities. He excels at orchestrating large-scale cloud deployments and data pipelines.",
+            funFact: "A passionate mountaineer, Austin applies the same principles of planning, resilience, and problem-solving from scaling peaks to engineering complex software.",
+            expertise: [
+                { name: 'Kubernetes & Docker', level: 97 },
+                { name: 'Data Engineering (Spark/Kafka)', level: 93 },
+                { name: 'Infrastructure as Code (Terraform)', level: 95 },
+                { name: 'Rust for System-Level Programming', level: 88 },
+                { name: 'Database Optimization (SQL/NoSQL)', level: 91 },
+            ]
+        }
+    ];
+
+    const methodologySteps = [
+        { 
+            title: 'Discovery & Strategy', 
+            description: 'We immerse ourselves in your world, listening and analyzing to define the core challenges and strategic objectives. This is the blueprint phase.',
+            example: 'For a fintech client, we shifted their project from a simple dashboard to a real-time fraud detection engine after discovering their primary pain point was security, not just visualization.'
+        },
+        { 
+            title: 'Architect & Prototype', 
+            description: 'We design the solution architecture and create tangible prototypes. This allows you to see and feel the solution before full-scale development begins.',
+            example: 'We built a clickable prototype for a logistics company, allowing them to refine their user workflow and save hundreds of development hours.'
+        },
+        { 
+            title: 'Develop & Integrate', 
+            description: 'Our engineers bring the vision to life with clean, efficient code, seamlessly integrating new systems with your existing infrastructure for a unified digital ecosystem.',
+            example: 'We engineered a custom API to bridge a client\'s legacy CRM with a modern cloud data warehouse, unlocking decades of historical data for analysis.'
+        },
+        { 
+            title: 'Deploy & Fortify', 
+            description: 'We manage a smooth, phased rollout with zero downtime. Security isn\'t an afterthought; it\'s embedded, with continuous monitoring and threat intelligence.',
+            example: 'We deployed a containerized ML model on AWS with auto-scaling that handled a 100x traffic spike during a product launch without a single issue.'
+        },
+        { 
+            title: 'Evolve & Support', 
+            description: 'Our partnership continues post-launch. We provide ongoing support, performance tuning, and iterative enhancements to ensure your solution grows with you.',
+            example: 'We provide ongoing performance tuning for a healthcare provider\'s data platform, adapting their algorithms as new research emerges.'
+        }
+    ];
+
+    const caseStudies = [
+        {
+            title: "Retail Inventory Real-Time Sync",
+            problem: "A major e-commerce platform struggled with inaccurate inventory, leading to overselling and customer dissatisfaction.",
+            solution: "We deployed a real-time data streaming solution using Kafka and a custom reconciliation microservice to sync their warehouse and storefront data instantly.",
+            result: "Achieved 99.9% inventory accuracy, reduced overselling incidents by 95%, and boosted customer satisfaction scores by 15%.",
+            icon: "fas fa-store"
+        },
+        {
+            title: "Fintech Fraud Detection Automation",
+            problem: "A startup's manual fraud detection was slow and unable to scale, exposing them to significant financial risk.",
+            solution: "We developed a deep learning model that analyzes transaction patterns in real-time to identify and flag suspicious activity with high precision.",
+            result: "Automated 98% of fraud checks, increased detection accuracy by 70%, and reduced manual review time by over 400 hours per month.",
+            icon: "fas fa-shield-alt"
+        }
+    ];
+
+     const tooling = [
+        { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', category: 'Languages & Frameworks' },
+        { name: 'JavaScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg', category: 'Languages & Frameworks' },
+        { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', category: 'Languages & Frameworks' },
+        { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg', category: 'Languages & Frameworks' },
+        { name: 'Go', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', category: 'Languages & Frameworks' },
+        { name: 'Rust', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg', category: 'Languages & Frameworks' },
+        { name: 'Amazon Web Services', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg', category: 'Cloud & Infra' },
+        { name: 'Google Cloud', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg', category: 'Cloud & Infra' },
+        { name: 'Azure', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg', category: 'Cloud & Infra' },
+        { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg', category: 'CI/CD & DevOps' },
+        { name: 'Kubernetes', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg', category: 'CI/CD & DevOps' },
+        { name: 'Terraform', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg', category: 'CI/CD & DevOps' },
+        { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg', category: 'Data & Analytics' },
+        { name: 'MongoDB', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg', category: 'Data & Analytics' },
+        { name: 'TensorFlow', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg', category: 'Data & Analytics' },
+        { name: 'Apache Kafka', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg', category: 'Data & Analytics' },
+        { name: 'Apache Spark', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg', category: 'Data & Analytics' },
+        { name: 'Git', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg', category: 'CI/CD & DevOps' }
+    ];
+
+    const quizQuestions = [
+        {
+            question: "What's the biggest ghost in your data machine?",
+            answers: [
+                "Data we can't trust (Accuracy)",
+                "Insights that arrive too late (Speed)",
+                "Data is siloed and inaccessible (Accessibility)",
+                "We don't know what we should be tracking (Strategy)"
+            ]
+        },
+        {
+            question: "When you think about 'innovation', what comes to mind first?",
+            answers: [
+                "A game-changing competitive advantage",
+                "Streamlining current processes for massive efficiency",
+                "Finding completely new, untapped revenue streams",
+                "Building a fortified, future-proof foundation"
+            ]
+        },
+        {
+            question: "What's your dream outcome from a technology partnership?",
+            answers: [
+                "A clear, actionable roadmap to our long-term goals",
+                "A robust, scalable system that just works, flawlessly",
+                "Unlocking hidden potential we didn't know we had",
+                "An expert team I can trust as a true extension of our own"
+            ]
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let quizAnswers = [];
+
+    // --- POPULATION FUNCTIONS ---
+    function populateFounders() {
+        const grid = document.getElementById('founders-grid');
+        if (!grid) return;
+        grid.innerHTML = founders.map(f => `
+            <div class="founder-card-container reveal-up">
+                <div class="founder-card" style="min-height: 550px;">
+                    <div class="card-face card-front">
+                        <img src="${f.image}" alt="${f.name}">
+                        <h3 class="text-2xl font-semibold mb-1 text-text-primary">${f.name}</h3>
+                        <p class="text-text-accent font-medium mb-4">${f.title}</p>
+                        <p class="text-text-secondary text-sm mb-6">${f.bio}</p>
+                        <button class="expertise-toggle-btn mt-auto px-4 py-2 rounded-lg font-semibold text-sm">View Expertise</button>
+                    </div>
+                    <div class="card-face card-back">
+                        <h4 class="text-xl font-semibold mb-3 text-text-primary">Core Expertise</h4>
+                        <div class="skills-container mb-4">
+                            ${f.expertise.map(skill => `
+                                <div class="skill">
+                                    <div class="skill-name text-text-secondary"><span>${skill.name}</span><span>${skill.level}%</span></div>
+                                    <div class="skill-bar-container"><div class="skill-bar" data-level="${skill.level}"></div></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <h4 class="text-xl font-semibold mb-2 text-text-primary">Fun Fact</h4>
+                        <p class="text-text-secondary text-sm mb-6">${f.funFact}</p>
+                        <button class="expertise-toggle-btn mt-auto px-4 py-2 rounded-lg font-semibold text-sm">View Bio</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        grid.querySelectorAll('.expertise-toggle-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const card = e.target.closest('.founder-card');
+                card.classList.toggle('is-flipped');
+            });
+        });
+    }
+
+    function populateMethodology() {
+        const container = document.getElementById('methodology-steps');
+        if (!container) return;
+        container.innerHTML = methodologySteps.map((step, index) => `
+            <div class="methodology-step reveal-up" data-step="${index + 1}">
+                <h3 class="text-xl font-bold mb-2 text-text-primary">${step.title}</h3>
+                <p class="text-text-secondary mb-3">${step.description}</p>
+                <p class="text-sm text-text-secondary italic border-l-2 pl-3" style="border-color: var(--border-color);">
+                     <span class="font-semibold not-italic" style="color: var(--text-accent);">Example:</span> ${step.example}
+                </p>
+            </div>
+        `).join('');
+    }
+    
+    function populateCaseStudies() {
+        const grid = document.getElementById('case-studies-grid');
+        if (!grid) return;
+        grid.innerHTML = caseStudies.map(study => `
+            <div class="case-study-card flex flex-col p-8 reveal-up">
+                 <div class="mb-4">
+                    <i class="${study.icon} fa-2x" style="color: var(--text-accent);"></i>
+                    <h3 class="text-2xl font-bold mt-2 text-text-primary">${study.title}</h3>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-text-secondary">Problem:</h4>
+                        <p class="text-text-secondary">${study.problem}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-text-secondary">Solution:</h4>
+                        <p class="text-text-secondary">${study.solution}</p>
+                    </div>
+                     <div>
+                        <h4 class="font-semibold text-text-secondary">Result:</h4>
+                        <p class="text-text-secondary">${study.result}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function populateTooling() {
+        const container = document.getElementById('tooling-categories');
+        if(!container) return;
+        const categories = [...new Set(tooling.map(t => t.category))];
+
+        container.innerHTML = categories.map(category => `
+            <div class="reveal-up">
+                <h3 class="text-2xl font-bold text-center mb-6 text-text-secondary">${category}</h3>
+                <div class="flex justify-center items-center flex-wrap gap-x-8 gap-y-6">
+                    ${tooling.filter(t => t.category === category).map(tool => `
+                        <div class="text-center group flex flex-col items-center w-24">
+                            <img src="${tool.logo}" alt="${tool.name}" class="h-12 w-12 mx-auto grayscale group-hover:grayscale-0 transition-all duration-300">
+                            <p class="mt-2 text-xs text-text-secondary group-hover:text-text-primary transition-colors duration-300 text-center">${tool.name}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // --- QUIZ LOGIC ---
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        quizAnswers = [];
+        document.getElementById('quiz-container').classList.remove('hidden');
+        document.getElementById('gemini-result-card').classList.add('hidden');
+        displayQuestion();
+    }
+
+    function displayQuestion() {
+        const quizContainer = document.getElementById('quiz-container');
+        if (currentQuestionIndex < quizQuestions.length) {
+            const q = quizQuestions[currentQuestionIndex];
+            quizContainer.innerHTML = `
+                <div class="p-6 rounded-lg" style="background-color: var(--bg-secondary);">
+                    <p class="font-semibold text-lg mb-4 text-center text-text-primary">${q.question}</p>
+                    <div class="space-y-3 mb-4">
+                        ${q.answers.map(answer => `<div class="quiz-option" data-answer="${answer}">${answer}</div>`).join('')}
+                    </div>
+                    <p class="text-xs text-center text-text-secondary">Question ${currentQuestionIndex + 1} of ${quizQuestions.length}</p>
+                </div>
+            `;
+            quizContainer.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', handleAnswerClick);
+            });
+        } else {
+            showQuizResult();
+        }
+    }
+
+    function handleAnswerClick(e) {
+        quizAnswers.push(e.target.dataset.answer);
+        currentQuestionIndex++;
+        displayQuestion();
+    }
+    
+    async function showQuizResult() {
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('gemini-result-card');
+        const geminiResponseEl = document.getElementById('gemini-response');
+
+        quizContainer.classList.add('hidden');
+        resultContainer.classList.remove('hidden');
+        geminiResponseEl.innerHTML = `<div class="flex items-center justify-center space-x-2"><div class="w-3 h-3 rounded-full animate-pulse" style="background-color:var(--text-accent);"></div><div class="w-3 h-3 rounded-full animate-pulse" style="background-color:var(--text-accent); animation-delay:0.2s;"></div><div class="w-3 h-3 rounded-full animate-pulse" style="background-color:var(--text-accent); animation-delay:0.4s;"></div><p class="text-text-secondary">Gemini is analyzing your responses...</p></div>`;
+
+        const prompt = `
+            A potential client has answered a three-question quiz. Based on their answers, provide a brief, insightful, and encouraging analysis of their potential data challenges and opportunities. Frame the response as if you are an expert data consultant. Be professional but approachable. Use markdown for formatting (e.g., bolding, bullet points). End with a call to action to get in touch for a detailed consultation.
+
+            Here are their answers:
+            1. Regarding their biggest data challenge, they said: "${quizAnswers[0]}"
+            2. When thinking about innovation, they prioritize: "${quizAnswers[1]}"
+            3. Their dream outcome from a partnership is: "${quizAnswers[2]}"
+
+            Please generate the analysis now.
+        `;
+        
+        try {
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+            const apiKey = ""; // API Key will be handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates[0]) {
+                 let text = result.candidates[0].content.parts[0].text;
+                 // Simple markdown to HTML conversion
+                 text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                 text = text.replace(/\n/g, '<br>');
+                 geminiResponseEl.innerHTML = text;
+            } else {
+                 throw new Error("No valid response from API.");
+            }
+        } catch (error) {
+            console.error("Gemini API error:", error);
+            geminiResponseEl.innerHTML = "<p>There was an error generating your analysis. This might be a temporary issue. Please feel free to reach out to us directly for a consultation.</p>";
+        }
+    }
+
+    // --- INITIALIZATION & EVENT LISTENERS ---
+    function initializePage() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const lottieContainer = document.getElementById('lottie-container');
+
+        lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://assets10.lottiefiles.com/packages/lf20_p8bfn5to.json'
+        });
+
+        // Theme setup
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeToggleMobile = document.getElementById('darkModeToggleMobile');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        
+        const setTheme = (isDark) => {
+            document.body.classList.toggle('dark-mode', isDark);
+            darkModeToggle.checked = isDark;
+            darkModeToggleMobile.checked = isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            loadParticles(isDark);
+        };
+        
+        if (savedTheme) {
+            setTheme(savedTheme === 'dark');
+        } else {
+            setTheme(prefersDark);
+        }
+
+        const handleThemeToggle = (e) => setTheme(e.target.checked);
+        darkModeToggle.addEventListener('change', handleThemeToggle);
+        darkModeToggleMobile.addEventListener('change', handleThemeToggle);
+
+        // Populate dynamic content
+        populateFounders();
+        populateMethodology();
+        populateCaseStudies();
+        populateTooling();
+        startQuiz();
+        
+        // Setup animations and other event listeners
+        setupAnimations();
+        setupEventListeners();
+
+        // Fade in page
+        window.addEventListener('load', () => {
+             setTimeout(() => {
+                gsap.to(loadingOverlay, { opacity: 0, duration: 0.5, onComplete: () => loadingOverlay.style.display = 'none' });
+                gsap.to('body', { opacity: 1, duration: 0.5 });
+            }, 500); // Give lottie a moment to load
+        });
+    }
+    
+    function setupAnimations() {
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+        
+        // Typing animation for hero headline
+        const heroHeadline = document.getElementById('hero-headline');
+        if(heroHeadline) {
+            gsap.to(heroHeadline, {
+                duration: 2,
+                text: {
+                    value: "We Are The Architects of Intelligence<span class='cursor'>|</span>",
+                },
+                ease: "none"
+            });
+        }
+        
+        // Reveal on scroll
+        gsap.utils.toArray('.reveal-up').forEach((elem) => {
+            gsap.fromTo(elem, 
+                { autoAlpha: 0, y: 40 },
+                {
+                    autoAlpha: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 90%',
+                        toggleActions: 'play none none none',
+                    }
+                }
+            );
+        });
+
+        // Animate skill bars when card is flipped
+        const founderCards = document.querySelectorAll('.founder-card');
+        founderCards.forEach(card => {
+            card.addEventListener('click', () => {
+                if(card.classList.contains('is-flipped')){
+                     setTimeout(() => { // Ensure the back is visible before animating
+                        card.querySelectorAll('.skill-bar').forEach(bar => {
+                            const level = bar.dataset.level;
+                            gsap.to(bar, { width: `${level}%`, duration: 1, ease: 'power2.out' });
+                        });
+                    }, 200);
+                } else {
+                    // Reset bars when flipping back
+                     card.querySelectorAll('.skill-bar').forEach(bar => {
+                        gsap.to(bar, { width: `0%`, duration: 0 });
+                    });
+                }
+            });
+        });
+    }
+
+    function setupEventListeners() {
+        document.getElementById('reset-quiz').addEventListener('click', startQuiz);
+        
+        // Header scroll effect
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    }
+
+    async function loadParticles(isDark) {
+        if (!window.tsParticles) return;
+        const options = {
+            fpsLimit: 60,
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: 'repulse' },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 80, duration: 0.4 }
+                }
+            },
+            particles: {
+                color: { value: isDark ? '#374151' : '#d1d5db' },
+                links: {
+                    color: isDark ? '#374151' : '#e5e7eb',
+                    distance: 150,
+                    enable: true,
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    direction: 'none',
+                    enable: true,
+                    outModes: { default: 'out' },
+                    random: false,
+                    speed: 1,
+                    straight: false
+                },
+                number: {
+                    density: { enable: true, area: 800 },
+                    value: 60
+                },
+                opacity: { value: 0.3 },
+                shape: { type: 'circle' },
+                size: { value: { min: 1, max: 3 } }
+            },
+            detectRetina: true
+        };
+        await tsParticles.load({ id: 'tsparticles-hero', options });
+    }
+
+    // --- RUN INITIALIZATION ---
+    initializePage();
+
+});
+</script>
+
+</body>
+</html>
