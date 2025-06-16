@@ -100,40 +100,96 @@
         #mobile-menu .nav-link:last-child { border-bottom: none; }
         #search-input { background-color: var(--bg-accent); color: var(--text-primary); }
 
-        /* --- Founder Card Gamification --- */
-        .founder-card-container { perspective: 1500px; }
-        .founder-card { position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); background-color: transparent; }
-        .founder-card .card-face { position: absolute; width: 100%; height: 100%; top: 0; left: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; border-radius: 1rem; border: 1px solid var(--border-color); background-color: var(--bg-secondary); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07); }
-        .founder-card .card-front { padding: 2rem; z-index: 2; }
-        .founder-card .card-back { padding: 2rem; transform: rotateY(180deg); z-index: 1; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
-        .founder-card .card-back::-webkit-scrollbar { display: none; }
-        .founder-card.is-flipped { transform: rotateY(180deg); }
-        .founder-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.5rem auto; border: 4px solid var(--text-accent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--text-accent) 20%, transparent); transition: transform 0.3s ease; }
-        .founder-card-container:hover img { transform: scale(1.05); }
-        .expertise-toggle-btn { background-color: var(--bg-accent); color: var(--text-primary); border: 1px solid var(--border-color); transition: all 0.3s ease; }
-        .expertise-toggle-btn:hover { background-color: color-mix(in srgb, var(--text-accent) 20%, var(--bg-accent)); color: var(--text-accent); transform: translateY(-2px); }
-        .skill { margin-bottom: 0.7rem; }
-        .skill-name { font-weight: 600; margin-bottom: 0.5rem; display: flex; justify-content: space-between; font-size: 0.85rem; }
-        .skill-bar-container { height: 8px; width: 100%; background-color: var(--bg-accent); border-radius: 4px; overflow: hidden; }
-        .skill-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid)); border-radius: 4px; }
+        /* --- Founder Card Styling --- */
+        .founder-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .founder-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px -10px var(--shadow-color);
+        }
+        .founder-card img {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.5rem auto;
+            border: 4px solid var(--text-accent);
+            box-shadow: 0 0 0 8px color-mix(in srgb, var(--text-accent) 20%, transparent);
+            transition: transform 0.3s ease;
+        }
+        .founder-card:hover img { transform: scale(1.05); }
+        .expertise-link-btn {
+            background-color: var(--text-accent);
+            color: var(--bg-secondary); /* Text color that contrasts with accent */
+            border: 1px solid var(--text-accent);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block; /* For proper padding and centering */
+            text-decoration: none; /* Remove underline from link */
+        }
+        .expertise-link-btn:hover {
+            background-color: color-mix(in srgb, var(--text-accent) 80%, black);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
 
-        /* --- New Sections --- */
-        /* Methodology Section */
+
+        /* --- Methodology Section --- */
         .methodology-step { position: relative; padding-left: 2.5rem; padding-bottom: 2rem; border-left: 3px solid var(--border-color); }
         .methodology-step:last-child { border-left: 3px solid transparent; padding-bottom: 0; }
         .methodology-step::before { content: attr(data-step); position: absolute; left: -1.25rem; top: -0.25rem; width: 2.5rem; height: 2.5rem; background: var(--bg-primary); border: 3px solid var(--text-accent); color: var(--text-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: all 0.3s ease; }
         .methodology-step:hover::before { transform: scale(1.1); background-color: var(--text-accent); color: var(--bg-secondary); }
 
-        /* Case Studies Section */
-        .case-study-card { background: var(--bg-secondary); border-radius: 1rem; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .case-study-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -15px var(--shadow-color); }
+        /* Philosophy & Innovation Section Cards */
+        .feature-card {
+            background-color: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px -10px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px -8px var(--shadow-color);
+        }
+        .feature-card .lottie-container-small { width: 100px; height: 100px; margin: 0 auto 1rem auto; }
+
+
+        /* Case Studies & Client Showcase Card */
+        .showcase-card { background: var(--bg-secondary); border-radius: 1rem; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 8px 25px -10px var(--shadow-color); }
+        .showcase-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px -10px var(--shadow-color); }
+        .showcase-card img { width: 100%; height: 200px; object-fit: cover; }
         
         /* Interactive Quiz Section */
-        #quiz-container { background-color: var(--bg-secondary); padding: 2rem; border-radius: 1rem; }
+        #quiz-container { background-color: var(--bg-secondary); padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 30px -5px var(--shadow-color); }
         .quiz-option { cursor: pointer; border: 2px solid var(--border-color); padding: 1rem; border-radius: 0.75rem; transition: all 0.2s ease; }
         .quiz-option:hover { border-color: var(--text-accent); background-color: var(--bg-accent); }
         .quiz-option.selected { border-color: var(--text-accent); background-color: color-mix(in srgb, var(--text-accent) 20%, transparent); font-weight: bold; }
         #gemini-result-card { border: 2px dashed var(--border-color); }
+
+        /* Gemini AI Customer Assistant Section */
+        #gemini-customer-care-container { background-color: var(--bg-secondary); padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 30px -5px var(--shadow-color); }
+        #gemini-chatbox { max-height: 300px; overflow-y: auto; padding: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; margin-bottom: 1rem; background-color: var(--bg-primary); }
+        .chat-message { margin-bottom: 0.75rem; padding: 0.75rem; border-radius: 0.5rem; max-width: 80%; }
+        .user-message { background-color: var(--text-accent); color: var(--bg-secondary); margin-left: auto; text-align: right; }
+        .gemini-message { background-color: var(--bg-accent); color: var(--text-primary); margin-right: auto; }
+        #gemini-care-input { border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 0.5rem 0 0 0.5rem; background-color: var(--bg-primary); color: var(--text-primary); }
+        #gemini-care-submit { background-color: var(--text-accent); color: var(--bg-secondary); padding: 0.75rem 1.25rem; border: none; border-radius: 0 0.5rem 0.5rem 0; font-weight: 600; cursor: pointer; transition: background-color 0.3s; }
+        #gemini-care-submit:hover { background-color: color-mix(in srgb, var(--text-accent) 80%, black); }
+        #lottie-gemini-thinking { width: 80px; height: 80px; margin: 1rem auto; }
+        #gemini-dissatisfied-btn {
+            background-color: #ef4444; /* red-500 */
+            color: white; padding: 0.5rem 1rem; border-radius: 0.5rem;
+            margin-top: 1rem; cursor: pointer; transition: background-color 0.3s;
+            border: none;
+        }
+        #gemini-dissatisfied-btn:hover { background-color: #dc2626; /* red-600 */ }
+
 
         /* Floating WhatsApp Button */
         #whatsapp-float {
@@ -158,9 +214,8 @@
             background-color: #1DAE50;
         }
 
-
         /* General Boilerplate */
-        #hero #tsparticles-hero { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; } /* Ensure it's behind content */
+        #hero #tsparticles-hero { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 10000; }
         .toggle-switch { position: relative; display: inline-block; width: 48px; height: 28px; }
         .toggle-switch input { display: none; }
@@ -172,7 +227,7 @@
 </head>
 <body class="light-mode">
 
-    <div id="loading-overlay"> <div class="text-center"> <div id="lottie-container" style="width: 150px; height: 150px; margin: 0 auto;"></div> <p class="text-lg font-semibold mt-4" style="color: var(--text-primary);">Architecting Intelligence...</p> </div> </div>
+    <div id="loading-overlay"> <div class="text-center"> <div id="lottie-loading" style="width: 150px; height: 150px; margin: 0 auto;"></div> <p class="text-lg font-semibold mt-4" style="color: var(--text-primary);">Architecting Intelligence...</p> </div> </div>
 
     <header id="main-header" class="fixed top-0 left-0 right-0 z-40 py-3 px-6 md:px-10">
         <nav class="container mx-auto flex justify-between items-center">
@@ -184,7 +239,7 @@
                     <a href="services.html" class="nav-link">Services</a>
                     <a href="process.html" class="nav-link">Our Process</a>
                     <a href="expertise.html" class="nav-link">Expertise</a>
-                    <a href="#case-studies" class="nav-link">Our Work</a> 
+                    <a href="#client-showcase" class="nav-link">Our Work</a> 
                     <a href="publications.html" class="nav-link">Publications</a>
                     <a href="testimonials.html" class="nav-link">Testimonials</a>
                     <a href="contact.html" class="nav-link">Contact</a>
@@ -206,7 +261,7 @@
             <a href="services.html" class="nav-link">Services</a>
             <a href="process.html" class="nav-link">Our Process</a>
             <a href="expertise.html" class="nav-link">Expertise</a>
-            <a href="#case-studies" class="nav-link">Our Work</a>
+            <a href="#client-showcase" class="nav-link">Our Work</a>
             <a href="publications.html" class="nav-link">Publications</a>
             <a href="testimonials.html" class="nav-link">Testimonials</a>
             <a href="contact.html" class="nav-link">Contact</a>
@@ -217,17 +272,12 @@
         <!-- HERO SECTION REDESIGN -->
         <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden p-6 md:p-10 searchable-section" data-search-index="hero welcome innovation vision code pioneers growth architects intelligence solutions ai security data">
             <div id="tsparticles-hero"></div>
-            
             <div class="relative z-10 flex flex-col items-center">
                 <div id="hero-lottie-animation" style="width: 200px; height: 200px; margin-bottom: 1rem;"></div>
-
-                <h1 id="hero-headline" class="text-4xl md:text-6xl font-bold mb-6 text-text-primary">
-                    <!-- Typing animation will populate this -->
-                </h1>
+                <h1 id="hero-headline" class="text-4xl md:text-6xl font-bold mb-6 text-text-primary"></h1>
                 <p class="text-lg md:text-xl text-text-secondary max-w-3xl mb-12">
                     We don't just build software. We architect intelligent, secure, and scalable digital ecosystems that become the engine for your growth and the fortress for your data.
                 </p>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
                     <div class="value-prop-card text-center reveal-up" data-reveal-delay="0.2">
                         <i class="fas fa-brain fa-2x text-accent mb-3"></i>
@@ -245,15 +295,14 @@
                         <p class="text-sm text-text-secondary">Engineer cloud-native systems built for tomorrow's demand.</p>
                     </div>
                 </div>
-
-                <a href="#our-team" class="hero-cta-button text-lg">
+                <a href="#our-team" class="hero-cta-button bg-accent text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:bg-opacity-80 transition duration-300">
                     Meet The Architects
                 </a>
             </div>
         </section>
 
-        <!-- OUR TEAM SECTION (UNCHANGED HTML, JS will gamify it) -->
-        <section id="our-team" class="bg-primary py-20 searchable-section" data-search-index="team innovators core daniel wanjala khadija khalid austin arnold wopata architect strategy security">
+        <!-- OUR TEAM SECTION -->
+        <section id="our-team" class="bg-primary py-20 searchable-section" data-search-index="team innovators core daniel wanjala khadija khalid austin arnold wopata architect strategy security expertise">
             <div class="container mx-auto px-6">
                  <div class="section-header text-center max-w-3xl mx-auto mb-12">
                     <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Our Core Innovators</h2>
@@ -262,112 +311,144 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
                     <!-- Daniel Wanjala Card -->
-                    <div class="founder-card-container reveal-up" data-search-index="daniel wanjala architect ai visionary python django deep learning llm react devops aws econometrics big data spark kafka">
-                        <div class="founder-card" style="min-height: 650px;">
-                            <div class="card-face card-front text-center">
-                                <img src="https://placehold.co/128x128/3B82F6/FFFFFF?text=DW" alt="Daniel Wanjala" class="mx-auto">
-                                <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
-                                <p class="text-accent font-medium mb-4">Chief Technical Architect & AI Visionary</p>
-                                <p class="text-text-secondary mb-6 text-sm">A master polyglot in the languages of machines and data, Daniel is the chief architect of our technological marvels. He doesn't just write code; he composes symphonies of logic, designing robust, scalable systems and pioneering our foray into advanced machine learning. His work involves transforming chaotic data streams into predictive intelligence, building the very engines that power our clients' success.</p>
-                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">Unveil Expertise <i class="fas fa-arrow-right ml-2"></i></button></div>
-                            </div>
-                            <div class="card-face card-back">
-                                <h4 class="text-xl font-bold text-center mb-3">Technical Proficiencies</h4>
-                                <div class="skill"><div class="skill-name"><span>Python & Advanced Django</span><span>98%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="98"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Deep Learning (TF/PyTorch)</span><span>95%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Large Language Models (LLMs)</span><span>92%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Full-Stack React & Next.js</span><span>90%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>GraphQL & Federated APIs</span><span>91%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Cloud-Native & DevOps (AWS)</span><span>88%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="88"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Econometrics & Time-Series</span><span>93%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Big Data Engineering (Spark/Kafka)</span><span>87%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="87"></div></div></div>
-                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full"><i class="fas fa-arrow-left mr-2"></i> Return to Bio</button></div>
-                            </div>
+                    <div class="founder-card text-center reveal-up" data-search-index="daniel wanjala architect ai visionary python django deep learning llm react devops aws econometrics big data spark kafka">
+                        <img src="https://placehold.co/128x128/3B82F6/FFFFFF?text=DW" alt="Daniel Wanjala" class="mx-auto">
+                        <h3 class="text-2xl font-semibold mb-1">Daniel Wanjala 👨‍💻</h3>
+                        <p class="text-accent font-medium mb-4">Chief Technical Architect & AI Visionary</p>
+                        <p class="text-text-secondary mb-6 text-sm">A master polyglot in the languages of machines and data, Daniel architects our technological marvels, transforming chaotic data streams into predictive intelligence.</p>
+                        <div class="mt-auto">
+                            <a href="expertise.html#daniel" class="expertise-link-btn">
+                                Unveil Expertise <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
                         </div>
                     </div>
                     <!-- Khadija Khalid Card -->
-                    <div class="founder-card-container reveal-up" data-reveal-delay="0.2" data-search-index="khadija khalid strategy systems analyst foresight product management ux ui agile scrum data visualization consulting intelligence">
-                         <div class="founder-card" style="min-height: 650px;">
-                            <div class="card-face card-front text-center">
-                                <img src="https://placehold.co/128x128/EC4899/FFFFFF?text=KK" alt="Khadija Khalid" class="mx-auto">
-                                <h3 class="text-2xl font-semibold mb-1">Khadija Khalid 👩‍💼</h3>
-                                <p class="text-accent font-medium mb-4">Chief Strategy Officer & Systems Analyst</p>
-                                <p class="text-text-secondary mb-6 text-sm">Khadija is the visionary conductor of our orchestra, translating abstract ideas into tangible, impactful systems. She possesses a rare dual-fluency in human-centric design and operational logistics. She masterfully aligns ambitious digital goals with ruthlessly efficient execution, ensuring that every project is a perfect synthesis of groundbreaking innovation, crystal-clear communication, and rigorously measured outcomes.</p>
-                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">Unveil Expertise <i class="fas fa-arrow-right ml-2"></i></button></div>
-                            </div>
-                            <div class="card-face card-back">
-                               <h4 class="text-xl font-bold text-center mb-3">Strategic Capabilities</h4>
-                                <div class="skill"><div class="skill-name"><span>Strategic Foresight & GTM</span><span>97%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="97"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Product Lifecycle Management</span><span>94%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="94"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Behavioral UX/UI Research</span><span>91%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Agile & Scrum Mastery</span><span>95%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Data Visualization & Storytelling</span><span>90%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Digital Transformation Consulting</span><span>93%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Competitive Intelligence</span><span>92%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="92"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Stakeholder Relationship Mgt.</span><span>96%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="96"></div></div></div>
-                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full"><i class="fas fa-arrow-left mr-2"></i> Return to Bio</button></div>
-                            </div>
+                    <div class="founder-card text-center reveal-up" data-reveal-delay="0.2" data-search-index="khadija khalid strategy systems analyst foresight product management ux ui agile scrum data visualization consulting intelligence">
+                        <img src="https://placehold.co/128x128/EC4899/FFFFFF?text=KK" alt="Khadija Khalid" class="mx-auto">
+                        <h3 class="text-2xl font-semibold mb-1">Khadija Khalid 👩‍💼</h3>
+                        <p class="text-accent font-medium mb-4">Chief Strategy Officer & Systems Analyst</p>
+                        <p class="text-text-secondary mb-6 text-sm">Khadija translates abstract ideas into tangible, impactful systems, aligning digital goals with efficient execution and user-centric design.</p>
+                        <div class="mt-auto">
+                             <a href="expertise.html#khadija" class="expertise-link-btn">
+                                Unveil Expertise <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
                         </div>
                     </div>
                     <!-- Austin Arnold Wopata Card -->
-                    <div class="founder-card-container reveal-up" data-reveal-delay="0.4" data-search-index="austin arnold wopata security ciso offensive red purple cloud zero trust forensics penetration testing grc devsecops">
-                        <div class="founder-card" style="min-height: 650px;">
-                            <div class="card-face card-front text-center">
-                                <img src="https://placehold.co/128x128/F59E0B/FFFFFF?text=AW" alt="Austin Arnold Wopata" class="mx-auto">
-                                <h3 class="text-2xl font-semibold mb-1">Austin Arnold Wopata 🛡️</h3>
-                                <p class="text-accent font-medium mb-4">Chief Information Security Officer</p>
-                                <p class="text-text-secondary mb-6 text-sm">Austin is the unwavering sentinel of our digital domain, a grandmaster in the art of cyber warfare and defense. He operates on the principle of "secure by design," weaving an impenetrable fabric of security into the DNA of every project. His expertise extends from proactive threat hunting and ethical hacking to architecting resilient, zero-trust networks, ensuring that our clients' innovations are not just powerful, but invulnerable.</p>
-                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full">Unveil Expertise <i class="fas fa-arrow-right ml-2"></i></button></div>
-                            </div>
-                            <div class="card-face card-back">
-                                <h4 class="text-xl font-bold text-center mb-3">Security Competencies</h4>
-                                <div class="skill"><div class="skill-name"><span>Offensive Security (Red/Purple)</span><span>99%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="99"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Cloud Security Posture Mgt.</span><span>96%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="96"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Zero Trust Network Architecture</span><span>94%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="94"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Digital Forensics & IR</span><span>97%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="97"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Advanced Penetration Testing</span><span>95%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="95"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>GRC (GDPR, ISO 27001, NIST)</span><span>93%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="93"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>AI & ML Security</span><span>90%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="90"></div></div></div>
-                                <div class="skill"><div class="skill-name"><span>Automated DevSecOps Pipelines</span><span>91%</span></div><div class="skill-bar-container"><div class="skill-bar" data-width="91"></div></div></div>
-                                <div class="mt-auto"><button class="expertise-toggle-btn font-semibold py-2 px-4 rounded-lg w-full"><i class="fas fa-arrow-left mr-2"></i> Return to Bio</button></div>
-                            </div>
+                    <div class="founder-card text-center reveal-up" data-reveal-delay="0.4" data-search-index="austin arnold wopata security ciso offensive red purple cloud zero trust forensics penetration testing grc devsecops">
+                        <img src="https://placehold.co/128x128/F59E0B/FFFFFF?text=AW" alt="Austin Arnold Wopata" class="mx-auto">
+                        <h3 class="text-2xl font-semibold mb-1">Austin Arnold Wopata 🛡️</h3>
+                        <p class="text-accent font-medium mb-4">Chief Information Security Officer</p>
+                        <p class="text-text-secondary mb-6 text-sm">Austin is the sentinel of our digital domain, weaving impenetrable security into every project, from threat hunting to resilient network architecture.</p>
+                         <div class="mt-auto">
+                             <a href="expertise.html#austin" class="expertise-link-btn">
+                                Unveil Expertise <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR CORE PHILOSOPHY SECTION -->
+        <section id="our-philosophy" class="bg-secondary py-20 searchable-section" data-search-index="philosophy values integrity innovation client-centric excellence collaboration">
+            <div class="container mx-auto px-6">
+                <div class="section-header text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Our Guiding Principles</h2>
+                    <p class="text-lg text-text-secondary">More than just a tech company, we're driven by a core set of values that define our work, our relationships, and our impact on the world.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="feature-card reveal-up">
+                        <div id="lottie-philosophy-innovation" class="lottie-container-small"></div>
+                        <h3 class="text-xl font-semibold mb-2 text-accent">Unrelenting Innovation</h3>
+                        <p class="text-text-secondary text-sm">We constantly explore, experiment, and adapt, pushing the boundaries of what's possible to deliver cutting-edge solutions.</p>
+                    </div>
+                    <div class="feature-card reveal-up" data-reveal-delay="0.2">
+                        <div id="lottie-philosophy-client" class="lottie-container-small"></div>
+                        <h3 class="text-xl font-semibold mb-2 text-accent">Client-Centric Partnership</h3>
+                        <p class="text-text-secondary text-sm">Your success is our success. We immerse ourselves in your challenges and goals, becoming a true extension of your team.</p>
+                    </div>
+                    <div class="feature-card reveal-up" data-reveal-delay="0.4">
+                         <div id="lottie-philosophy-integrity" class="lottie-container-small"></div>
+                        <h3 class="text-xl font-semibold mb-2 text-accent">Unwavering Integrity</h3>
+                        <p class="text-text-secondary text-sm">Transparency, honesty, and ethical practices are the bedrock of every interaction and every line of code we write.</p>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- NEW SECTION: OUR METHODOLOGY -->
-        <section id="methodology" class="bg-secondary py-20 searchable-section" data-search-index="methodology process discovery architecture development security deployment agile">
+        <!-- EXPANDED METHODOLOGY SECTION -->
+        <section id="methodology" class="bg-primary py-20 searchable-section" data-search-index="methodology process discovery architecture development quality assurance security deployment support agile evolution">
             <div class="container mx-auto px-6">
                 <div class="section-header text-center max-w-3xl mx-auto mb-16">
                     <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Our Blueprint for Success</h2>
-                    <p class="text-lg text-text-secondary">Success isn't accidental; it's engineered. We follow a battle-tested, six-phase methodology that ensures clarity, minimizes risk, and maximizes impact. This is more than a process; it's our covenant with you, guaranteeing that what we build is not only what you asked for, but precisely what you need.</p>
+                    <p class="text-lg text-text-secondary">Success isn't accidental; it's engineered. We follow a battle-tested, six-phase methodology ensuring clarity, minimizing risk, and maximizing impact. This is our covenant with you.</p>
                 </div>
-
                 <div class="max-w-3xl mx-auto">
                     <div class="methodology-step reveal-up" data-step="1">
                         <h3 class="text-2xl font-bold mb-2">Phase 1: Deep-Dive Discovery & Strategic Alignment</h3>
-                        <p class="text-text-secondary">This initial phase is the most critical. We don't just listen to your requirements; we immerse ourselves in your world. We conduct comprehensive stakeholder interviews, analyze your existing systems, map your operational workflows, and research your competitive landscape. The goal is to move beyond the "what" and understand the "why." We challenge assumptions and co-create a strategic roadmap where every proposed feature is tied to a measurable business objective. The deliverable is not a requirements document; it's a shared vision and a strategic blueprint that aligns technology with your core business goals.</p>
+                        <p class="text-text-secondary">We immerse ourselves in your world: stakeholder interviews, system analysis, workflow mapping, competitive research. The goal is a shared vision and a strategic blueprint aligning technology with your core business goals.</p>
                     </div>
                     <div class="methodology-step reveal-up" data-step="2">
                         <h3 class="text-2xl font-bold mb-2">Phase 2: Architectural Design & Prototyping</h3>
-                        <p class="text-text-secondary">With a clear strategy, our architects design the system's blueprint. This is where we make pivotal decisions about technology stacks, data models, scalability patterns, and security frameworks. We design for the future, creating systems that are not just robust today but are flexible enough to evolve. Concurrently, our UX/UI team builds interactive prototypes. You get to see, touch, and feel the user experience long before a single line of production code is written. This allows for rapid feedback and iteration, ensuring the final product is intuitive, efficient, and user-centric.</p>
+                        <p class="text-text-secondary">Architects design the system's blueprint: technology stacks, data models, scalability, security frameworks. UX/UI teams build interactive prototypes for rapid feedback, ensuring an intuitive, user-centric product.</p>
                     </div>
-                     <!-- More steps... -->
+                    <div class="methodology-step reveal-up" data-step="3">
+                        <h3 class="text-2xl font-bold mb-2">Phase 3: Agile Development & Iteration</h3>
+                        <p class="text-text-secondary">Our development teams work in agile sprints, delivering functional increments of the software regularly. This allows for continuous feedback, adaptability to changing requirements, and transparent progress tracking, ensuring the project stays on course and aligned with your evolving needs.</p>
+                    </div>
+                    <div class="methodology-step reveal-up" data-step="4">
+                        <h3 class="text-2xl font-bold mb-2">Phase 4: Rigorous Quality Assurance & Security Hardening</h3>
+                        <p class="text-text-secondary">Comprehensive testing is integral. We conduct functional, performance, usability, and security testing (including penetration tests) at every stage. Our dedicated QA engineers and security experts ensure the solution is robust, reliable, and fortified against threats.</p>
+                    </div>
+                    <div class="methodology-step reveal-up" data-step="5">
+                        <h3 class="text-2xl font-bold mb-2">Phase 5: Seamless Deployment & Go-Live</h3>
+                        <p class="text-text-secondary">We manage the deployment process meticulously, whether to cloud environments or on-premise infrastructure. This includes data migration, final system checks, and user training. Our goal is a smooth transition with minimal disruption to your operations.</p>
+                    </div>
+                    <div class="methodology-step reveal-up" data-step="6">
+                        <h3 class="text-2xl font-bold mb-2">Phase 6: Continuous Monitoring, Support & Evolution</h3>
+                        <p class="text-text-secondary">Our partnership doesn't end at launch. We provide ongoing support, monitor system performance, and offer proactive maintenance. We also work with you to plan future enhancements and scale the solution as your business grows, ensuring long-term value and success.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- NEW SECTION: INTERACTIVE QUIZ -->
+        <!-- COMMITMENT TO INNOVATION SECTION -->
+        <section id="innovation-commitment" class="bg-secondary py-20 searchable-section" data-search-index="innovation research development future technology ai machine learning emerging tech continuous learning">
+            <div class="container mx-auto px-6">
+                <div class="section-header text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Pioneering the Future</h2>
+                    <p class="text-lg text-text-secondary">Innovation is in our DNA. We are passionately curious, dedicated to research and development, and always exploring emerging technologies to bring you solutions that are not just current, but future-proof.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="feature-card reveal-up">
+                        <div id="lottie-innovation-rd" class="lottie-container-small"></div>
+                        <h3 class="text-xl font-semibold mb-2 text-accent">Dedicated R&D</h3>
+                        <p class="text-text-secondary text-sm">Investing time and resources to explore next-gen AI, quantum resistant cryptography, and decentralized systems.</p>
+                    </div>
+                    <div class="feature-card reveal-up" data-reveal-delay="0.2">
+                         <div id="lottie-innovation-learning" class="lottie-container-small"></div>
+                        <h3 class="text-xl font-semibold mb-2 text-accent">Continuous Learning</h3>
+                        <p class="text-text-secondary text-sm">Our team actively participates in global tech summits, contributes to open-source, and fosters a culture of lifelong learning.</p>
+                    </div>
+                    <div class="feature-card reveal-up" data-reveal-delay="0.4">
+                        <div id="lottie-innovation-labs" class="lottie-container-small"></div>
+                        <h3 class="text-xl font-semibold mb-2 text-accent">Innovation Labs</h3>
+                        <p class="text-text-secondary text-sm">Internal sandboxes where we experiment with proof-of-concepts for bleeding-edge technologies before they hit mainstream.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- INTERACTIVE QUIZ SECTION -->
         <section id="interactive-quiz" class="bg-primary py-20 searchable-section" data-search-index="quiz interactive solution forge gemini ai sector service objective challenge outcome">
             <div class="container mx-auto px-6">
                  <div class="section-header text-center max-w-3xl mx-auto mb-12">
                     <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Forge Your Solution Path</h2>
-                    <p class="text-lg text-text-secondary">Unsure where to begin or what service might suit you best? Answer a few simple questions, and our AI-powered strategic assistant (powered by Gemini) will suggest a preliminary direction and potential solutions tailored to your real-world needs.</p>
+                    <p class="text-lg text-text-secondary">Unsure where to begin or what service might suit you best? Answer a few simple questions, and our AI-powered strategic assistant will suggest a preliminary direction and potential solutions tailored to your real-world needs.</p>
                 </div>
-
-                <div id="quiz-container" class="max-w-3xl mx-auto shadow-lg">
+                <div id="quiz-container" class="max-w-3xl mx-auto">
                     <div id="quiz-questions">
                         <!-- Questions will be injected here by JS -->
                     </div>
@@ -386,16 +467,72 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Other sections like Global Reach, Case Studies, Blog, etc. -->
+
+        <!-- NEW: GEMINI AI CUSTOMER ASSISTANT -->
+        <section id="gemini-customer-care" class="bg-secondary py-20 searchable-section" data-search-index="gemini ai assistant customer care support help contact questions">
+            <div class="container mx-auto px-6">
+                <div class="section-header text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Need Help? Ask Our AI Assistant!</h2>
+                    <p class="text-lg text-text-secondary">Have a quick question? Our AI assistant, powered by Gemini technology, is here to provide initial guidance. For complex inquiries, it can help direct you to the right human expert.</p>
+                </div>
+                <div id="gemini-customer-care-container" class="max-w-2xl mx-auto">
+                    <div id="lottie-gemini-avatar" style="width:120px; height:120px; margin: 0 auto -20px auto; z-index:10; position:relative;"></div>
+                    <div id="gemini-chatbox">
+                        <div class="chat-message gemini-message">Hello! I'm D-K Solutions' AI Assistant. How can I help you today?</div>
+                    </div>
+                    <div id="lottie-gemini-thinking" class="hidden"></div>
+                    <div class="flex">
+                        <input type="text" id="gemini-care-input" class="flex-grow" placeholder="Type your question here...">
+                        <button id="gemini-care-submit">Send <i class="fas fa-paper-plane ml-2"></i></button>
+                    </div>
+                    <div id="gemini-care-feedback" class="text-center mt-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLIENT SUCCESS SHOWCASE (Placeholder) -->
+        <section id="client-showcase" class="bg-primary py-20 searchable-section" data-search-index="client success showcase case studies work portfolio results impact">
+            <div class="container mx-auto px-6">
+                <div class="section-header text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="gradient-text inline-block text-3xl md:text-4xl font-bold mb-4">Driving Real-World Impact</h2>
+                    <p class="text-lg text-text-secondary">We're proud of the partnerships we've built and the tangible results we've delivered for our clients across various industries. Here are a few snapshots of our work.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="showcase-card reveal-up">
+                        <img src="https://placehold.co/600x400/1E40AF/FFFFFF?text=Project+Alpha" alt="Project Alpha">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Project Alpha: Enterprise AI</h3>
+                            <p class="text-text-secondary text-sm mb-4">Revolutionized data analytics for a leading finance firm, improving predictive accuracy by 40%.</p>
+                            <a href="contact.html" class="font-semibold text-accent hover:underline">Learn More <i class="fas fa-angle-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="showcase-card reveal-up" data-reveal-delay="0.2">
+                        <img src="https://placehold.co/600x400/0D9488/FFFFFF?text=Startup+Ignite" alt="Startup Ignite">
+                         <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Startup Ignite: Mobile Platform</h3>
+                            <p class="text-text-secondary text-sm mb-4">Built a scalable mobile-first platform for a fast-growing e-commerce startup, supporting 1M+ users.</p>
+                            <a href="contact.html" class="font-semibold text-accent hover:underline">Learn More <i class="fas fa-angle-right ml-1"></i></a>
+                        </div>
+                    </div>
+                    <div class="showcase-card reveal-up" data-reveal-delay="0.4">
+                        <img src="https://placehold.co/600x400/047857/FFFFFF?text=SecureNet+Global" alt="SecureNet Global">
+                         <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">SecureNet Global: Cybersecurity</h3>
+                            <p class="text-text-secondary text-sm mb-4">Overhauled cybersecurity infrastructure for a healthcare provider, achieving 99.9% threat detection.</p>
+                            <a href="contact.html" class="font-semibold text-accent hover:underline">Learn More <i class="fas fa-angle-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
     </main>
 
     <footer class="bg-accent py-12">
-        <!-- Footer content -->
         <div class="container mx-auto text-center text-text-primary">
             <p>© <script>document.write(new Date().getFullYear())</script> D-K Solutions. All rights reserved.</p>
-            <p class="text-sm mt-2">Innovating for a Smarter Future.</p>
+            <p class="text-sm mt-2">Innovating for a Smarter Future. Powered by Ingenuity.</p>
         </div>
     </footer>
 
@@ -406,56 +543,28 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- GSAP PLUGIN REGISTRATION ---
     gsap.registerPlugin(ScrollTrigger, TextPlugin);
-
-    // --- CONFIGURATION & DATA ---
-    const GITHUB_USERNAME = 'MadScie254';
     const GEMINI_API_KEY = 'AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84'; // FAKE API Key
+    const COMPANY_CONTACT_NUMBER = '+254742007277';
 
-    // --- NEW: Data for the Interactive Quiz ---
     const QUIZ_DATA = [
         {
             question: "Which broad area are you seeking solutions for, or which service type are you most interested in?",
-            options: [
-                "AI & Intelligent Automation",
-                "Custom Software Development (Web/Mobile/Enterprise)",
-                "Cybersecurity & Data Protection",
-                "Data Analytics & Business Intelligence",
-                "Cloud Infrastructure & DevOps",
-                "Digital Transformation & Strategy Consulting"
-            ],
+            options: ["AI & Intelligent Automation", "Custom Software Development (Web/Mobile/Enterprise)", "Cybersecurity & Data Protection", "Data Analytics & Business Intelligence", "Cloud Infrastructure & DevOps", "Digital Transformation & Strategy Consulting"],
             promptKey: "serviceArea"
         },
-        {
-            question: "What is your primary business objective related to this area?",
-            options: ["Increase revenue/growth", "Reduce operational costs", "Enhance customer experience", "Improve decision-making", "Launch a new product/service", "Mitigate risks & ensure compliance"],
-            promptKey: "objective"
-        },
-        {
-            question: "What is your biggest current challenge in this chosen area?",
-            options: ["Lack of technical expertise/resources", "Outdated or inefficient existing systems", "Data management, quality, or security concerns", "Difficulty integrating new technologies", "Keeping up with market changes and competition", "Budget limitations for desired solutions"],
-            promptKey: "challenge"
-        },
-        {
-            question: "What specific outcome or improvement are you hoping to achieve with our help?",
-            options: ["Automate specific manual or repetitive processes", "Develop a new platform, application, or digital tool", "Significantly strengthen current security posture", "Gain actionable insights from available data", "Modernize IT infrastructure for better performance/scalability", "Define a clear strategic digital roadmap for the future"],
-            promptKey: "desiredOutcome"
-        }
+        { question: "What is your primary business objective related to this area?", options: ["Increase revenue/growth", "Reduce operational costs", "Enhance customer experience", "Improve decision-making", "Launch a new product/service", "Mitigate risks & ensure compliance"], promptKey: "objective" },
+        { question: "What is your biggest current challenge in this chosen area?", options: ["Lack of technical expertise/resources", "Outdated or inefficient existing systems", "Data management, quality, or security concerns", "Difficulty integrating new technologies", "Keeping up with market changes and competition", "Budget limitations for desired solutions"], promptKey: "challenge" },
+        { question: "What specific outcome or improvement are you hoping to achieve with our help?", options: ["Automate specific manual or repetitive processes", "Develop a new platform, application, or digital tool", "Significantly strengthen current security posture", "Gain actionable insights from available data", "Modernize IT infrastructure for better performance/scalability", "Define a clear strategic digital roadmap for the future"], promptKey: "desiredOutcome" }
     ];
     let userQuizAnswers = {};
 
-    // --- CORE INITIALIZATION ---
     async function initializePage() {
         populateQuiz();
-        loadHeroLottieAnimation();
+        loadLottieAnimations(); // Consolidated Lottie loading
         animateHeroText();
         
-        const asyncOperations = [
-            loadParticles(),
-            // fetchGithubStats(), // Assuming these might be on other pages or not critical here
-            // fetchGithubActivity()
-        ];
+        const asyncOperations = [loadParticles()];
         
         try {
             await Promise.all(asyncOperations.map(p => p.catch(err => console.error("A non-critical async task failed:", err))));
@@ -476,118 +585,108 @@ document.addEventListener('DOMContentLoaded', () => {
                         initializeMobileMenu();
                         setupHeaderScroll();
                         initializeDarkMode();
+                        initializeGeminiCustomerCare();
                     } 
                 });
             } else {
                 gsap.to('body', { opacity: 1, duration: 0.5 });
-                setupScrollTriggers();
-                initializeSearch();
-                setupPageTransitions();
-                initializeMobileMenu();
-                setupHeaderScroll();
-                initializeDarkMode();
+                setupScrollTriggers(); /* ... other initializers */ initializeGeminiCustomerCare();
             }
         }
     }
     
-    // --- Page Transition Logic ---
+    function loadLottieAnimations() {
+        const lottieLoadingContainer = document.getElementById('lottie-loading');
+        if (lottieLoadingContainer) {
+            lottie.loadAnimation({ container: lottieLoadingContainer, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets9.lottiefiles.com/packages/lf20_fh7O5N6N2b.json' });
+        }
+
+        const heroLottieContainer = document.getElementById('hero-lottie-animation');
+        if (heroLottieContainer) {
+            lottie.loadAnimation({ container: heroLottieContainer, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets3.lottiefiles.com/packages/lf20_x9hfm2jp.json' });
+            document.body.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX / window.innerWidth - 0.5) * 30;
+                const moveY = (e.clientY / window.innerHeight - 0.5) * 30;
+                gsap.to(heroLottieContainer, { x: moveX, y: moveY, rotation: moveX * 0.05, duration: 0.8, ease: 'power1.out' });
+            });
+        }
+        
+        // Philosophy Lotties
+        const philInnovation = document.getElementById('lottie-philosophy-innovation');
+        if(philInnovation) lottie.loadAnimation({ container: philInnovation, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets2.lottiefiles.com/packages/lf20_v92o76EAX9.json' }); // Idea bulb / Innovation
+        const philClient = document.getElementById('lottie-philosophy-client');
+        if(philClient) lottie.loadAnimation({ container: philClient, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets1.lottiefiles.com/packages/lf20_kylpcnql.json'}); // Handshake / Partnership
+        const philIntegrity = document.getElementById('lottie-philosophy-integrity');
+        if(philIntegrity) lottie.loadAnimation({ container: philIntegrity, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets8.lottiefiles.com/packages/lf20_k2397ggr.json' }); // Shield / Trust
+
+        // Innovation Lotties
+        const innovRD = document.getElementById('lottie-innovation-rd');
+        if(innovRD) lottie.loadAnimation({ container: innovRD, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets5.lottiefiles.com/packages/lf20_xwhnpqyv.json' }); // Scientist / Research
+        const innovLearning = document.getElementById('lottie-innovation-learning');
+        if(innovLearning) lottie.loadAnimation({ container: innovLearning, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets1.lottiefiles.com/packages/lf20_aacw0wgj.json' }); // Book / Learning
+        const innovLabs = document.getElementById('lottie-innovation-labs');
+        if(innovLabs) lottie.loadAnimation({ container: innovLabs, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets6.lottiefiles.com/packages/lf20_0yfsb3a1.json' }); // Rocket / Experiment
+
+        // Gemini AI Assistant Lotties
+        const geminiAvatar = document.getElementById('lottie-gemini-avatar');
+        if(geminiAvatar) lottie.loadAnimation({ container: geminiAvatar, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets5.lottiefiles.com/packages/lf20_mzbdc0qk.json' }); // Friendly AI face
+        const geminiThinking = document.getElementById('lottie-gemini-thinking');
+        if(geminiThinking) lottie.loadAnimation({ container: geminiThinking, renderer: 'svg', loop: true, autoplay: true, path: 'https://assets5.lottiefiles.com/packages/lf20_vnikrcia.json'}); // AI Brain processing
+    }
+
     function setupPageTransitions() {
-        const navLinks = document.querySelectorAll('a.nav-link');
-        navLinks.forEach(link => {
+        document.querySelectorAll('a.nav-link, a.hero-cta-button, .expertise-link-btn, .showcase-card a').forEach(link => {
             const href = link.getAttribute('href');
-            if (href && href.includes('.html') && !href.startsWith('#') && !link.hasAttribute('target')) {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    gsap.to('body', {
-                        opacity: 0,
-                        duration: 0.5,
-                        ease: 'power1.in',
-                        onComplete: () => {
-                            window.location.href = href;
-                        }
+            if (href && (href.includes('.html') || href.startsWith('#')) && !link.hasAttribute('target')) {
+                // Ensure # links on the same page don't trigger full page fade
+                if (href.startsWith('#') && window.location.pathname.endsWith(link.pathname)) {
+                    // This is a hash link on the current page, let default behavior handle smooth scroll
+                    return;
+                }
+                 if (href.includes('.html')) { // Only fade for different pages
+                    link.addEventListener('click', e => {
+                        e.preventDefault();
+                        gsap.to('body', { opacity: 0, duration: 0.4, ease: 'power1.in', onComplete: () => { window.location.href = href; }});
                     });
-                });
+                 }
             }
         });
     }
 
-    // --- Hero Section Redesign Functions ---
     function animateHeroText() {
         const headline = document.getElementById('hero-headline');
         if (!headline) return;
-        const textToType = "Architecting the Future of <span class='gradient-text'>Intelligence</span><span class='cursor'>|</span>";
+        const textToType = "Architecting <span class='gradient-text'>Intelligent Futures</span><span class='cursor'>|</span>";
         gsap.to(headline, {
-            duration: 4, text: { value: textToType }, ease: "none",
-            onComplete: () => {
-                const cursor = headline.querySelector('.cursor');
-                if(cursor) cursor.style.animationPlayState = 'paused'; // Or style.display = 'none';
-            }
+            duration: 3, text: { value: textToType, newClass:"gradient-text"}, ease: "none",
+            onComplete: () => { const cursor = headline.querySelector('.cursor'); if(cursor) cursor.style.animationPlayState = 'paused';}
         });
     }
 
-    function loadHeroLottieAnimation() {
-        const container = document.getElementById('hero-lottie-animation');
-        const lottieLoadingContainer = document.getElementById('lottie-container');
-
-        if (container) {
-            lottie.loadAnimation({
-                container: container,
-                renderer: 'svg', loop: true, autoplay: true,
-                path: 'https://assets3.lottiefiles.com/packages/lf20_x9hfm2jp.json'
-            });
-             document.body.addEventListener('mousemove', (e) => {
-                const moveX = (e.clientX / window.innerWidth - 0.5) * 40;
-                const moveY = (e.clientY / window.innerHeight - 0.5) * 40;
-                gsap.to(container, { x: moveX, y: moveY, rotation: moveX * 0.1, duration: 1, ease: 'power1.out' });
-            });
-        }
-        if (lottieLoadingContainer) {
-            lottie.loadAnimation({
-                container: lottieLoadingContainer, renderer: 'svg', loop: true, autoplay: true,
-                path: 'https://assets9.lottiefiles.com/packages/lf20_fh7O5N6N2b.json' // Example loading animation
-            });
-        }
-    }
-
-    // --- Interactive Quiz Functions ---
     function populateQuiz() {
         const questionsContainer = document.getElementById('quiz-questions');
         if (!questionsContainer) return;
-
-        let questionsHTML = '';
-        QUIZ_DATA.forEach((q, index) => {
-            questionsHTML += `
-                <div class="mb-6 reveal-up" data-question-index="${index}">
-                    <h4 class="font-semibold text-lg mb-3">${index + 1}. ${q.question}</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        ${q.options.map(opt => `<div class="quiz-option" data-value="${opt}">${opt}</div>`).join('')}
-                    </div>
+        let questionsHTML = QUIZ_DATA.map((q, index) => `
+            <div class="mb-6 reveal-up" data-question-index="${index}">
+                <h4 class="font-semibold text-lg mb-3">${index + 1}. ${q.question}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    ${q.options.map(opt => `<div class="quiz-option" data-value="${opt}">${opt}</div>`).join('')}
                 </div>
-            `;
-        });
+            </div>`).join('');
         questionsContainer.innerHTML = questionsHTML;
-        document.querySelectorAll('.quiz-option').forEach(option => {
-            option.addEventListener('click', handleQuizOptionSelect);
-        });
+        document.querySelectorAll('.quiz-option').forEach(option => option.addEventListener('click', handleQuizOptionSelect));
     }
 
     function handleQuizOptionSelect(e) {
         const selectedOption = e.currentTarget;
         const questionDiv = selectedOption.closest('[data-question-index]');
-        const questionIndex = parseInt(questionDiv.dataset.questionIndex);
-
         questionDiv.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
         selectedOption.classList.add('selected');
-
-        const promptKey = QUIZ_DATA[questionIndex].promptKey;
-        userQuizAnswers[promptKey] = selectedOption.dataset.value;
-
-        if (Object.keys(userQuizAnswers).length === QUIZ_DATA.length) {
-            triggerGemini();
-        }
+        userQuizAnswers[QUIZ_DATA[parseInt(questionDiv.dataset.questionIndex)].promptKey] = selectedOption.dataset.value;
+        if (Object.keys(userQuizAnswers).length === QUIZ_DATA.length) triggerGeminiSolution();
     }
     
-    async function triggerGemini() {
+    async function triggerGeminiSolution() { /* Using 'Solution' to distinguish from care-bot */
         const resultContainer = document.getElementById('gemini-result-container');
         const spinner = document.getElementById('gemini-spinner');
         const contentDiv = document.getElementById('gemini-content');
@@ -596,143 +695,140 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDiv.classList.add('hidden');
         spinner.classList.remove('hidden');
         
-        const userPrompt = `Based on the following user needs:
-        - Area/Service of Interest: ${userQuizAnswers.serviceArea}
-        - Primary Objective: ${userQuizAnswers.objective}
-        - Biggest Challenge: ${userQuizAnswers.challenge}
-        - Desired Outcome: ${userQuizAnswers.desiredOutcome}
-        
-        Please generate a concise, high-level, preliminary solution architecture blueprint. Structure your response in three parts: 1. Core Strategy, 2. Recommended Technology Stack (illustrative), and 3. First Steps. Use Markdown for formatting, including H3 for titles (e.g., ### Core Strategy) and bullet points. Focus on providing real-world help and actionable advice for the specified area of interest. Be professional, insightful, and encouraging.`;
+        const userPrompt = `Based on: Area/Service: ${userQuizAnswers.serviceArea}, Objective: ${userQuizAnswers.objective}, Challenge: ${userQuizAnswers.challenge}, Outcome: ${userQuizAnswers.desiredOutcome}. Generate a concise, high-level, preliminary solution blueprint (Core Strategy, Tech Stack (illustrative), First Steps). Use Markdown (H3 for titles, bullets). Be professional, insightful, encouraging.`;
 
         try {
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ contents: [{ parts: [{ text: userPrompt }] }] })
             });
-
-            if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
             const data = await response.json();
-            const geminiText = data.candidates[0].content.parts[0].text;
-            displayGeminiResult(geminiText); // Potentially needs markdownToHtml converter
-
+            displayGeminiResult(data.candidates[0].content.parts[0].text);
         } catch (error) {
-            console.warn("Gemini API call likely failed due to restrictions or fake key. Using mock response.", error.message);
-            setTimeout(() => {
-                const mockResponse = generateMockGeminiResponse(userQuizAnswers);
-                displayGeminiResult(mockResponse); // Mock response is already HTML
-            }, 1500);
+            console.warn("Gemini Solution API failed. Using mock response.", error.message);
+            setTimeout(() => displayGeminiResult(generateMockGeminiResponse(userQuizAnswers)), 1500);
         }
     }
 
-    function displayGeminiResult(htmlContent) { // Assumes htmlContent, if markdown then convert
+    function displayGeminiResult(markdownContent) { // Assuming markdown for this one now.
         const spinner = document.getElementById('gemini-spinner');
         const contentDiv = document.getElementById('gemini-content');
         spinner.classList.add('hidden');
-        contentDiv.innerHTML = htmlContent; // If markdown, this needs to be set with converted HTML
+        // Simple Markdown to HTML conversion for H3 and lists
+        let htmlContent = markdownContent
+            .replace(/### (.*)/g, '<h3 class="text-lg font-semibold mt-3 mb-1">$1</h3>')
+            .replace(/\* (.*)/g, '<li class="ml-4 list-disc">$1</li>')
+            .replace(/\n/g, '<br>');
+        // Wrap lists in <ul>
+        htmlContent = htmlContent.replace(/(<li.*<\/li>)/gs, '<ul>$1</ul>');
+        htmlContent = htmlContent.replace(/<\/ul><br><ul>/g, ''); // Fix adjacent ul tags due to line breaks
+
+        contentDiv.innerHTML = `<div class="prose prose-sm max-w-none dark:prose-invert">${htmlContent}</div>`;
         contentDiv.classList.remove('hidden');
         gsap.from(contentDiv, { opacity: 0, y: 20, duration: 0.5 });
     }
     
-    // Updated mock response generator
     function generateMockGeminiResponse(answers) {
-        let strategy, tech, steps;
-        let serviceContext = answers.serviceArea || "general technology solutions";
-        let objectiveContext = answers.objective || "achieving business goals";
-        let challengeContext = answers.challenge || "overcoming technical hurdles";
-        let outcomeContext = answers.desiredOutcome || "achieving significant improvements";
+        let { serviceArea, objective, challenge, desiredOutcome } = answers;
+        return `### Core Strategy: Tailored for ${serviceArea}
+* Focus on leveraging technology to achieve ${objective}, overcome ${challenge}, and deliver ${desiredOutcome}.
+* We'll emphasize agile methodologies for rapid iteration and value delivery.
 
-        strategy = `<h3>Core Strategy: Tailored for ${serviceContext}</h3><p>To empower you in <strong>${objectiveContext}</strong> by tackling <strong>${challengeContext}</strong> and aiming for <strong>${outcomeContext}</strong>, our strategic approach will emphasize:</p>`;
-        
-        if (serviceContext.includes("AI") || serviceContext.includes("Intelligent Automation")) {
-            strategy += "<ul><li>Identifying high-impact areas for AI-driven process automation.</li><li>Leveraging machine learning for predictive analytics and intelligent decision support.</li><li>Ensuring responsible AI development with a focus on data privacy and ethical considerations.</li></ul>";
-        } else if (serviceContext.includes("Software Development")) {
-            strategy += "<ul><li>Employing agile methodologies for iterative development, ensuring flexibility and rapid delivery of value.</li><li>Building robust, scalable, and secure custom applications (web, mobile, or enterprise) perfectly aligned with your unique requirements.</li><li>Prioritizing user-centric design (UX/UI) for intuitive and engaging experiences.</li></ul>";
-        } else if (serviceContext.includes("Cybersecurity")) {
-            strategy += "<ul><li>Implementing a defense-in-depth security strategy, layering multiple security controls.</li><li>Conducting thorough risk assessments, vulnerability scanning, and penetration testing.</li><li>Developing and testing comprehensive incident response and business continuity plans.</li></ul>";
-        } else if (serviceContext.includes("Data Analytics") || serviceContext.includes("Business Intelligence")) {
-            strategy += "<ul><li>Establishing a modern data architecture for reliable data collection, storage, and processing (ETL/ELT).</li><li>Creating interactive dashboards and insightful reports to empower data-driven decision-making across your organization.</li><li>Implementing strong data governance frameworks for data quality, security, and regulatory compliance.</li></ul>";
-        } else if (serviceContext.includes("Cloud Infrastructure") || serviceContext.includes("DevOps")) {
-            strategy += "<ul><li>Designing and implementing scalable, resilient, and cost-effective cloud solutions on platforms like AWS, Azure, or GCP.</li><li>Establishing CI/CD pipelines and DevOps practices to automate and accelerate software delivery.</li><li>Optimizing cloud resource utilization for performance and cost-efficiency (FinOps).</li></ul>";
-        } else if (serviceContext.includes("Digital Transformation") || serviceContext.includes("Strategy")) {
-            strategy += "<ul><li>Performing an in-depth assessment of your current digital capabilities and market positioning.</li><li>Co-creating a comprehensive digital transformation roadmap that aligns technology initiatives with core business objectives.</li><li>Guiding change management processes to ensure smooth adoption and stakeholder buy-in.</li></ul>";
-        } else {
-            strategy += "<p>A foundational approach focusing on robust design principles, efficient project execution, transparent communication, and delivering measurable positive outcomes.</p>";
-        }
+### Recommended Technology Stack (Illustrative Examples)
+* **Backend:** Python (Django/FastAPI) or Node.js (Express) for robust APIs.
+* **Frontend:** React (Next.js) or Vue.js for dynamic user interfaces.
+* **Database:** PostgreSQL for relational data, MongoDB for flexibility.
+* **Cloud:** AWS or Azure for scalable infrastructure.
+* **AI/ML (if applicable for ${serviceArea}):** TensorFlow, PyTorch, scikit-learn.
 
-        tech = `<h3>Recommended Technology Stack (Illustrative Examples)</h3><p>The precise technologies will be determined after a deeper dive, but here are some potential tools and platforms relevant to <strong>${serviceContext}</strong>:</p><ul>`;
-        if (serviceContext.includes("AI")) {
-            tech += "<li><strong>AI/ML Frameworks:</strong> Python (TensorFlow, PyTorch, Scikit-learn), R.</li><li><strong>MLOps Platforms:</strong> Kubeflow, MLflow, AWS SageMaker, Azure ML.</li>";
-        }
-        if (serviceContext.includes("Software") || serviceContext.includes("Web") || serviceContext.includes("Mobile")) {
-            tech += "<li><strong>Backend Technologies:</strong> Node.js (Express/NestJS), Python (Django/FastAPI), Java (Spring Boot), Ruby on Rails, .NET.</li>";
-            tech += "<li><strong>Frontend Frameworks:</strong> React, Angular, Vue.js for web; Swift/Objective-C (iOS), Kotlin/Java (Android), React Native, Flutter for mobile.</li>";
-            tech += "<li><strong>Databases:</strong> PostgreSQL, MySQL, SQL Server, MongoDB, Cassandra, Redis.</li>";
-        }
-        if (serviceContext.includes("Cloud")) {
-            tech += "<li><strong>Cloud Platforms:</strong> Amazon Web Services (AWS), Microsoft Azure, Google Cloud Platform (GCP).</li>";
-            tech += "<li><strong>Containerization & Orchestration:</strong> Docker, Kubernetes, OpenShift.</li><li><strong>Infrastructure as Code:</strong> Terraform, AWS CloudFormation, Azure Resource Manager.</li>";
-        }
-        if (serviceContext.includes("Security")) {
-             tech += "<li><strong>Security Information and Event Management (SIEM):</strong> Splunk, ELK Stack (Elasticsearch, Logstash, Kibana), Wazuh.</li><li><strong>Endpoint Detection and Response (EDR):</strong> CrowdStrike, SentinelOne.</li><li><strong>Identity and Access Management (IAM):</strong> Okta, Auth0, Keycloak.</li>";
-        }
-        if (serviceContext.includes("Data")) {
-             tech += "<li><strong>Data Warehousing:</strong> Snowflake, Google BigQuery, Amazon Redshift.</li><li><strong>Data Lake Solutions:</strong> Apache Hadoop, Delta Lake.</li><li><strong>Business Intelligence Tools:</strong> Tableau, Microsoft Power BI, Looker.</li><li><strong>Data Pipeline Tools:</strong> Apache Airflow, Apache Kafka.</li>";
-        }
-        tech += "<li>Cross-cutting concerns will be addressed using appropriate DevOps tools (e.g., Jenkins, GitLab CI, GitHub Actions), monitoring solutions (e.g., Prometheus, Grafana, Datadog), and collaboration platforms.</li></ul>";
-        
-        steps = `<h3>First Steps (Initial 2-4 Weeks)</h3><p>To swiftly move towards achieving <strong>${outcomeContext}</strong>, we propose the following initial actions:</p><ol>`;
-        steps += `<li><strong>Discovery & Alignment Workshop:</strong> A dedicated session to deeply understand your specific context within <strong>${serviceContext}</strong>, refine goals for <strong>${objectiveContext}</strong>, and map out existing challenges related to <strong>${challengeContext}</strong>. We'll collaboratively define key success metrics.</li>`;
-        steps += "<li><strong>Rapid Assessment & Gap Analysis:</strong> Review your current technological landscape, processes, and resources relevant to your area of interest. Identify key opportunities for improvement and quick wins.</li>";
-        steps += "<li><strong>Solution Blueprint & Roadmap Outline:</strong> Develop a high-level solution concept, potential architectural approaches, and a phased implementation roadmap. This will include estimated timelines and resource considerations for initial phases.</li>";
-        steps += "<li><strong>Proof of Concept (if applicable):</strong> For complex scenarios, especially in AI or custom development, we might propose a small-scale PoC to validate critical assumptions and demonstrate feasibility before full-scale commitment.</li></ol>";
-        steps += "<p>We're excited by the possibility of partnering with you and believe that by focusing on these steps, we can quickly build momentum and deliver tangible value.</p>";
-
-        return `<div class="space-y-4 text-sm">${strategy}${tech}${steps}</div>`;
+### First Steps (Initial 2-4 Weeks)
+* **Deep Dive Workshop:** Understand your specific needs within ${serviceArea}.
+* **Scope Definition & Prototyping:** Outline key features and create initial mockups.
+* **Technical Architecture Design:** Finalize tech stack and system design.
+* **Sprint 0 & Setup:** Prepare development environment and initial backlog.`;
     }
+
+    // --- GEMINI CUSTOMER CARE ---
+    function initializeGeminiCustomerCare() {
+        const chatbox = document.getElementById('gemini-chatbox');
+        const input = document.getElementById('gemini-care-input');
+        const submitBtn = document.getElementById('gemini-care-submit');
+        const thinkingLottie = document.getElementById('lottie-gemini-thinking');
+        const feedbackDiv = document.getElementById('gemini-care-feedback');
+
+        const appendMessage = (text, type) => {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-message', type === 'user' ? 'user-message' : 'gemini-message');
+            msgDiv.textContent = text;
+            chatbox.appendChild(msgDiv);
+            chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll
+        };
+
+        const showDissatisfiedOption = () => {
+            feedbackDiv.innerHTML = ''; // Clear previous
+            const btn = document.createElement('button');
+            btn.id = 'gemini-dissatisfied-btn';
+            btn.innerHTML = 'Not quite what I needed <i class="far fa-frown ml-1"></i>';
+            btn.onclick = () => {
+                appendMessage(`I understand. For more personalized assistance, please contact us directly at ${COMPANY_CONTACT_NUMBER}. Our human experts are ready to help!`, 'gemini');
+                feedbackDiv.innerHTML = `<p class="text-sm text-text-secondary">We've noted your feedback. Please call us at <strong class="text-accent">${COMPANY_CONTACT_NUMBER}</strong>.</p>`;
+            };
+            feedbackDiv.appendChild(btn);
+        };
+        
+        const handleCareSubmit = async () => {
+            const userText = input.value.trim();
+            if (!userText) return;
+            appendMessage(userText, 'user');
+            input.value = '';
+            thinkingLottie.classList.remove('hidden');
+            feedbackDiv.innerHTML = ''; // Clear old feedback
+
+            // Simulate API call and mock response
+            setTimeout(() => {
+                thinkingLottie.classList.add('hidden');
+                let geminiResponseText;
+                if (userText.toLowerCase().includes("price") || userText.toLowerCase().includes("cost") || userText.toLowerCase().includes("quote")) {
+                    geminiResponseText = `For detailed pricing or a quote, it's best to discuss your specific project requirements. I can arrange for one of our specialists to contact you, or you can reach us at ${COMPANY_CONTACT_NUMBER}. What would you prefer?`;
+                } else if (userText.toLowerCase().includes("services")) {
+                    geminiResponseText = "We offer a range of services including AI & Intelligent Automation, Custom Software Development, Cybersecurity, Data Analytics, Cloud Solutions, and Digital Transformation consulting. Can I provide more details on a specific area?";
+                } else if (userText.toLowerCase().includes("hello") || userText.toLowerCase().includes("hi")) {
+                    geminiResponseText = "Hello there! How can I assist you further today?";
+                } else {
+                    geminiResponseText = "Thanks for your question! While I'm still learning, for detailed inquiries it's often best to speak with a human expert. I can provide general information, or would you like to know how to contact us directly?";
+                }
+                appendMessage(geminiResponseText, 'gemini');
+                showDissatisfiedOption();
+            }, 1500 + Math.random() * 1000);
+        };
+
+        submitBtn.addEventListener('click', handleCareSubmit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleCareSubmit();
+        });
+    }
+
 
     // --- SCROLL & UI ---
      function setupScrollTriggers() {
         gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, { y: 50, autoAlpha: 0 }, {
-                duration: 1, y: 0, autoAlpha: 1, ease: 'power3.out',
-                scrollTrigger: { trigger: elem, start: 'top 90%', toggleActions: 'play none none reset' },
+            gsap.fromTo(elem, { y: 60, autoAlpha: 0 }, {
+                duration: 1.2, y: 0, autoAlpha: 1, ease: 'power3.out',
+                scrollTrigger: { trigger: elem, start: 'top 90%', end: "bottom 60%", toggleActions: 'play none none reset' },
                 delay: parseFloat(elem.dataset.revealDelay) || 0
             });
-        });
-        
-        gsap.utils.toArray('.founder-card-container').forEach(container => {
-            const card = container.querySelector('.founder-card');
-            const toggleButtons = card.querySelectorAll('.expertise-toggle-btn');
-            toggleButtons.forEach(btn => btn.addEventListener('click', (e) => {
-                e.stopPropagation(); card.classList.toggle('is-flipped');
-                if (card.classList.contains('is-flipped')) {
-                    gsap.fromTo(card.querySelectorAll('.skill-bar'), 
-                    { width: '0%' }, 
-                    { 
-                        width: (i, t) => `${t.dataset.width}%`, duration: 0.8, ease: 'power2.inOut', 
-                        stagger: { amount: 0.5, from: "start" }
-                    });
-                }
-            }));
-            // 3D Hover (Optional, can be intensive)
-            // container.addEventListener('mousemove', e => { ... });
-            // container.addEventListener('mouseleave', e => { ... });
         });
     }
 
     function setupHeaderScroll() {
         const header = document.getElementById('main-header');
         if (!header) return;
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+        ScrollTrigger.create({
+            trigger: "body", start: "top top-=" + (header.offsetHeight + 10),
+            onUpdate: self => header.classList.toggle('scrolled', self.direction === 1 && self.scroll() > 50),
+            onLeaveBack: () => header.classList.remove('scrolled'), // when scrolling back to top
+            onEnter: () => { if(window.scrollY > 50) header.classList.add('scrolled');}
         });
     }
     
@@ -741,9 +837,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const mobileMenu = document.getElementById('mobile-menu');
         if (menuButton && mobileMenu) {
             menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                menuButton.querySelector('i').classList.toggle('fa-bars');
-                menuButton.querySelector('i').classList.toggle('fa-times');
+                const isHidden = mobileMenu.classList.toggle('hidden');
+                menuButton.querySelector('i').className = isHidden ? 'fas fa-bars fa-lg' : 'fas fa-times fa-lg';
+                 gsap.fromTo(mobileMenu, { maxHeight: isHidden ? '500px' : 0, opacity: isHidden ? 1: 0 }, { maxHeight: isHidden ? 0 : '500px', opacity: isHidden ? 0 : 1, duration: 0.3, ease: 'power2.inOut'});
             });
         }
     }
@@ -751,107 +847,43 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeDarkMode() {
         const toggles = [document.getElementById('darkModeToggle'), document.getElementById('darkModeToggleMobile')];
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        // Initial state
-        if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && prefersDark)) {
-            document.body.classList.add('dark-mode');
-            document.body.classList.remove('light-mode');
-            toggles.forEach(t => t && (t.checked = true));
-            if(typeof tsParticles !== 'undefined') { tsParticles.load({ id:"tsparticles-hero", options: getParticlesConfig()});}
+        let isCurrentlyDark = localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && prefersDark);
 
-        } else {
-            document.body.classList.add('light-mode');
-            document.body.classList.remove('dark-mode');
-             if(typeof tsParticles !== 'undefined') { tsParticles.load({ id:"tsparticles-hero", options: getParticlesConfig()});}
+        const applyTheme = (dark) => {
+            document.body.classList.toggle('dark-mode', dark);
+            document.body.classList.toggle('light-mode', !dark);
+            toggles.forEach(t => t && (t.checked = dark));
+            if(typeof tsParticles !== 'undefined') tsParticles.load({ id:"tsparticles-hero", options: getParticlesConfig()});
+            localStorage.setItem('darkMode', dark);
         }
+        applyTheme(isCurrentlyDark);
 
         toggles.forEach(toggle => {
-            if (toggle) {
-                toggle.addEventListener('change', (e) => {
-                    const isChecked = e.target.checked;
-                    document.body.classList.toggle('dark-mode', isChecked);
-                    document.body.classList.toggle('light-mode', !isChecked);
-                    localStorage.setItem('darkMode', isChecked);
-                    // Update particles color on theme change
-                    if(typeof tsParticles !== 'undefined') { tsParticles.load({ id:"tsparticles-hero", options: getParticlesConfig()});}
-                    // Sync other toggle
-                    toggles.forEach(t => t && t !== toggle && (t.checked = isChecked));
-                });
-            }
+            if (toggle) toggle.addEventListener('change', (e) => applyTheme(e.target.checked));
         });
     }
     
-    // --- PARTICLES ---
     async function loadParticles() {
         if(typeof tsParticles !== 'undefined') {
            await tsParticles.load({ id: "tsparticles-hero", options: getParticlesConfig() });
-        } else {
-            console.warn("tsParticles not loaded, skipping particle initialization.");
-        }
+        } else { console.warn("tsParticles not loaded."); }
     }
     
     function getParticlesConfig() {
         const isDark = document.body.classList.contains('dark-mode');
-        return {
-            fpsLimit: 60, // Reduced for performance
-            interactivity: {
-                events: {
-                    onHover: { enable: true, mode: "grab" },
-                    resize: true
-                },
-                modes: { grab: { distance: 120, links: { opacity: 0.8 } } } // Reduced distance
-            },
-            particles: {
-                color: { value: isDark ? "#4b5563" : "#9ca3af" }, // Adjusted colors
-                links: {
-                    color: isDark ? "#374151" : "#d1d5db", // Softer link colors
-                    distance: 130, // Reduced distance
-                    enable: true,
-                    opacity: 0.4, // Reduced opacity
-                    width: 1
-                },
-                move: {
-                    direction: "none", enable: true, outModes: { default: "bounce" }, // Changed outMode to bounce
-                    random: true, // More random movement
-                    speed: 1, // Slower speed
-                    straight: false
-                },
-                number: { density: { enable: true, area: 1000 }, value: 60 }, // Reduced density area, fewer particles
-                opacity: { value: { min: 0.3, max: 0.7 } }, // Varied opacity
-                shape: { type: "circle" },
-                size: { value: { min: 1, max: 3 } } // Smaller particles
-            },
-            detectRetina: true
-        };
+        return {"fpsLimit":60,"interactivity":{"events":{"onHover":{"enable":true,"mode":"grab"},"resize":true},"modes":{"grab":{"distance":140,"links":{"opacity":0.8,"color":isDark ? "#556677" : "#aabbcc"}}}},"particles":{"color":{"value":isDark ? "#4b5563":"#9ca3af"},"links":{"color":isDark ? "#374151":"#d1d5db","distance":150,"enable":true,"opacity":0.4,"width":1},"move":{"direction":"none","enable":true,"outModes":{"default":"bounce"},"random":true,"speed":1.2,"straight":false},"number":{"density":{"enable":true,"area":900},"value":70},"opacity":{"value":{"min":0.2,"max":0.6}},"shape":{"type":"circle"},"size":{"value":{"min":1,"max":4}}},"detectRetina":true};
     }
     
     function initializeSearch() {
         const searchInput = document.getElementById('search-input');
         if (!searchInput) return;
-
         const sections = document.querySelectorAll('.searchable-section');
-
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
-
             sections.forEach(section => {
                 const searchIndex = (section.dataset.searchIndex || "").toLowerCase();
-                const sectionHeader = section.querySelector('h2, h3'); // Find main heading
-                const headerText = sectionHeader ? sectionHeader.textContent.toLowerCase() : "";
-
-                if (query === "") {
-                    section.classList.remove('is-hidden');
-                    gsap.to(section, { opacity: 1, duration: 0.3 });
-                } else if (searchIndex.includes(query) || headerText.includes(query)) {
-                    section.classList.remove('is-hidden');
-                    gsap.to(section, { opacity: 1, duration: 0.3 });
-                } else {
-                    gsap.to(section, { 
-                        opacity: 0.2, 
-                        duration: 0.3, 
-                        onComplete: () => section.classList.add('is-hidden') 
-                    });
-                }
+                const isMatch = query === "" || searchIndex.includes(query);
+                gsap.to(section, { opacity: isMatch ? 1 : 0.2, duration: 0.3, onComplete: () => section.classList.toggle('is-hidden', !isMatch) });
             });
         });
     }
