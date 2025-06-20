@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danco & Khadija - The Digital Blueprint</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.3.0/tsparticles.engine.min.js"></script>
+
+    <style>
+        /* --- CORE THEME & NEUROAESTHETIC FOUNDATION --- */
+        :root {
+            --bg: #050508;
+            --text-primary: #EAEAEB;
+            --text-secondary: #8A8A8E;
+            --accent-glow: rgba(76, 134, 255, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(20, 20, 25, 0.5);
+            --node-stroke: rgba(255,255,255,0.4);
+            --node-label: var(--text-secondary);
+            --gradient-start: #3b82f6;
+            --gradient-end: #14b8a6;
+        }
+
+        .light-mode {
+            --bg: #F7F7F8;
+            --text-primary: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --node-stroke: rgba(0,0,0,0.4);
+            --node-label: var(--text-secondary);
+        }
+
+        /* --- GLOBAL STYLES --- */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            overflow: hidden; /* Prevent scrollbars during transitions */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        
+        /* --- WORKSPACE & CAMERA --- */
+        .workspace {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            perspective: 1000px;
+        }
+        .camera {
+            position: absolute; width: 100%; height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* --- SECTIONS (CONTENT BLOCKS) --- */
+        .content-section {
+            position: absolute; width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            backface-visibility: hidden;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+        .content-section.active { opacity: 1; pointer-events: auto; }
+        
+        #hero-section { transform: translateZ(0px); opacity: 1; pointer-events: auto; }
+        #team-section { transform: translateY(-100vh) rotateX(90deg) translateZ(50vh); }
+        #philosophy-section { transform: translateX(100vw) rotateY(-90deg) translateZ(50vh); }
+        #methodology-section { transform: translateX(-100vw) rotateY(90deg) translateZ(50vh); }
+        #labs-section { transform: translateY(100vh) rotateX(-90deg) translateZ(50vh); }
+        #contact-section { transform: translateZ(-100vh) rotateX(180deg); }
+
+        /* --- INTERACTIVE HERO BLUEPRINT --- */
+        #blueprint-svg { position: absolute; width: 100%; height: 100%; z-index: 1; overflow: visible; }
+        .pulse-circle { animation: pulse 4s infinite cubic-bezier(0.4, 0, 0.6, 1); }
+        @keyframes pulse {
+            0%, 100% { r: 8; opacity: 0.2; }
+            50% { r: 16; opacity: 0.05; }
+        }
+        .connector-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 5s forwards; }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+        
+        .nav-node { cursor: pointer; transition: all 0.3s ease; }
+        .nav-node .node-shape { stroke: var(--node-stroke); }
+        .nav-node .node-label { fill: var(--node-label); }
+        .nav-node:hover .node-shape { stroke: var(--accent-glow); stroke-width: 3; }
+        .nav-node:hover .node-label { fill: var(--text-primary); }
+
+        /* --- GLASSMORPHIC CONTENT PANELS --- */
+        .content-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px; padding: 2rem;
+            width: 90%; max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: scale(0.95); opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+        }
+        .light-mode .content-panel { box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .content-section.active .content-panel { transform: scale(1); opacity: 1; }
+
+        /* --- UI CONTROLS (BACK & THEME) --- */
+        .ui-control {
+            position: absolute; z-index: 100;
+            width: 44px; height: 44px;
+            background: var(--glass-bg); border: 1px solid var(--border-color);
+            border-radius: 50%; color: var(--text-primary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .ui-control:hover { border-color: var(--accent-glow); color: var(--accent-glow); }
+        #back-button { top: 2rem; left: 2rem; transform: scale(0); opacity: 0; }
+        .content-section.active #back-button { transform: scale(1); opacity: 1; transition-delay: 0.5s; }
+        #theme-toggle { top: 2rem; right: 2rem; }
+
+        /* --- SECTION-SPECIFIC STYLES --- */
+        .section-title { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+        .section-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; }
+
+        /* Innovators Section */
+        .innovator-tab {
+            padding: 0.5rem 1rem; border-radius: 99px;
+            cursor: pointer; transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .innovator-tab.active {
+            color: var(--text-primary);
+            background-color: var(--border-color);
+        }
+        .skill-bar-bg { background-color: var(--border-color); border-radius: 4px; overflow: hidden; }
+        .skill-bar-fg {
+            background-image: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            height: 8px; border-radius: 4px;
+            transform: scaleX(0); transform-origin: left;
+        }
+        .tech-badge {
+            background-color: var(--border-color);
+            padding: 0.25rem 0.75rem; border-radius: 6px;
+            font-size: 0.8rem; font-weight: 500;
+        }
+        .philosophy-card, .methodology-step, .lab-card-inner {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem; border-radius: 12px;
+        }
+        .light-mode .philosophy-card, .light-mode .methodology-step, .light-mode .lab-card-inner {
+             background-color: rgba(0,0,0,0.02);
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- UI Controls -->
+    <div id="back-button" class="ui-control"><i class="fas fa-times"></i></div>
+    <div id="theme-toggle" class="ui-control">
+        <i class="fas fa-sun"></i>
+    </div>
+
+
+    <div class="workspace">
+        <div class="camera">
+
+            <!-- A. HERO SECTION -->
+            <section id="hero-section" class="content-section active">
+                 <div class="text-center relative z-10 p-8">
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4">
+                        <span>Architects of</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Intelligent Futures</span>
+                    </h1>
+                    <p class="text-lg md:text-xl max-w-2xl mx-auto text-secondary">
+                        Navigate our core competencies. Select a node to begin.
+                    </p>
+                </div>
+                <svg id="blueprint-svg" viewBox="0 0 1000 600">
+                    <defs>
+                        <radialGradient id="glow">
+                            <stop offset="0%" stop-color="var(--accent-glow)" stop-opacity="0.5" />
+                            <stop offset="100%" stop-color="var(--accent-glow)" stop-opacity="0" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="500" cy="300" r="100" fill="url(#glow)" />
+                    <circle class="pulse-circle" cx="500" cy="300" r="8" fill="var(--accent-glow)" />
+                    <line class="connector-line" x1="500" y1="300" x2="500" y2="100" stroke="var(--border-color)" stroke-width="1.5" />
+                    <line class="connector-line" x1="500" y1="300" x2="800" y2="300" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.2s;"/>
+                    <line class="connector-line" x1="500" y1="300" x2="200" y2="300" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.4s;"/>
+                    <line class="connector-line" x1="500" y1="300" x2="500" y2="500" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.6s;"/>
+                    <line class="connector-line" x1="500" y1="300" x2="650" y2="450" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.8s;"/>
+                    <g class="nav-node" data-target="team-section"><circle class="node-shape" cx="500" cy="100" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="500" y="80" text-anchor="middle" font-size="14">Core Innovators</text></g>
+                    <g class="nav-node" data-target="philosophy-section"><circle class="node-shape" cx="800" cy="300" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="800" y="280" text-anchor="middle" font-size="14">Our Philosophy</text></g>
+                    <g class="nav-node" data-target="methodology-section"><circle class="node-shape" cx="200" cy="300" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="200" y="280" text-anchor="middle" font-size="14">Execution Blueprint</text></g>
+                    <g class="nav-node" data-target="labs-section"><circle class="node-shape" cx="500" cy="500" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="500" y="528" text-anchor="middle" font-size="14">Innovation Labs</text></g>
+                    <g class="nav-node" data-target="contact-section"><circle class="node-shape" cx="650" cy="450" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="650" y="478" text-anchor="middle" font-size="14">Build With Us</text></g>
+                </svg>
+            </section>
+
+            <!-- Other sections will be dynamically populated -->
+            <section id="team-section" class="content-section"></section>
+            <section id="philosophy-section" class="content-section"></section>
+            <section id="methodology-section" class="content-section"></section>
+            <section id="labs-section" class="content-section"></section>
+            <section id="contact-section" class="content-section"></section>
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-300 py-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="#" class="text-3xl font-bold gradient-text">Danco & Khadija</a>
+                </div>
+                <div class="flex flex-col md:flex-row items-center">
+                    <a href="#hero-section" class="footer-link">Home</a>
+                    <a href="#team-section" class="footer-link">Innovators</a>
+                    <a href="#philosophy-section" class="footer-link">Philosophy</a>
+                    <a href="#methodology-section" class="footer-link">Methodology</a>
+                    <a href="#labs-section" class="footer-link">Labs</a>
+                    <a href="#contact-section" class="footer-link">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-4 pt-4 text-center text-sm">
+                <p>&copy; <span id="year"></span> Danco & Khadija. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- GSAP PLUGIN REGISTRATION ---
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // --- DATA & CONFIG ---
+    const TECH_STACK_DATA = {
+        frontend: [ { name: 'React', icon: 'react' }, { name: 'Next.js', icon: 'nextdotjs' }, { name: 'Vue.js', icon: 'vuedotjs' }, { name: 'Svelte', icon: 'svelte' }, { name: 'TailwindCSS', icon: 'tailwindcss' }, { name: 'GSAP', icon: 'gsap' } ],
+        backend: [ { name: 'Python', icon: 'python' }, { name: 'Django', icon: 'django' }, { name: 'Node.js', icon: 'nodedotjs' }, { name: 'FastAPI', icon: 'fastapi' }, { name: 'PostgreSQL', icon: 'postgresql' }, { name: 'MongoDB', icon: 'mongodb' } ],
+        devops: [ { name: 'AWS', icon: 'amazonaws' }, { name: 'GCP', icon: 'googlecloud' }, { name: 'Docker', icon: 'docker' }, { name: 'Kubernetes', icon: 'kubernetes' }, { name: 'Terraform', icon: 'terraform' }, { name: 'Jenkins', icon: 'jenkins' } ],
+        ai: [ { name: 'TensorFlow', icon: 'tensorflow' }, { name: 'PyTorch', icon: 'pytorch' }, { name: 'Scikit-learn', icon: 'scikitlearn' }, { name: 'LangChain', icon: 'langchain' }, { name: 'HuggingFace', icon: 'huggingface' }, { name: 'OpenAI', icon: 'openai' } ],
+        security: [ { name: 'Metasploit', icon: 'metasploit' }, { name: 'Wireshark', icon: 'wireshark' }, { name: 'Burp Suite', icon: 'burpsuite' }, { name: 'Nmap', icon: 'nmap' }, { name: 'OWASP', icon: 'owasp' }, { name: 'Vault', icon: 'hashicorpvault' } ]
+    };
+
+    const PROCESS_DATA = [
+        { id: 'd', x: 100, y: 200, label: 'Discovery', icon: 'fa-magnifying-glass', description: 'Deep-dive workshops, stakeholder interviews, and system analysis to align on a strategic blueprint.'},
+        { id: 'a', x: 300, y: 200, label: 'Architecture', icon: 'fa-sitemap', description: 'Designing the system blueprint, technology stacks, data models, and security frameworks.'},
+        { id: 'dev', x: 500, y: 200, label: 'Development', icon: 'fa-code', description: 'Agile sprints delivering functional increments. Continuous feedback and transparent progress.'},
+        { id: 'qa', x: 700, y: 200, label: 'QA & Security', icon: 'fa-shield-halved', description: 'Rigorous functional, performance, and security testing, including penetration tests.'},
+        { id: 'dep', x: 900, y: 200, label: 'Deployment', icon: 'fa-rocket', description: 'Meticulous deployment to cloud or on-premise infrastructure with minimal disruption.'},
+        { id: 'e', x: 1100, y: 200, label: 'Evolution', icon: 'fa-infinity', description: 'Ongoing support, monitoring, and proactive maintenance to ensure long-term value.'},
+    ];
+    
+    // --- INITIALIZATION ---
+    function init() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        lottie.loadAnimation({ container: document.getElementById('lottie-loading'), renderer: 'svg', loop: true, autoplay: true, path: 'https://assets9.lottiefiles.com/packages/lf20_m6dff8ch.json' });
+
+        const onPageLoad = () => {
+            gsap.to(loadingOverlay, { opacity: 0, duration: 0.5, onComplete: () => {
+                loadingOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                runEnterAnimations();
+            }});
+            
+            initDarkMode();
+            initHeroAnimation();
+            initInteractiveBlueprint(); // New function for blueprint logic
+            initInnovatorsScroll();
+            initGenericAnimations();
+            initParticles();
+            initLottieAnimations();
+            initTechStack();
+            initCounters();
+            initProcessNavigator();
+            initAIAssistant();
+            initQuiz();
+            setYear();
+        };
+        
+        if (document.readyState === 'complete') {
+            onPageLoad();
+        } else {
+            window.addEventListener('load', onPageLoad);
+        }
+    }
+
+    function runEnterAnimations() {
+        gsap.timeline()
+            .to("#hero-content .line-inner", { y: 0, duration: 1.2, ease: "power4.out", stagger: 0.15 })
+            .from("#hero-subtitle", { y: 20, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.8")
+            .from(".scroll-indicator", { y: 20, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.6");
+    }
+
+    // --- UI & THEME ---
+    function initDarkMode() {
+        const toggle = document.getElementById('darkModeToggle');
+        if (!toggle) return;
+
+        const applyTheme = (isDark) => {
+            document.body.classList.toggle('light-mode', !isDark);
+            toggle.checked = isDark;
+            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+        };
+
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('darkMode');
+        const isDark = savedTheme !== null ? savedTheme === 'true' : prefersDark;
+        
+        applyTheme(isDark);
+        toggle.addEventListener('change', e => applyTheme(e.target.checked));
+    }
+
+    function setYear() {
+        const yearSpan = document.getElementById('year');
+        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+    }
+    
+    // --- ANIMATIONS & INTERACTIVITY ---
+    function initHeroAnimation() {
+        gsap.set("#hero-content .line-inner", { y: "110%" });
+        gsap.to("#hero-content", {
+            y: "-50%",
+            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
+        });
+        gsap.to("#hero-background", {
+            scale: 1.5,
+            opacity: 0,
+            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
+        });
+    }
+
+    function initInteractiveBlueprint() {
+        // This function will now handle the hero blueprint navigation
+        // For simplicity, we assume the blueprint is part of the hero content
+        // and we add click listeners to pre-defined elements.
+        // A more robust solution would generate this from a data object.
+
+        const blueprintNodes = {
+            '#node-innovators': '#innovators',
+            '#node-philosophy': '#philosophy',
+            '#node-methodology': '#methodology',
+            '#node-showcase': '#impact-metrics', // Assuming showcase is impact
+            '#node-tech': '#tech-stack-section-id', // Add ID to tech stack section
+            '#node-ai': '#ai-chat-section-id' // Add ID to AI assistant section
+        };
+
+        for (const nodeId in blueprintNodes) {
+            const nodeElement = document.querySelector(nodeId);
+            const targetSectionId = blueprintNodes[nodeId];
+            if (nodeElement && document.querySelector(targetSectionId)) {
+                nodeElement.style.cursor = 'pointer';
+                nodeElement.addEventListener('click', (e) => {
+                    e.preventDefault(); // PREVENTS THE "STUPID ZOOM"
+                    gsap.to(window, {
+                        duration: 1.5,
+                        scrollTo: { y: targetSectionId, offsetY: 70 }, // Offset for fixed header
+                        ease: 'power3.inOut'
+                    });
+                });
+
+                // Add hover interactivity
+                const tl = gsap.timeline({ paused: true });
+                tl.to(nodeElement, { scale: 1.15, duration: 0.3, ease: 'back.out(2)' })
+                  .to(nodeElement, { filter: 'drop-shadow(0 0 15px var(--gradient-start))', duration: 0.3 }, 0);
+
+                nodeElement.addEventListener('mouseenter', () => tl.play());
+                nodeElement.addEventListener('mouseleave', () => tl.reverse());
+            }
+        }
+    }
+    
+    function initInnovatorsScroll() {
+        const cards = gsap.utils.toArray('.innovator-card');
+        const triggers = gsap.utils.toArray('.innovator-sticky-trigger');
+
+        triggers.forEach((trigger, i) => {
+            ScrollTrigger.create({
+                trigger: trigger,
+                start: 'top center',
+                end: 'bottom center',
+                onToggle: self => gsap.to(cards[i], { autoAlpha: self.isActive ? 1 : 0, duration: 0.5 })
+            });
+        });
+
+        ScrollTrigger.create({
+            trigger: '#innovators-container',
+            start: 'top top',
+            end: 'bottom bottom',
+            pin: '#innovators-visuals',
+            anticipatePin: 1
+        });
+    }
+
+    function initGenericAnimations() {
+        gsap.utils.toArray('[data-animate]').forEach(elem => {
+            gsap.from(elem, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: elem.dataset.delay || 0,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: elem, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+        });
+    }
+
+    function initCounters() {
+        gsap.utils.toArray('[data-counter]').forEach(counter => {
+            const endValue = parseFloat(counter.dataset.counter);
+            const isFloat = endValue % 1 !== 0;
+            let obj = { val: 0 };
+            gsap.to(obj, {
+                val: endValue,
+                duration: 2.5,
+                ease: "circ.out",
+                scrollTrigger: { trigger: counter, start: "top 90%" },
+                onUpdate: () => {
+                    counter.textContent = isFloat ? obj.val.toFixed(1) : Math.round(obj.val);
+                }
+            });
+        });
+    }
+
+    function initLottieAnimations() {
+        const lottieContainers = {
+            'lottie-innovation': 'https://assets2.lottiefiles.com/packages/lf20_v92o76EAX9.json',
+            'lottie-partnership': 'https://assets1.lottiefiles.com/packages/lf20_kylpcnql.json',
+            'lottie-integrity': 'https://assets8.lottiefiles.com/packages/lf20_k2397ggr.json',
+            'lottie-mentorship': 'https://assets1.lottiefiles.com/packages/lf20_F3kxdG.json'
+        };
+        for (const id in lottieContainers) {
+            const container = document.getElementById(id);
+            if (container) {
+                lottie.loadAnimation({
+                    container: container, renderer: 'svg', loop: true, autoplay: true, path: lottieContainers[id]
+                });
+            }
+        }
+    }
+    
+    // --- INTERACTIVE COMPONENTS ---
+    function initTechStack() {
+        // This function needs the section to have an ID for navigation
+        const techSection = document.querySelector('.tech-grid')?.closest('section');
+        if(techSection) techSection.id = 'tech-stack-section-id';
+
+        const tabs = document.querySelectorAll('.tech-tab');
+        const grids = document.querySelectorAll('.tech-grid');
+
+        for (const category in TECH_STACK_DATA) {
+            const grid = document.getElementById(`${category}-grid`);
+            if (grid) {
+                grid.innerHTML = TECH_STACK_DATA[category].map(item => `
+                    <div class="tech-item opacity-0" data-animate>
+                        <img src="https://cdn.simpleicons.org/${item.icon}/" alt="${item.name} logo" onerror="this.style.display='none'">
+                        <span>${item.name}</span>
+                    </div>`).join('');
+            }
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                grids.forEach(g => g.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}-grid`).classList.add('active');
+                gsap.from(`#${tab.dataset.tab}-grid .tech-item`, { opacity: 0, y: 20, stagger: 0.05, duration: 0.5 });
+            });
+        });
+        gsap.from(`#frontend-grid .tech-item`, { opacity: 0, y: 20, stagger: 0.05, duration: 0.5 });
+    }
+    
+    function initProcessNavigator() {
+        const container = document.getElementById('process-navigator');
+        if (!container) return;
+        
+        let svgHtml = `<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid meet" class="w-full h-auto">`;
+        svgHtml += `<defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--gradient-start)" /><stop offset="100%" stop-color="var(--gradient-end)" /></linearGradient></defs>`;
+        
+        const linePath = PROCESS_DATA.map((p, i) => (i === 0 ? 'M' : 'L') + `${p.x} ${p.y}`).join(' ');
+        svgHtml += `<path d="${linePath}" stroke="url(#grad)" stroke-width="3" fill="none" stroke-dasharray="10,5" class="line-path"/>`;
+
+        PROCESS_DATA.forEach(p => {
+            svgHtml += `
+                <g class="node-group" data-description="${p.description}" data-label="${p.label}" transform="translate(${p.x}, ${p.y})">
+                    <circle class="node-bg" r="50" fill="var(--panel-dark)" stroke="var(--gradient-start)" stroke-width="2"/>
+                    <circle r="40" fill="var(--bg-dark)"/>
+                    <text class="node-icon" text-anchor="middle" dominant-baseline="central" fill="var(--text-dark-primary)" font-family="FontAwesome" font-size="32">&#x${p.icon.split('-').map(part => part.codePointAt(0).toString(16)).join('')};</text>
+                </g>`;
+        });
+        svgHtml += `</svg>`;
+        container.innerHTML = svgHtml;
+        
+        const tooltip = document.querySelector('.process-tooltip');
+        document.querySelectorAll('#process-navigator .node-group').forEach(node => {
+            node.addEventListener('mousemove', e => {
+                tooltip.style.opacity = '1';
+                tooltip.style.visibility = 'visible';
+                tooltip.style.left = `${e.pageX + 20}px`;
+                tooltip.style.top = `${e.pageY}px`;
+                tooltip.innerHTML = `<strong class="gradient-text">${node.dataset.label}</strong><p class="text-sm text-dark-secondary mt-1">${node.dataset.description}</p>`;
+            });
+            node.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
+            });
+        });
+    }
+
+    function initQuiz() { /* Placeholder for quiz logic */ }
+    
+    function initAIAssistant() { 
+        const aiSection = document.querySelector('#ai-chat-window')?.closest('section');
+        if(aiSection) aiSection.id = 'ai-chat-section-id';
+        /* Placeholder for AI Assistant logic */ 
+    }
+
+    async function initParticles() { 
+        const isLightMode = document.body.classList.contains('light-mode');
+        const particleColor = isLightMode ? "#4A5568" : "#A0AEC0";
+        const linkColor = isLightMode ? "#CBD5E0" : "#2D3748";
+
+        if (typeof tsParticles !== 'undefined') {
+            await tsParticles.load({
+                id: "tsparticles-hero",
+                options: {
+                    fpsLimit: 60,
+                    interactivity: { events: { onHover: { enable: true, mode: "bubble" } }, modes: { bubble: { distance: 200, duration: 2, opacity: 0.8, size: 5 } } },
+                    particles: {
+                        color: { value: particleColor },
+                        links: { color: linkColor, distance: 150, enable: true, opacity: 0.1, width: 1 },
+                        move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.5, straight: false },
+                        number: { density: { enable: true, area: 800 }, value: 50 },
+                        opacity: { value: 0.2 },
+                        shape: { type: "circle" },
+                        size: { value: { min: 1, max: 3 } }
+                    },
+                    detectRetina: true
+                }
+            });
+        }
+    }
+
+    // --- RUN EVERYTHING ---
+    init();
+</script>
+
+</body>
+</html>
