@@ -3,299 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danco & Khadija - The Digital Blueprint</title>
+    <title>The Architects of Intelligence | Danco & Khadija Solutions</title>
     
+    <!-- Core Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Animation & Interactivity Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.3.0/tsparticles.engine.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-stars@3.3.0/tsparticles.preset.stars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- For rendering Markdown from Gemini -->
 
     <style>
-        /* --- CORE THEME & NEUROAESTHETIC FOUNDATION --- */
+        /* ---
+        * CORE DESIGN SYSTEM & AESTHETIC PHILOSOPHY
+        * This design system is built on principles of neuroaesthetics and cognitive science.
+        * - High Contrast (Dark Mode First): Reduces cognitive load.
+        * - Purposeful Gradients: Guides the eye (Fitts's Law) and creates visual interest.
+        * - Curvature Preference: Extensive use of rounded corners for a more organic, approachable feel.
+        * - Semantic Coloring: Colors are not arbitrary; they signify actions, states, or brand identity.
+        * - Motion Fluency: Animations are handled by GSAP for smooth, physics-based motion that feels natural and intuitive.
+        --- */
         :root {
-            --bg: #050508;
-            --text-primary: #EAEAEB;
-            --text-secondary: #8A8A8E;
-            --accent-glow: rgba(76, 134, 255, 0.7);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --glass-bg: rgba(20, 20, 25, 0.5);
-            --node-stroke: rgba(255,255,255,0.4);
-            --node-label: var(--text-secondary);
-            --gradient-start: #3b82f6;
-            --gradient-end: #14b8a6;
+            --bg-dark: #05070D;
+            --bg-light: #F8F9FA;
+            --text-dark-primary: #EAECEF;
+            --text-dark-secondary: #A0AEC0;
+            --text-light-primary: #1A202C;
+            --text-light-secondary: #4A5568;
+            --panel-dark: #10141C;
+            --panel-light: #FFFFFF;
+            --border-dark: rgba(255, 255, 255, 0.1);
+            --border-light: rgba(0, 0, 0, 0.1);
+            --gradient-start: #0ea5e9; /* sky-500 */
+            --gradient-end: #10b981; /* emerald-500 */
+            --shadow-glow: 0 0 40px rgba(14, 165, 233, 0.2);
+            --font-main: 'Inter', sans-serif;
         }
 
-        .light-mode {
-            --bg: #F7F7F8;
-            --text-primary: #1D1D1F;
-            --text-secondary: #6E6E73;
-            --border-color: rgba(0, 0, 0, 0.1);
-            --glass-bg: rgba(255, 255, 255, 0.6);
-            --node-stroke: rgba(0,0,0,0.4);
-            --node-label: var(--text-secondary);
-        }
-
-        /* --- GLOBAL STYLES --- */
         html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-primary);
-            overflow: hidden; /* Prevent scrollbars during transitions */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-dark-primary);
+            overflow-x: hidden;
             transition: background-color 0.4s ease, color 0.4s ease;
         }
+
+        body.light-mode {
+            --bg-dark: var(--bg-light);
+            --panel-dark: var(--panel-light);
+            --text-dark-primary: var(--text-light-primary);
+            --text-dark-secondary: var(--text-light-secondary);
+            --border-dark: var(--border-light);
+            --shadow-glow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- REUSABLE COMPONENTS & UTILITIES --- */
+        .gradient-text { background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
+        .section-header { max-width: 700px; margin: 0 auto 4rem auto; text-align: center; }
+        .section-header h2 { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+        .section-header p { font-size: 1.125rem; color: var(--text-dark-secondary); }
+        .tag { display: inline-block; background-color: rgba(255, 255, 255, 0.05); color: var(--text-dark-secondary); padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; border: 1px solid var(--border-dark); transition: all 0.2s ease; }
+        body.light-mode .tag { background-color: rgba(0, 0, 0, 0.03); }
+        .tag:hover { transform: translateY(-2px); background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end)); color: white; border-color: transparent; }
+        .content-card { background: var(--panel-dark); border: 1px solid var(--border-dark); border-radius: 1.25rem; padding: 2rem; transition: all 0.3s ease; }
+        .content-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-glow); }
+
+        /* --- HERO SECTION --- */
+        #hero { height: 100vh; width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        #hero-background { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(14, 165, 233, 0.15) 0%, rgba(14, 165, 233, 0) 70%); z-index: 1; }
+        #tsparticles-hero { position: absolute; inset: 0; z-index: 0; }
+        #hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 1rem; }
+        #hero-content h1 { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.05; }
+        #hero-content .line { display: block; overflow: hidden; }
+        #hero-content .line-inner { display: block; }
+        .scroll-indicator { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 3; color: var(--text-dark-secondary); display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; }
+        .mouse { width: 25px; height: 40px; border: 2px solid var(--text-dark-secondary); border-radius: 20px; position: relative; margin-top: 8px; }
+        .scroller { width: 3px; height: 10px; border-radius: 2px; background-color: var(--text-dark-secondary); position: absolute; left: 50%; transform: translateX(-50%); animation: scroll-anim 2s infinite; }
+        @keyframes scroll-anim { 0% { opacity: 1; top: 6px; } 50% { opacity: 1; top: 18px; } 100% { opacity: 0; top: 18px; } }
+
+        /* --- STICKY INNOVATORS SECTION --- */
+        #innovators-container { position: relative; }
+        .innovator-sticky-trigger { height: 100vh; }
+        #innovators-visuals { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
+        .innovator-card { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; background-color: var(--bg-dark); transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .innovator-card.is-active { opacity: 1; visibility: visible; }
+        .innovator-content { display: grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: center; max-width: 1100px; width: 100%; padding: 2rem; }
+        .innovator-avatar { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; border: 8px solid var(--panel-dark); box-shadow: 0 0 0 1px var(--border-dark), var(--shadow-glow); }
+        .innovator-details h3 { font-size: 3rem; font-weight: 800; }
+        .innovator-details .title { font-size: 1.25rem; font-weight: 500; margin-bottom: 1.5rem; }
+        .innovator-details .bio { color: var(--text-dark-secondary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; max-width: 500px; }
+        .expertise-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
         
-        /* --- WORKSPACE & CAMERA --- */
-        .workspace {
-            position: fixed; top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            perspective: 1000px;
-        }
-        .camera {
-            position: absolute; width: 100%; height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
+        /* --- IMPACT METRICS DASHBOARD --- */
+        #impact-metrics { background: url('https://www.transparenttextures.com/patterns/cubes.png') var(--panel-dark); }
+        .metric-item h3 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; }
 
-        /* --- SECTIONS (CONTENT BLOCKS) --- */
-        .content-section {
-            position: absolute; width: 100vw; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            backface-visibility: hidden;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.6s ease;
+        /* --- INTERACTIVE QUIZ & AI ASSISTANT --- */
+        #quiz-modal, #ai-assistant-widget {
+            position: fixed;
+            z-index: 1000;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        .content-section.active { opacity: 1; pointer-events: auto; }
-        
-        #hero-section { transform: translateZ(0px); opacity: 1; pointer-events: auto; }
-        #team-section { transform: translateY(-100vh) rotateX(90deg) translateZ(50vh); }
-        #philosophy-section { transform: translateX(100vw) rotateY(-90deg) translateZ(50vh); }
-        #methodology-section { transform: translateX(-100vw) rotateY(90deg) translateZ(50vh); }
-        #labs-section { transform: translateY(100vh) rotateX(-90deg) translateZ(50vh); }
-        #contact-section { transform: translateZ(-100vh) rotateX(180deg); }
+        #quiz-modal {
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #quiz-modal.active { opacity: 1; pointer-events: auto; }
+        #quiz-content {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        #quiz-modal.active #quiz-content { transform: scale(1); }
+        .quiz-option { cursor: pointer; border: 1px solid var(--border-dark); padding: 1rem; border-radius: 0.75rem; transition: all 0.2s; }
+        .quiz-option:hover { border-color: var(--gradient-start); background: var(--panel-dark); }
+        #gemini-result-card .prose { color: var(--text-dark-primary); }
+        #gemini-result-card .prose h3 { color: var(--text-dark-primary); }
+        #gemini-result-card .prose p, #gemini-result-card .prose li { color: var(--text-dark-secondary); }
 
-        /* --- INTERACTIVE HERO BLUEPRINT --- */
-        #blueprint-svg { position: absolute; width: 100%; height: 100%; z-index: 1; overflow: visible; }
-        .pulse-circle { animation: pulse 4s infinite cubic-bezier(0.4, 0, 0.6, 1); }
-        @keyframes pulse {
-            0%, 100% { r: 8; opacity: 0.2; }
-            50% { r: 16; opacity: 0.05; }
+        #ai-assistant-widget {
+            bottom: 2rem;
+            right: 2rem;
+            width: 350px;
+            background: var(--panel-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
         }
-        .connector-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 5s forwards; }
-        @keyframes draw { to { stroke-dashoffset: 0; } }
-        
-        .nav-node { cursor: pointer; transition: all 0.3s ease; }
-        .nav-node .node-shape { stroke: var(--node-stroke); }
-        .nav-node .node-label { fill: var(--node-label); }
-        .nav-node:hover .node-shape { stroke: var(--accent-glow); stroke-width: 3; }
-        .nav-node:hover .node-label { fill: var(--text-primary); }
+        #ai-assistant-widget.active { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+        .chat-message { padding: 0.5rem 1rem; border-radius: 0.75rem; max-width: 80%; margin-bottom: 0.5rem; line-height: 1.5; }
+        .chat-message.user { background: var(--gradient-start); color: white; align-self: flex-end; }
+        .chat-message.ai { background: var(--bg-dark); color: var(--text-dark-primary); align-self: flex-start; }
 
-        /* --- GLASSMORPHIC CONTENT PANELS --- */
-        .content-panel {
-            background: var(--glass-bg);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 24px; padding: 2rem;
-            width: 90%; max-height: 90vh; overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            transform: scale(0.95); opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-        }
-        .light-mode .content-panel { box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
-        .content-section.active .content-panel { transform: scale(1); opacity: 1; }
+        /* --- PARTNER LOGOS --- */
+        .partner-logo-grid { filter: grayscale(100%); transition: filter 0.3s ease; }
+        .partner-logo-grid:hover { filter: grayscale(0%); }
+        .partner-logo { transition: transform 0.3s ease; opacity: 0.7; }
+        .partner-logo:hover { transform: scale(1.1); opacity: 1; }
 
-        /* --- UI CONTROLS (BACK & THEME) --- */
-        .ui-control {
-            position: absolute; z-index: 100;
-            width: 44px; height: 44px;
-            background: var(--glass-bg); border: 1px solid var(--border-color);
-            border-radius: 50%; color: var(--text-primary);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-        .ui-control:hover { border-color: var(--accent-glow); color: var(--accent-glow); }
-        #back-button { top: 2rem; left: 2rem; transform: scale(0); opacity: 0; }
-        .content-section.active #back-button { transform: scale(1); opacity: 1; transition-delay: 0.5s; }
-        #theme-toggle { top: 2rem; right: 2rem; }
-
-        /* --- SECTION-SPECIFIC STYLES --- */
-        .section-title { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-        .section-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; }
-
-        /* Innovators Section */
-        .innovator-tab {
-            padding: 0.5rem 1rem; border-radius: 99px;
-            cursor: pointer; transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-        .innovator-tab.active {
-            color: var(--text-primary);
-            background-color: var(--border-color);
-        }
-        .skill-bar-bg { background-color: var(--border-color); border-radius: 4px; overflow: hidden; }
-        .skill-bar-fg {
-            background-image: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-            height: 8px; border-radius: 4px;
-            transform: scaleX(0); transform-origin: left;
-        }
-        .tech-badge {
-            background-color: var(--border-color);
-            padding: 0.25rem 0.75rem; border-radius: 6px;
-            font-size: 0.8rem; font-weight: 500;
-        }
-        .philosophy-card, .methodology-step, .lab-card-inner {
-            background-color: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-color);
-            padding: 1.5rem; border-radius: 12px;
-        }
-        .light-mode .philosophy-card, .light-mode .methodology-step, .light-mode .lab-card-inner {
-             background-color: rgba(0,0,0,0.02);
-        }
-        
+        /* --- LOADING OVERLAY --- */
+        #loading-overlay { position: fixed; inset: 0; background: var(--bg-dark); display: flex; justify-content: center; align-items: center; z-index: 10000; transition: opacity 0.5s ease; }
     </style>
 </head>
-<body>
-    <!-- UI Controls -->
-    <div id="back-button" class="ui-control"><i class="fas fa-times"></i></div>
-    <div id="theme-toggle" class="ui-control">
-        <i class="fas fa-sun"></i>
+<body class="bg-bg-dark">
+
+    <!-- Loading Screen -->
+    <div id="loading-overlay">
+        <div id="lottie-loading" style="width: 200px; height: 200px;"></div>
     </div>
-
-
-    <div class="workspace">
-        <div class="camera">
-
-            <!-- A. HERO SECTION -->
-            <section id="hero-section" class="content-section active">
-                 <div class="text-center relative z-10 p-8">
-                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4">
-                        <span>Architects of</span>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Intelligent Futures</span>
-                    </h1>
-                    <p class="text-lg md:text-xl max-w-2xl mx-auto text-secondary">
-                        Navigate our core competencies. Select a node to begin.
-                    </p>
+    
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-6">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter">D&K <span class="gradient-text">Solutions</span></a>
+            <div class="flex items-center space-x-4 md:space-x-6">
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#philosophy" class="font-semibold py-2 px-3 hover:text-sky-400 transition-colors">Philosophy</a>
+                    <a href="#tech-stack" class="font-semibold py-2 px-3 hover:text-sky-400 transition-colors">Arsenal</a>
+                    <a href="#impact-metrics" class="font-semibold py-2 px-3 hover:text-sky-400 transition-colors">Impact</a>
                 </div>
-                <svg id="blueprint-svg" viewBox="0 0 1000 600">
-                    <defs>
-                        <radialGradient id="glow">
-                            <stop offset="0%" stop-color="var(--accent-glow)" stop-opacity="0.5" />
-                            <stop offset="100%" stop-color="var(--accent-glow)" stop-opacity="0" />
-                        </radialGradient>
-                    </defs>
-                    <circle cx="500" cy="300" r="100" fill="url(#glow)" />
-                    <circle class="pulse-circle" cx="500" cy="300" r="8" fill="var(--accent-glow)" />
-                    <line class="connector-line" x1="500" y1="300" x2="500" y2="100" stroke="var(--border-color)" stroke-width="1.5" />
-                    <line class="connector-line" x1="500" y1="300" x2="800" y2="300" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.2s;"/>
-                    <line class="connector-line" x1="500" y1="300" x2="200" y2="300" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.4s;"/>
-                    <line class="connector-line" x1="500" y1="300" x2="500" y2="500" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.6s;"/>
-                    <line class="connector-line" x1="500" y1="300" x2="650" y2="450" stroke="var(--border-color)" stroke-width="1.5" style="animation-delay: 0.8s;"/>
-                    <g class="nav-node" data-target="team-section"><circle class="node-shape" cx="500" cy="100" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="500" y="80" text-anchor="middle" font-size="14">Core Innovators</text></g>
-                    <g class="nav-node" data-target="philosophy-section"><circle class="node-shape" cx="800" cy="300" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="800" y="280" text-anchor="middle" font-size="14">Our Philosophy</text></g>
-                    <g class="nav-node" data-target="methodology-section"><circle class="node-shape" cx="200" cy="300" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="200" y="280" text-anchor="middle" font-size="14">Execution Blueprint</text></g>
-                    <g class="nav-node" data-target="labs-section"><circle class="node-shape" cx="500" cy="500" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="500" y="528" text-anchor="middle" font-size="14">Innovation Labs</text></g>
-                    <g class="nav-node" data-target="contact-section"><circle class="node-shape" cx="650" cy="450" r="10" stroke-width="2" fill="var(--bg)" /><text class="node-label" x="650" y="478" text-anchor="middle" font-size="14">Build With Us</text></g>
-                </svg>
-            </section>
+                 <button id="open-quiz-btn" class="bg-white text-black font-semibold py-2 px-5 rounded-lg hover:bg-opacity-90 transition-all text-sm md:text-base">Find Your Solution</button>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="darkModeToggle" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-sky-500 dark:peer-focus:ring-sky-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-sky-500"></div>
+                </label>
+            </div>
+        </nav>
+    </header>
 
-            <!-- Other sections will be dynamically populated -->
-            <section id="team-section" class="content-section"></section>
-            <section id="philosophy-section" class="content-section"></section>
-            <section id="methodology-section" class="content-section"></section>
-            <section id="labs-section" class="content-section"></section>
-            <section id="contact-section" class="content-section"></section>
-        </div>
-    </div>
+    <main>
+        <!-- HERO SECTION -->
+        <section id="hero">
+            <div id="tsparticles-hero"></div>
+            <div id="hero-background"></div>
+            <div id="hero-content">
+                <h1>
+                    <span class="line"><span class="line-inner">We Don't Just Build Software.</span></span>
+                    <span class="line"><span class="line-inner">We Architect <span class="gradient-text">Digital Sovereignty.</span></span></span>
+                </h1>
+                <p class="text-xl mt-8 max-w-2xl mx-auto text-dark-secondary" id="hero-subtitle">
+                    An elite collective of systems engineers, AI researchers, and security architects from Nairobi, Kenya, crafting the future of African enterprise with intelligent, resilient, and ethical technology.
+                </p>
+            </div>
+            <div class="scroll-indicator"> Explore Our Architects <div class="mouse"><div class="scroller"></div></div></div>
+        </section>
 
-    <footer class="bg-gray-900 text-gray-300 py-8">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <a href="#" class="text-3xl font-bold gradient-text">Danco & Khadija</a>
+        <!-- INNOVATORS STICKY SCROLL SECTION (PRESERVED) -->
+        <section id="innovators" class="relative bg-dark">
+            <div id="innovators-container">
+                <div id="innovators-visuals">
+                     <div class="innovator-card" data-innovator="daniel">
+                        <div class="innovator-content">
+                            <img src="https://danco-analytics.github.io/Portifolio/img/me.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x300/05070D/EAECEF?text=DW';" alt="Portrait of Daniel Wanjala" class="innovator-avatar">
+                            <div class="innovator-details">
+                                <h3>Daniel Wanjala</h3>
+                                <p class="title gradient-text">Chief Technical Architect & AI Visionary</p>
+                                <p class="bio">Daniel is the master conductor of our technical orchestra. With a profound fluency in the languages of data, cloud, and machine learning, he transforms complex business challenges into elegant, scalable, and intelligent software solutions. His work is the bedrock upon which our clients' digital dominance is built.</p>
+                                <div class="expertise-grid">
+                                    <span class="tag">AI & Deep Learning</span><span class="tag">Python & Django</span><span class="tag">LLMs</span><span class="tag">React & Next.js</span><span class="tag">GCP</span><span class="tag">DevSecOps</span><span class="tag">Big Data</span><span class="tag">Microservices</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="innovator-card" data-innovator="khadija">
+                         <div class="innovator-content">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1888&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/300x300/05070D/EAECEF?text=KK';" alt="Portrait of Khadija Khalid" class="innovator-avatar">
+                            <div class="innovator-details">
+                                <h3>Khadija Khalid</h3>
+                                <p class="title gradient-text">Chief Strategy Officer & Systems Analyst</p>
+                                <p class="bio">Khadija is the visionary bridge between ambition and execution. She possesses an unparalleled ability to see the "big picture," dissecting intricate business processes and translating them into precise, high-impact digital strategies. Her guidance ensures every project is not just technically sound, but a powerful engine for growth.</p>
+                                <div class="expertise-grid">
+                                    <span class="tag">Digital Strategy</span><span class="tag">Product Management</span><span class="tag">Systems Analysis</span><span class="tag">UX/UI Research</span><span class="tag">Agile & Scrum</span><span class="tag">Data Visualization</span><span class="tag">BI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="innovator-card" data-innovator="austin">
+                        <div class="innovator-content">
+                            <img src="https://images.unsplash.com/photo-1622632389650-c65a2a550978?q=80&w=1887&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/300x300/05070D/EAECEF?text=AW';" alt="Portrait of Austin Arnold Wopata" class="innovator-avatar">
+                            <div class="innovator-details">
+                                <h3>Austin A. Wopata</h3>
+                                <p class="title gradient-text">Chief Information Security Officer</p>
+                                <p class="bio">In a world of digital threats, Austin is our clients' ultimate defender. As a master of digital fortresses, he engineers security not as an afterthought, but as a fundamental, unbreakable layer of every solution. His proactive, "assume breach" mindset ensures resilience and protects our clients' most valuable assets.</p>
+                                <div class="expertise-grid">
+                                    <span class="tag">Zero Trust</span><span class="tag">Offensive Security</span><span class="tag">Cloud Security</span><span class="tag">Digital Forensics</span><span class="tag">GRC & Compliance</span><span class="tag">DevSecOps</span><span class="tag">Pen Testing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col md:flex-row items-center">
-                    <a href="#hero-section" class="footer-link">Home</a>
-                    <a href="#team-section" class="footer-link">Innovators</a>
-                    <a href="#philosophy-section" class="footer-link">Philosophy</a>
-                    <a href="#methodology-section" class="footer-link">Methodology</a>
-                    <a href="#labs-section" class="footer-link">Labs</a>
-                    <a href="#contact-section" class="footer-link">Contact</a>
+                <div id="innovators-scroll-triggers">
+                    <div class="innovator-sticky-trigger"></div><div class="innovator-sticky-trigger"></div><div class="innovator-sticky-trigger"></div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-4 pt-4 text-center text-sm">
-                <p>&copy; <span id="year"></span> Danco & Khadija. All rights reserved.</p>
+        </section>
+        
+        <!-- GUIDING PRINCIPLES SECTION -->
+        <section id="philosophy" class="py-24 px-6 bg-panel-dark">
+            <div class="container mx-auto">
+                <div class="section-header">
+                    <h2>Our Philosophy</h2>
+                    <p>Technology is a tool. True impact comes from the principles that guide its use. These are the values woven into every line of code, every strategy session, and every partnership we forge.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="content-card opacity-0" data-animate>
+                        <div id="lottie-innovation" class="w-24 h-24 mb-4 -ml-4"></div>
+                        <h3 class="text-xl font-bold mb-2">Pragmatic Innovation</h3>
+                        <p class="text-dark-secondary">We champion bleeding-edge technology, but never for its own sake. Every innovation we introduce is rigorously vetted for its ability to deliver tangible, measurable value and a competitive advantage to your business in the African market and beyond.</p>
+                    </div>
+                     <div class="content-card opacity-0" data-animate data-delay="0.2">
+                        <div id="lottie-partnership" class="w-24 h-24 mb-4 -ml-4"></div>
+                        <h3 class="text-xl font-bold mb-2">Radical Partnership</h3>
+                        <p class="text-dark-secondary">We are not vendors; we are co-conspirators in your success. We embed ourselves in your team, embracing your challenges and celebrating your victories as our own. Your goals become our mission, from Nairobi to the world.</p>
+                    </div>
+                     <div class="content-card opacity-0" data-animate data-delay="0.4">
+                        <div id="lottie-integrity" class="w-24 h-24 mb-4 -ml-4"></div>
+                        <h3 class="text-xl font-bold mb-2">Engineered Trust</h3>
+                        <p class="text-dark-secondary">Trust isn't given, it's built. We construct it through transparent communication, obsessive attention to security and quality, and an unwavering commitment to doing the right thing, always. It is the core of our digital promise.</p>
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <!-- OUR METHODOLOGY -->
+        <section id="methodology" class="py-24 px-6 bg-bg-dark">
+             <div class="container mx-auto">
+                <div class="section-header">
+                    <h2>Our Blueprint for Success</h2>
+                    <p>Success isn't accidental; it's engineered. Our battle-tested methodology ensures clarity, minimizes risk, and maximizes impact. This interactive navigator provides a high-level overview of our six-phase covenant with you.</p>
+                </div>
+                <div id="process-navigator" class="relative">
+                    <!-- SVG is injected by JS -->
+                </div>
+                <div class="process-tooltip"></div>
+            </div>
+        </section>
+
+        <!-- IMPACT METRICS DASHBOARD -->
+        <section id="impact-metrics" class="py-24 px-6">
+            <div class="container mx-auto">
+                 <div class="section-header">
+                    <h2>Impact by the Numbers</h2>
+                    <p>While every project is unique, the results speak for themselves. Here's a glance at the collective impact we've driven from our headquarters in Nairobi, alongside our visionary partners.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-6xl mx-auto">
+                    <div class="metric-item opacity-0" data-animate>
+                        <h3 class="gradient-text" data-counter="75">0</h3>
+                        <p class="text-lg font-bold">Enterprise Projects Delivered</p>
+                    </div>
+                    <div class="metric-item opacity-0" data-animate data-delay="0.1">
+                        <h3 class="gradient-text" data-counter="5.2">0</h3>
+                        <p class="text-lg font-bold">Million+ End-Users Impacted</p>
+                    </div>
+                    <div class="metric-item opacity-0" data-animate data-delay="0.2">
+                         <h3 class="gradient-text" data-counter="30">0</h3>
+                        <p class="text-lg font-bold">Custom AI Models Built</p>
+                    </div>
+                    <div class="metric-item opacity-0" data-animate data-delay="0.3">
+                         <h3 class="gradient-text" data-counter="99.8">0</h3>
+                        <p class="text-lg font-bold">Average Solution Uptime (%)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECH STACK & CAPABILITIES -->
+        <section id="tech-stack" class="py-24 px-6 bg-panel-dark">
+            <div class="container mx-auto">
+                <div class="section-header">
+                    <h2>Our Technical Arsenal</h2>
+                    <p>We are fluent in the languages and tools that build the future. Our expertise spans the full spectrum of modern technology, allowing us to select the perfect stack for any challenge.</p>
+                </div>
+                <div class="flex justify-center flex-wrap border-b border-border-dark mb-8">
+                    <button class="tech-tab active" data-tab="frontend">Frontend</button>
+                    <button class="tech-tab" data-tab="backend">Backend</button>
+                    <button class="tech-tab" data-tab="devops">DevOps & Cloud</button>
+                    <button class="tech-tab" data-tab="ai">AI/ML</button>
+                    <button class="tech-tab" data-tab="security">Security</button>
+                </div>
+                
+                <div id="frontend-grid" class="tech-grid active grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+                <div id="backend-grid" class="tech-grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+                <div id="devops-grid" class="tech-grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+                <div id="ai-grid" class="tech-grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+                <div id="security-grid" class="tech-grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- CLIENT SHOWCASE -->
+        <section class="py-24 px-6 bg-bg-dark">
+            <div class="container mx-auto">
+                <div class="section-header">
+                    <h2>Driving Real-World Impact</h2>
+                    <p>We measure our success by the tangible outcomes we create for our partners. Here are a few examples of challenges we've turned into competitive advantages.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="content-card opacity-0" data-animate>
+                        <h3 class="text-xl font-bold mb-2">Project Ushindi: AI-Powered Logistics</h3>
+                        <p class="text-dark-secondary mb-4">Revolutionized supply chain for a top East African distributor, cutting delivery times by 35% with a predictive routing engine.</p>
+                        <a href="#" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">View Case Study <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                     <div class="content-card opacity-0" data-animate data-delay="0.2">
+                        <h3 class="text-xl font-bold mb-2">AfyaData: Secure Health Platform</h3>
+                        <p class="text-dark-secondary mb-4">Built a HIPAA-compliant data platform for a multi-national healthcare provider, enabling secure data sharing across 5 countries.</p>
+                        <a href="#" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                     <div class="content-card opacity-0" data-animate data-delay="0.4">
+                        <h3 class="text-xl font-bold mb-2">Soko Intelligence: FinTech Core</h3>
+                        <p class="text-dark-secondary mb-4">Engineered a high-throughput, microservices-based core banking system for a digital-first bank, now serving 1M+ customers.</p>
+                        <a href="#" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">Explore the Architecture <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SECURITY CREDENTIALS & COMPLIANCE -->
+        <section class="py-24 px-6 bg-panel-dark">
+            <div class="container mx-auto">
+                 <div class="section-header">
+                    <h2>Fortified by Design: Our Security Posture</h2>
+                    <p>For us, security is not a feature; it is the foundation. We practice a DevSecOps culture, embedding security into every stage of the development lifecycle to build resilient, trustworthy systems.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                    <div class="opacity-0" data-animate>
+                        <h3 class="text-2xl font-bold mb-4">The DevSecOps Loop</h3>
+                        <p class="text-dark-secondary mb-6">Our process ensures continuous security integration, from initial design to deployment and beyond. This proactive approach minimizes vulnerabilities and ensures compliance with global standards.</p>
+                        <div class="space-y-4">
+                            <p class="flex items-center"><i class="fas fa-shield-halved text-sky-400 mr-3"></i> <strong>Threat Modeling</strong> at the design phase.</p>
+                            <p class="flex items-center"><i class="fas fa-code-branch text-sky-400 mr-3"></i> <strong>SAST & DAST</strong> in CI/CD pipelines.</p>
+                            <p class="flex items-center"><i class="fas fa-user-secret text-sky-400 mr-3"></i> <strong>Penetration Testing</strong> before every major release.</p>
+                            <p class="flex items-center"><i class="fas fa-certificate text-sky-400 mr-3"></i> <strong>Compliance:</strong> ISO 27001, SOC2 Type II, GDPR alignment.</p>
+                        </div>
+                    </div>
+                    <div id="lottie-security" class="w-full h-auto max-w-md mx-auto opacity-0" data-animate data-delay="0.2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARTNER & ECOSYSTEM LOGOS -->
+        <section class="py-24 px-6 bg-bg-dark">
+            <div class="container mx-auto">
+                <div class="text-center max-w-4xl mx-auto">
+                    <h3 class="text-xl font-semibold text-dark-secondary mb-8">Trusted by industry leaders, innovators, and governments</h3>
+                    <div class="partner-logo-grid grid grid-cols-3 md:grid-cols-5 gap-8 items-center">
+                        <!-- Logos are SVGs for quality and color control. Sourced from SimpleIcons or similar. -->
+                        <img src="https://via.placeholder.com/150x60/cccccc/ffffff.png?text=Ministry+of+ICT" alt="Partner Logo" class="partner-logo mx-auto">
+                        <img src="https://via.placeholder.com/150x60/cccccc/ffffff.png?text=Safaricom" alt="Partner Logo" class="partner-logo mx-auto">
+                        <img src="https://via.placeholder.com/150x60/cccccc/ffffff.png?text=Equity+Bank" alt="Partner Logo" class="partner-logo mx-auto">
+                        <img src="https://via.placeholder.com/150x60/cccccc/ffffff.png?text=Twiga+Foods" alt="Partner Logo" class="partner-logo mx-auto">
+                        <img src="https://via.placeholder.com/150x60/cccccc/ffffff.png?text=Africa's+Talking" alt="Partner Logo" class="partner-logo mx-auto">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- MENTORSHIP HUB -->
+        <section class="py-24 px-6 bg-panel-dark">
+             <div class="container mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="opacity-0" data-animate>
+                        <h2 class="text-3xl font-bold mb-4">Building the Next Generation of Innovators</h2>
+                        <p class="text-dark-secondary mb-6">We are deeply committed to nurturing talent and building a robust tech ecosystem in Nairobi. Our internship and mentorship programs are designed to provide real-world experience, pairing aspiring technologists with our senior architects on impactful projects.</p>
+                        <p class="text-dark-secondary mb-8">If you are passionate, curious, and driven to solve complex problems, we invite you to apply.</p>
+                        <a href="mailto:careers@dksolutions.dev" class="inline-block text-lg font-bold py-3 px-8 rounded-xl transition-all duration-300 bg-gradient-to-r from-sky-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-sky-500/30 hover:scale-105">
+                            Join Our Mission
+                        </a>
+                    </div>
+                    <div id="lottie-mentorship" class="w-full h-auto max-w-md mx-auto opacity-0" data-animate data-delay="0.2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESEARCH & PUBLICATIONS -->
+        <section class="py-24 px-6 bg-bg-dark">
+            <div class="container mx-auto">
+                <div class="section-header">
+                    <h2>From Our Digital Library</h2>
+                    <p>We believe in advancing the industry through shared knowledge. Here are some of our whitepapers and research contributions, free for you to explore.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <a href="#" class="publication-card block opacity-0" data-animate>
+                        <p class="text-sm gradient-text font-bold mb-1">AI & ECONOMETRICS</p>
+                        <h3 class="font-bold text-lg mb-2">Predictive Modeling for Emerging Markets</h3>
+                        <p class="text-sm text-dark-secondary mb-4">An analysis of using LLMs to forecast economic trends in East Africa.</p>
+                        <span class="font-semibold text-sky-400">Read Paper <i class="fas fa-arrow-right ml-1"></i></span>
+                    </a>
+                     <a href="#" class="publication-card block opacity-0" data-animate data-delay="0.2">
+                        <p class="text-sm gradient-text font-bold mb-1">CYBERSECURITY</p>
+                        <h3 class="font-bold text-lg mb-2">The Practical Implementation of Zero Trust</h3>
+                        <p class="text-sm text-dark-secondary mb-4">A step-by-step guide for SMEs to adopt a Zero Trust security model without enterprise budgets.</p>
+                        <span class="font-semibold text-sky-400">Download Whitepaper <i class="fas fa-arrow-right ml-1"></i></span>
+                    </a>
+                     <a href="#" class="publication-card block opacity-0" data-animate data-delay="0.4">
+                        <p class="text-sm gradient-text font-bold mb-1">SYSTEMS ARCHITECTURE</p>
+                        <h3 class="font-bold text-lg mb-2">Scalable Django for High-Traffic Applications</h3>
+                        <p class="text-sm text-dark-secondary mb-4">Case study on scaling a monolithic Django application into resilient microservices.</p>
+                        <span class="font-semibold text-sky-400">View Case Study <i class="fas fa-arrow-right ml-1"></i></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- NEWSLETTER SIGNUP -->
+        <section class="py-24 px-6 bg-panel-dark">
+            <div class="container mx-auto max-w-3xl text-center">
+                <div class="section-header">
+                     <h2>Stay on the Bleeding Edge</h2>
+                     <p>Subscribe to our monthly "Intelligence Briefing" newsletter for exclusive insights on AI, cybersecurity, and digital strategy, delivered directly from our Nairobi HQ.</p>
+                </div>
+                <form class="flex flex-col md:flex-row gap-2 max-w-lg mx-auto">
+                    <input type="email" placeholder="your.email@example.com" class="w-full bg-bg-dark text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 border border-border-dark">
+                    <button type="submit" class="bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition-opacity">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer id="contact" class="bg-bg-dark py-20 px-6 text-center border-t border-border-dark">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-black mb-4">Ready to Architect Your Future?</h2>
+            <p class="text-xl text-dark-secondary max-w-2xl mx-auto mb-8">Let's have a conversation about the challenges you face and the legacy you want to build. We're ready to listen and co-create.</p>
+            <a href="mailto:hello@dksolutions.dev" class="inline-block text-xl font-bold py-4 px-10 rounded-xl transition-all duration-300 bg-gradient-to-r from-sky-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-sky-500/30 hover:scale-105">
+                Start the Conversation
+            </a>
+            <p class="mt-12 text-dark-secondary">&copy; <span id="year"></span> Danco & Khadija Solutions. All Rights Reserved. Nairobi, Kenya.</p>
         </div>
     </footer>
+
+    <!-- INTERACTIVE QUIZ MODAL -->
+    <div id="quiz-modal">
+        <div id="quiz-content">
+            <!-- Quiz steps will be injected here by JS -->
+        </div>
+    </div>
+    
+    <!-- AI ASSISTANT WIDGET -->
+    <button id="ai-assistant-toggle" class="fixed bottom-8 right-8 z-[999] bg-gradient-to-r from-sky-500 to-emerald-500 w-16 h-16 rounded-full text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+        <i class="fas fa-robot text-2xl"></i>
+    </button>
+    <div id="ai-assistant-widget">
+        <div class="p-4 bg-bg-dark border-b border-border-dark flex justify-between items-center">
+            <div>
+                <h3 class="font-bold">D&K AI Assistant</h3>
+                <p class="text-xs text-dark-secondary">Powered by Gemini</p>
+            </div>
+            <button id="close-ai-btn" class="text-dark-secondary hover:text-white">&times;</button>
+        </div>
+        <div id="ai-chat-box" class="p-4 h-80 overflow-y-auto flex flex-col">
+            <!-- Chat messages will be appended here -->
+             <div class="chat-message ai">Hello! How can I help you explore our services today?</div>
+        </div>
+        <div class="p-2 border-t border-border-dark">
+            <form id="ai-chat-form" class="flex gap-2">
+                <input type="text" id="ai-chat-input" placeholder="Ask about our services..." class="flex-grow bg-bg-dark p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500 border border-transparent text-sm">
+                <button type="submit" class="bg-sky-500 text-white font-bold p-2 rounded-md hover:bg-sky-600"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
 
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- GSAP PLUGIN REGISTRATION ---
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    // ---
+    //   MASTER SCRIPT - D&K INTELLIGENT SOLUTIONS
+    //   This script orchestrates the entire interactive experience of the page.
+    //   It follows a modular structure for clarity and maintainability.
+    // ---
 
-    // --- DATA & CONFIG ---
-    const TECH_STACK_DATA = {
-        frontend: [ { name: 'React', icon: 'react' }, { name: 'Next.js', icon: 'nextdotjs' }, { name: 'Vue.js', icon: 'vuedotjs' }, { name: 'Svelte', icon: 'svelte' }, { name: 'TailwindCSS', icon: 'tailwindcss' }, { name: 'GSAP', icon: 'gsap' } ],
-        backend: [ { name: 'Python', icon: 'python' }, { name: 'Django', icon: 'django' }, { name: 'Node.js', icon: 'nodedotjs' }, { name: 'FastAPI', icon: 'fastapi' }, { name: 'PostgreSQL', icon: 'postgresql' }, { name: 'MongoDB', icon: 'mongodb' } ],
-        devops: [ { name: 'AWS', icon: 'amazonaws' }, { name: 'GCP', icon: 'googlecloud' }, { name: 'Docker', icon: 'docker' }, { name: 'Kubernetes', icon: 'kubernetes' }, { name: 'Terraform', icon: 'terraform' }, { name: 'Jenkins', icon: 'jenkins' } ],
-        ai: [ { name: 'TensorFlow', icon: 'tensorflow' }, { name: 'PyTorch', icon: 'pytorch' }, { name: 'Scikit-learn', icon: 'scikitlearn' }, { name: 'LangChain', icon: 'langchain' }, { name: 'HuggingFace', icon: 'huggingface' }, { name: 'OpenAI', icon: 'openai' } ],
-        security: [ { name: 'Metasploit', icon: 'metasploit' }, { name: 'Wireshark', icon: 'wireshark' }, { name: 'Burp Suite', icon: 'burpsuite' }, { name: 'Nmap', icon: 'nmap' }, { name: 'OWASP', icon: 'owasp' }, { name: 'Vault', icon: 'hashicorpvault' } ]
+    // --- GSAP PLUGIN REGISTRATION ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- DATA & CONFIGURATION ---
+    // Centralized data for dynamic components. This makes content updates easier.
+    const CONFIG = {
+        GEMINI_API_KEY: "AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84", // Provided fake key
+        GEMINI_API_URL: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=`,
+        TECH_STACK_DATA: {
+            frontend: [ { name: 'React', icon: 'react' }, { name: 'Next.js', icon: 'nextdotjs' }, { name: 'Vue.js', icon: 'vuedotjs' }, { name: 'Svelte', icon: 'svelte' }, { name: 'TailwindCSS', icon: 'tailwindcss' }, { name: 'GSAP', icon: 'greensock' } ],
+            backend: [ { name: 'Python', icon: 'python' }, { name: 'Django', icon: 'django' }, { name: 'Node.js', icon: 'nodedotjs' }, { name: 'FastAPI', icon: 'fastapi' }, { name: 'PostgreSQL', icon: 'postgresql' }, { name: 'MongoDB', icon: 'mongodb' } ],
+            devops: [ { name: 'AWS', icon: 'amazonaws' }, { name: 'GCP', icon: 'googlecloud' }, { name: 'Docker', icon: 'docker' }, { name: 'Kubernetes', icon: 'kubernetes' }, { name: 'Terraform', icon: 'terraform' }, { name: 'Jenkins', icon: 'jenkins' } ],
+            ai: [ { name: 'TensorFlow', icon: 'tensorflow' }, { name: 'PyTorch', icon: 'pytorch' }, { name: 'Scikit-learn', icon: 'scikitlearn' }, { name: 'LangChain', icon: 'langchain' }, { name: 'HuggingFace', icon: 'huggingface' }, { name: 'OpenAI', icon: 'openai' } ],
+            security: [ { name: 'Metasploit', icon: 'metasploit' }, { name: 'Wireshark', icon: 'wireshark' }, { name: 'Burp Suite', icon: 'burpsuite' }, { name: 'Nmap', icon: 'nmap' }, { name: 'OWASP', icon: 'owasp' }, { name: 'Vault', icon: 'hashicorpvault' } ]
+        },
+        PROCESS_DATA: [
+            { id: 'd', x: 100, y: 200, label: 'Discovery', description: 'Deep-dive workshops, stakeholder interviews, and system analysis to align on a strategic blueprint.'},
+            { id: 'a', x: 300, y: 200, label: 'Architecture', description: 'Designing the system blueprint, technology stacks, data models, and security frameworks.'},
+            { id: 'dev', x: 500, y: 200, label: 'Development', description: 'Agile sprints delivering functional increments. Continuous feedback and transparent progress.'},
+            { id: 'qa', x: 700, y: 200, label: 'QA & Security', description: 'Rigorous functional, performance, and security testing, including penetration tests.'},
+            { id: 'dep', x: 900, y: 200, label: 'Deployment', description: 'Meticulous deployment to cloud or on-premise infrastructure with minimal disruption.'},
+            { id: 'e', x: 1100, y: 200, label: 'Evolution', description: 'Ongoing support, monitoring, and proactive maintenance to ensure long-term value.'},
+        ],
+        QUIZ_DATA: [
+            // ... (Quiz data is defined in the quiz module)
+        ]
     };
 
-    const PROCESS_DATA = [
-        { id: 'd', x: 100, y: 200, label: 'Discovery', icon: 'fa-magnifying-glass', description: 'Deep-dive workshops, stakeholder interviews, and system analysis to align on a strategic blueprint.'},
-        { id: 'a', x: 300, y: 200, label: 'Architecture', icon: 'fa-sitemap', description: 'Designing the system blueprint, technology stacks, data models, and security frameworks.'},
-        { id: 'dev', x: 500, y: 200, label: 'Development', icon: 'fa-code', description: 'Agile sprints delivering functional increments. Continuous feedback and transparent progress.'},
-        { id: 'qa', x: 700, y: 200, label: 'QA & Security', icon: 'fa-shield-halved', description: 'Rigorous functional, performance, and security testing, including penetration tests.'},
-        { id: 'dep', x: 900, y: 200, label: 'Deployment', icon: 'fa-rocket', description: 'Meticulous deployment to cloud or on-premise infrastructure with minimal disruption.'},
-        { id: 'e', x: 1100, y: 200, label: 'Evolution', icon: 'fa-infinity', description: 'Ongoing support, monitoring, and proactive maintenance to ensure long-term value.'},
-    ];
-    
     // --- INITIALIZATION ---
-    function init() {
+    // The main entry point. It orchestrates the loading sequence and initialization of all modules.
+    function masterInit() {
         const loadingOverlay = document.getElementById('loading-overlay');
         lottie.loadAnimation({ container: document.getElementById('lottie-loading'), renderer: 'svg', loop: true, autoplay: true, path: 'https://assets9.lottiefiles.com/packages/lf20_m6dff8ch.json' });
 
-        const onPageLoad = () => {
-            gsap.to(loadingOverlay, { opacity: 0, duration: 0.5, onComplete: () => {
-                loadingOverlay.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                runEnterAnimations();
-            }});
+        window.onload = () => {
+            gsap.to(loadingOverlay, { 
+                opacity: 0, 
+                duration: 0.5, 
+                onComplete: () => {
+                    loadingOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    runEnterAnimations();
+                }
+            });
             
-            initDarkMode();
-            initHeroAnimation();
-            initInteractiveBlueprint(); // New function for blueprint logic
-            initInnovatorsScroll();
-            initGenericAnimations();
-            initParticles();
-            initLottieAnimations();
-            initTechStack();
-            initCounters();
-            initProcessNavigator();
-            initAIAssistant();
-            initQuiz();
-            setYear();
+            // Initialize all page modules
+            uiModule.init();
+            animationModule.init();
+            interactiveModule.init();
+            particlesModule.init();
         };
-        
-        if (document.readyState === 'complete') {
-            onPageLoad();
-        } else {
-            window.addEventListener('load', onPageLoad);
-        }
     }
 
+    // This animation sequence runs once the page is loaded, creating the "Peak-End Rule" initial impression.
     function runEnterAnimations() {
         gsap.timeline()
             .to("#hero-content .line-inner", { y: 0, duration: 1.2, ease: "power4.out", stagger: 0.15 })
@@ -303,258 +596,430 @@ document.addEventListener('DOMContentLoaded', () => {
             .from(".scroll-indicator", { y: 20, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.6");
     }
 
-    // --- UI & THEME ---
-    function initDarkMode() {
-        const toggle = document.getElementById('darkModeToggle');
-        if (!toggle) return;
+    // --- UI MODULE ---
+    // Handles static UI elements like dark mode, year, etc.
+    const uiModule = {
+        init: function() {
+            this.initDarkMode();
+            this.setYear();
+        },
+        initDarkMode: function() {
+            const toggle = document.getElementById('darkModeToggle');
+            if (!toggle) return;
+            // Respects user's OS preference as default
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('darkMode') === 'true' || (localStorage.getItem('darkMode') === null && prefersDark);
 
-        const applyTheme = (isDark) => {
-            document.body.classList.toggle('light-mode', !isDark);
-            toggle.checked = isDark;
-            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
-        };
+            const applyTheme = (dark) => {
+                document.body.classList.toggle('light-mode', !dark);
+                toggle.checked = !dark; // In our setup, checked is light mode
+                localStorage.setItem('darkMode', String(dark));
+                // Re-initialize particles to match the new theme
+                particlesModule.init();
+            };
 
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const savedTheme = localStorage.getItem('darkMode');
-        const isDark = savedTheme !== null ? savedTheme === 'true' : prefersDark;
-        
-        applyTheme(isDark);
-        toggle.addEventListener('change', e => applyTheme(e.target.checked));
-    }
-
-    function setYear() {
-        const yearSpan = document.getElementById('year');
-        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-    }
-    
-    // --- ANIMATIONS & INTERACTIVITY ---
-    function initHeroAnimation() {
-        gsap.set("#hero-content .line-inner", { y: "110%" });
-        gsap.to("#hero-content", {
-            y: "-50%",
-            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
-        });
-        gsap.to("#hero-background", {
-            scale: 1.5,
-            opacity: 0,
-            scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
-        });
-    }
-
-    function initInteractiveBlueprint() {
-        // This function will now handle the hero blueprint navigation
-        // For simplicity, we assume the blueprint is part of the hero content
-        // and we add click listeners to pre-defined elements.
-        // A more robust solution would generate this from a data object.
-
-        const blueprintNodes = {
-            '#node-innovators': '#innovators',
-            '#node-philosophy': '#philosophy',
-            '#node-methodology': '#methodology',
-            '#node-showcase': '#impact-metrics', // Assuming showcase is impact
-            '#node-tech': '#tech-stack-section-id', // Add ID to tech stack section
-            '#node-ai': '#ai-chat-section-id' // Add ID to AI assistant section
-        };
-
-        for (const nodeId in blueprintNodes) {
-            const nodeElement = document.querySelector(nodeId);
-            const targetSectionId = blueprintNodes[nodeId];
-            if (nodeElement && document.querySelector(targetSectionId)) {
-                nodeElement.style.cursor = 'pointer';
-                nodeElement.addEventListener('click', (e) => {
-                    e.preventDefault(); // PREVENTS THE "STUPID ZOOM"
-                    gsap.to(window, {
-                        duration: 1.5,
-                        scrollTo: { y: targetSectionId, offsetY: 70 }, // Offset for fixed header
-                        ease: 'power3.inOut'
-                    });
-                });
-
-                // Add hover interactivity
-                const tl = gsap.timeline({ paused: true });
-                tl.to(nodeElement, { scale: 1.15, duration: 0.3, ease: 'back.out(2)' })
-                  .to(nodeElement, { filter: 'drop-shadow(0 0 15px var(--gradient-start))', duration: 0.3 }, 0);
-
-                nodeElement.addEventListener('mouseenter', () => tl.play());
-                nodeElement.addEventListener('mouseleave', () => tl.reverse());
-            }
+            applyTheme(isDark);
+            toggle.addEventListener('change', e => applyTheme(!e.target.checked));
+        },
+        setYear: function() {
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
         }
-    }
+    };
     
-    function initInnovatorsScroll() {
-        const cards = gsap.utils.toArray('.innovator-card');
-        const triggers = gsap.utils.toArray('.innovator-sticky-trigger');
-
-        triggers.forEach((trigger, i) => {
-            ScrollTrigger.create({
-                trigger: trigger,
-                start: 'top center',
-                end: 'bottom center',
-                onToggle: self => gsap.to(cards[i], { autoAlpha: self.isActive ? 1 : 0, duration: 0.5 })
+    // --- ANIMATION MODULE ---
+    // Handles all GSAP and Lottie animations.
+    const animationModule = {
+        init: function() {
+            this.initHeroScrollAnimation();
+            this.initInnovatorsScroll();
+            this.initGenericScrollAnimations();
+            this.initCounterAnimations();
+            this.initLottieAnimations();
+        },
+        initHeroScrollAnimation: function() {
+            gsap.set("#hero-content .line-inner", { y: "110%" });
+            gsap.to("#hero-content", {
+                y: "-50%",
+                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
             });
-        });
-
-        ScrollTrigger.create({
-            trigger: '#innovators-container',
-            start: 'top top',
-            end: 'bottom bottom',
-            pin: '#innovators-visuals',
-            anticipatePin: 1
-        });
-    }
-
-    function initGenericAnimations() {
-        gsap.utils.toArray('[data-animate]').forEach(elem => {
-            gsap.from(elem, {
+            gsap.to("#hero-background", {
+                scale: 1.5,
                 opacity: 0,
-                y: 50,
-                duration: 0.8,
-                delay: elem.dataset.delay || 0,
-                ease: 'power3.out',
-                scrollTrigger: { trigger: elem, start: 'top 85%', toggleActions: 'play none none none' }
+                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 1 }
             });
-        });
-    }
+        },
+        initInnovatorsScroll: function() {
+            const cards = gsap.utils.toArray('.innovator-card');
+            const triggers = gsap.utils.toArray('.innovator-sticky-trigger');
+            if(cards.length === 0) return;
 
-    function initCounters() {
-        gsap.utils.toArray('[data-counter]').forEach(counter => {
-            const endValue = parseFloat(counter.dataset.counter);
-            const isFloat = endValue % 1 !== 0;
-            let obj = { val: 0 };
-            gsap.to(obj, {
-                val: endValue,
-                duration: 2.5,
-                ease: "circ.out",
-                scrollTrigger: { trigger: counter, start: "top 90%" },
-                onUpdate: () => {
-                    counter.textContent = isFloat ? obj.val.toFixed(1) : Math.round(obj.val);
+            triggers.forEach((trigger, i) => {
+                ScrollTrigger.create({
+                    trigger: trigger,
+                    start: 'top center',
+                    end: 'bottom center',
+                    onToggle: self => {
+                        cards[i].classList.toggle('is-active', self.isActive)
+                    },
+                });
+            });
+
+            ScrollTrigger.create({
+                trigger: '#innovators-container',
+                start: 'top top',
+                end: () => `+=${document.querySelector('#innovators-scroll-triggers').offsetHeight - window.innerHeight}`,
+                pin: '#innovators-visuals',
+                scrub: true,
+                anticipatePin: 1
+            });
+        },
+        initGenericScrollAnimations: function() {
+            gsap.utils.toArray('[data-animate]').forEach(elem => {
+                gsap.from(elem, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: parseFloat(elem.dataset.delay) || 0,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: elem, start: 'top 85%', toggleActions: 'play none none reverse' }
+                });
+            });
+        },
+        initCounterAnimations: function() {
+            gsap.utils.toArray('[data-counter]').forEach(counter => {
+                const endValue = parseFloat(counter.dataset.counter);
+                const isFloat = endValue.toString().includes('.');
+                let obj = { val: 0 };
+                gsap.to(obj, {
+                    val: endValue,
+                    duration: 2.5,
+                    ease: "power2.out",
+                    scrollTrigger: { trigger: counter, start: "top 90%" },
+                    onUpdate: () => {
+                        counter.textContent = isFloat ? obj.val.toFixed(1) : Math.round(obj.val);
+                    }
+                });
+            });
+        },
+        initLottieAnimations: function() {
+            const lottieContainers = {
+                'lottie-innovation': 'https://assets2.lottiefiles.com/packages/lf20_v92o76EAX9.json',
+                'lottie-partnership': 'https://assets1.lottiefiles.com/packages/lf20_kylpcnql.json',
+                'lottie-integrity': 'https://assets8.lottiefiles.com/packages/lf20_k2397ggr.json',
+                'lottie-mentorship': 'https://assets1.lottiefiles.com/packages/lf20_F3kxdG.json',
+                'lottie-security': 'https://assets1.lottiefiles.com/packages/lf20_LpuvS1As1d.json'
+            };
+            for (const id in lottieContainers) {
+                const container = document.getElementById(id);
+                if (container) {
+                    lottie.loadAnimation({
+                        container: container, renderer: 'svg', loop: true, autoplay: true, path: lottieContainers[id]
+                    });
+                }
+            }
+        }
+    };
+
+    // --- INTERACTIVE COMPONENTS MODULE ---
+    // Manages all user-interactive components like tabs, navigators, and the Gemini-powered features.
+    const interactiveModule = {
+        init: function() {
+            this.initTechStack();
+            this.initProcessNavigator();
+            this.initQuiz();
+            this.initAIAssistant();
+        },
+        initTechStack: function() {
+            const tabs = document.querySelectorAll('.tech-tab');
+            const grids = document.querySelectorAll('.tech-grid');
+
+            for (const category in CONFIG.TECH_STACK_DATA) {
+                const grid = document.getElementById(`${category}-grid`);
+                if (grid) {
+                    CONFIG.TECH_STACK_DATA[category].forEach(item => {
+                        const techItem = `
+                            <div class="tech-item p-4 opacity-0 flex flex-col items-center justify-center gap-2" data-animate>
+                                <img src="https://cdn.simpleicons.org/${item.icon}" alt="${item.name} logo" class="h-10 w-10" style="filter: brightness(0) invert(1);">
+                                <span class="text-sm font-semibold">${item.name}</span>
+                            </div>`;
+                        grid.innerHTML += techItem;
+                    });
+                }
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    grids.forEach(g => g.classList.remove('active'));
+                    tab.classList.add('active');
+                    document.getElementById(`${tab.dataset.tab}-grid`).classList.add('active');
+                });
+            });
+        },
+        initProcessNavigator: function() {
+            const container = document.getElementById('process-navigator');
+            if (!container) return;
+            
+            let svgHtml = `<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid meet" class="w-full h-auto">`;
+            svgHtml += `<defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:var(--gradient-start)" /><stop offset="100%" style="stop-color:var(--gradient-end)" /></linearGradient></defs>`;
+            for(let i=0; i < CONFIG.PROCESS_DATA.length - 1; i++){
+                svgHtml += `<line x1="${CONFIG.PROCESS_DATA[i].x}" y1="${CONFIG.PROCESS_DATA[i].y}" x2="${CONFIG.PROCESS_DATA[i+1].x}" y2="${CONFIG.PROCESS_DATA[i+1].y}" stroke="url(#grad)" stroke-width="4" stroke-dasharray="10,5" />`;
+            }
+            CONFIG.PROCESS_DATA.forEach(p => {
+                svgHtml += `
+                    <g class="node opacity-0" data-animate data-description="${p.description}" transform="translate(${p.x}, ${p.y})">
+                        <circle class="node-bg" r="60" fill="var(--panel-dark)" stroke="var(--border-dark)" stroke-width="2"/>
+                        <circle r="50" fill="var(--bg-dark)"/>
+                        <text class="node-text text-sm" text-anchor="middle" dy=".3em" fill="var(--text-dark-primary)" font-weight="bold">${p.label}</text>
+                    </g>`;
+            });
+            svgHtml += `</svg>`;
+            container.innerHTML = svgHtml;
+            
+            const tooltip = document.querySelector('.process-tooltip');
+            document.querySelectorAll('#process-navigator .node').forEach(node => {
+                node.addEventListener('mousemove', e => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    tooltip.style.left = `${e.pageX + 15}px`;
+                    tooltip.style.top = `${e.pageY + 15}px`;
+                    tooltip.innerHTML = `<strong class="gradient-text">${node.querySelector('text').textContent}</strong><p class="text-sm text-dark-secondary mt-1">${node.dataset.description}</p>`;
+                });
+                node.addEventListener('mouseleave', () => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
+                });
+            });
+        },
+        initQuiz: function() {
+            const modal = document.getElementById('quiz-modal');
+            const quizContent = document.getElementById('quiz-content');
+            const openBtn = document.getElementById('open-quiz-btn');
+
+            const quizData = [
+                {
+                    question: "What is the primary goal of your project?",
+                    key: "goal",
+                    options: ["Launch a new digital product", "Optimize existing business operations", "Enhance our data & AI capabilities", "Strengthen our cybersecurity posture"]
+                },
+                {
+                    question: "What is your approximate project timeline?",
+                    key: "timeline",
+                    options: ["Urgent (0-3 Months)", "Standard (3-6 Months)", "Strategic (6-12 Months)", "Exploratory (12+ Months)"]
+                },
+                {
+                    question: "Which area requires the most immediate attention?",
+                    key: "focus",
+                    options: ["User Experience & Interface", "Backend Architecture & Scalability", "Data Security & Compliance", "AI Model Development"]
+                },
+                {
+                    question: "What is your organization's biggest current challenge?",
+                    key: "challenge",
+                    options: ["Slow time-to-market", "High operational costs", "Lack of data-driven insights", "Potential security vulnerabilities"]
+                }
+            ];
+
+            let currentStep = 0;
+            let userAnswers = {};
+
+            const renderStep = () => {
+                if (currentStep >= quizData.length) {
+                    renderLoadingState();
+                    generateGeminiResult();
+                    return;
+                }
+                const stepData = quizData[currentStep];
+                let html = `<h3 class="text-2xl font-bold mb-2">${stepData.question}</h3><p class="text-dark-secondary mb-6">Step ${currentStep + 1} of ${quizData.length}</p><div class="space-y-3">`;
+                stepData.options.forEach(opt => {
+                    html += `<div class="quiz-option" data-answer="${opt}">${opt}</div>`;
+                });
+                html += `</div><button id="close-quiz-btn" class="absolute top-4 right-4 text-2xl text-dark-secondary">&times;</button>`;
+                quizContent.innerHTML = html;
+            };
+
+            const renderLoadingState = () => {
+                quizContent.innerHTML = `
+                    <div class="text-center p-8">
+                        <h3 class="text-2xl font-bold mb-4">Analyzing Your Path...</h3>
+                        <p class="text-dark-secondary mb-6">Our AI is forging a custom solution blueprint based on your needs. Please wait a moment.</p>
+                        <div id="lottie-quiz-loading" class="w-32 h-32 mx-auto"></div>
+                    </div>`;
+                lottie.loadAnimation({ container: document.getElementById('lottie-quiz-loading'), renderer: 'svg', loop: true, autoplay: true, path: 'https://assets3.lottiefiles.com/packages/lf20_gbfwtkzw.json' });
+            };
+
+            const generateGeminiResult = async () => {
+                const prompt = `
+                    Based on the following user responses to a quiz about their project needs, act as a Chief Strategy Officer from an elite African tech firm (Danco & Khadija). 
+                    Generate a concise, insightful, and actionable service recommendation. The user is likely a CTO or decision-maker.
+                    The output MUST be in Markdown format.
+
+                    User's Answers:
+                    - Primary Goal: ${userAnswers.goal}
+                    - Timeline: ${userAnswers.timeline}
+                    - Immediate Focus: ${userAnswers.focus}
+                    - Biggest Challenge: ${userAnswers.challenge}
+
+                    Structure your response as follows:
+                    ### Your Forged Solution Path: [Give the solution a cool, strategic name]
+                    **Strategic Analysis:** A brief, sharp paragraph diagnosing the user's situation based on their answers.
+                    **Recommended Service Package:** Bold this. Suggest one primary service: "AI & Systems Integration", "Enterprise Modernization", "Digital Product Acceleration", or "Cybersecurity & Resilience."
+                    **Core Components:** A bulleted list of 3-4 key activities we would undertake (e.g., "- Advanced Threat Modeling", "- AI-powered workflow automation").
+                    **Next Step:** A concluding sentence telling them the logical next step is a "Discovery Workshop".
+                `;
+
+                // --- FAKE API CALL ---
+                // In a real application, this would be a secure, server-side call.
+                // Here, we simulate the delay and the response structure.
+                setTimeout(() => {
+                    // This is a pre-canned response for demonstration, as the API key is fake.
+                    const mockResponseText = `
+                        ### Your Forged Solution Path: **Project Catalyst**
+                        **Strategic Analysis:** Your responses indicate a critical need to bridge the gap between an innovative product vision and the operational realities of market speed and security. The urgency suggests a requirement for rapid, yet robust, development that doesn't compromise on scalability or user experience.
+                        
+                        **Recommended Service Package:** **Digital Product Acceleration**
+
+                        **Core Components:**
+                        * Rapid Prototyping & UX/UI Sprints to validate user journeys.
+                        * Microservices-based backend architecture for ultimate scalability and resilience.
+                        * Embedded DevSecOps practices to ensure security is built-in, not bolted-on.
+                        * Deployment of a CI/CD pipeline for automated, reliable releases.
+
+                        **Next Step:** The logical next step is to schedule a complimentary Discovery Workshop to map out a precise project blueprint.
+                    `;
+                    renderResult(mockResponseText);
+                }, 2500); // Simulate network latency
+            };
+            
+            const renderResult = (markdownText) => {
+                 quizContent.innerHTML = `
+                    <div id="gemini-result-card" class="prose max-w-none">
+                        ${marked.parse(markdownText)}
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="restart-quiz-btn" class="bg-white text-black font-semibold py-2 px-5 rounded-lg hover:bg-opacity-90 transition-all">Start Over</button>
+                    </div>
+                    <button id="close-quiz-btn" class="absolute top-4 right-4 text-2xl text-dark-secondary">&times;</button>
+                `;
+            };
+            
+            openBtn.addEventListener('click', () => {
+                currentStep = 0;
+                userAnswers = {};
+                modal.classList.add('active');
+                renderStep();
+            });
+
+            quizContent.addEventListener('click', e => {
+                if (e.target.matches('.quiz-option')) {
+                    userAnswers[quizData[currentStep].key] = e.target.dataset.answer;
+                    currentStep++;
+                    renderStep();
+                }
+                if(e.target.matches('#close-quiz-btn') || e.target.parentElement.matches('#close-quiz-btn')) {
+                    modal.classList.remove('active');
+                }
+                if(e.target.matches('#restart-quiz-btn')) {
+                    currentStep = 0;
+                    userAnswers = {};
+                    renderStep();
                 }
             });
-        });
-    }
+        },
+        initAIAssistant: function() {
+            const widget = document.getElementById('ai-assistant-widget');
+            const toggleBtn = document.getElementById('ai-assistant-toggle');
+            const closeBtn = document.getElementById('close-ai-btn');
+            const chatForm = document.getElementById('ai-chat-form');
+            const chatInput = document.getElementById('ai-chat-input');
+            const chatBox = document.getElementById('ai-chat-box');
 
-    function initLottieAnimations() {
-        const lottieContainers = {
-            'lottie-innovation': 'https://assets2.lottiefiles.com/packages/lf20_v92o76EAX9.json',
-            'lottie-partnership': 'https://assets1.lottiefiles.com/packages/lf20_kylpcnql.json',
-            'lottie-integrity': 'https://assets8.lottiefiles.com/packages/lf20_k2397ggr.json',
-            'lottie-mentorship': 'https://assets1.lottiefiles.com/packages/lf20_F3kxdG.json'
-        };
-        for (const id in lottieContainers) {
-            const container = document.getElementById(id);
-            if (container) {
-                lottie.loadAnimation({
-                    container: container, renderer: 'svg', loop: true, autoplay: true, path: lottieContainers[id]
+            const addMessage = (text, sender) => {
+                const messageEl = document.createElement('div');
+                messageEl.classList.add('chat-message', sender);
+                messageEl.textContent = text;
+                chatBox.appendChild(messageEl);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            };
+
+            const getAIResponse = (userInput) => {
+                addMessage("...", "ai"); // Typing indicator
+                
+                 // --- FAKE API CALL SIMULATION ---
+                 setTimeout(() => {
+                    const lastMessage = chatBox.querySelector('.chat-message:last-child');
+                    let response;
+                    if (userInput.toLowerCase().includes('price') || userInput.toLowerCase().includes('cost')) {
+                        response = "Our solutions are custom-architected. Pricing depends on project scope. The best first step is a Discovery Workshop to define your needs.";
+                    } else if (userInput.toLowerCase().includes('security')) {
+                         response = "We offer comprehensive cybersecurity services, from Zero Trust architecture implementation to offensive security and compliance consulting. How can I elaborate?";
+                    } else if (userInput.toLowerCase().includes('ai') || userInput.toLowerCase().includes('ml')) {
+                        response = "Our AI/ML capabilities include building custom LLMs, predictive analytics engines, and computer vision systems. What specific challenge are you trying to solve?";
+                    } else {
+                        response = "Thank you for your query. Could you please provide more details? For example, are you interested in our AI development, cybersecurity, or systems architecture services?";
+                    }
+                    lastMessage.textContent = response;
+                 }, 1500);
+            };
+
+            toggleBtn.addEventListener('click', () => widget.classList.add('active'));
+            closeBtn.addEventListener('click', () => widget.classList.remove('active'));
+
+            chatForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const userInput = chatInput.value.trim();
+                if (!userInput) return;
+                addMessage(userInput, 'user');
+                getAIResponse(userInput);
+                chatInput.value = '';
+            });
+        }
+    };
+
+    // --- PARTICLES MODULE ---
+    // Manages the tsParticles background effect.
+    const particlesModule = {
+        init: async function() {
+            // Destroy existing instance before creating a new one to prevent conflicts on theme change.
+            if (tsParticles.domItem(0)) {
+                tsParticles.domItem(0).destroy();
+            }
+
+            const isLightMode = document.body.classList.contains('light-mode');
+            const particleColor = isLightMode ? "#4A5568" : "#4A5568";
+            const linkColor = isLightMode ? "#A0AEC0" : "#2D3748";
+
+            if (typeof tsParticles !== 'undefined') {
+                await tsParticles.load({
+                    id: "tsparticles-hero",
+                    options: {
+                        fpsLimit: 60,
+                        interactivity: {
+                            events: { onHover: { enable: true, mode: "bubble" } },
+                            modes: { bubble: { distance: 200, duration: 2, opacity: 0.8, size: 5 } }
+                        },
+                        particles: {
+                            color: { value: particleColor },
+                            links: { color: linkColor, distance: 150, enable: true, opacity: 0.1, width: 1 },
+                            move: {
+                                direction: "none", enable: true, outModes: { default: "out" },
+                                random: true, speed: 0.5, straight: false
+                            },
+                            number: { density: { enable: true, area: 800 }, value: 50 },
+                            opacity: { value: 0.2 },
+                            shape: { type: "circle" },
+                            size: { value: { min: 1, max: 3 } }
+                        },
+                        detectRetina: true
+                    }
                 });
             }
         }
-    }
-    
-    // --- INTERACTIVE COMPONENTS ---
-    function initTechStack() {
-        // This function needs the section to have an ID for navigation
-        const techSection = document.querySelector('.tech-grid')?.closest('section');
-        if(techSection) techSection.id = 'tech-stack-section-id';
-
-        const tabs = document.querySelectorAll('.tech-tab');
-        const grids = document.querySelectorAll('.tech-grid');
-
-        for (const category in TECH_STACK_DATA) {
-            const grid = document.getElementById(`${category}-grid`);
-            if (grid) {
-                grid.innerHTML = TECH_STACK_DATA[category].map(item => `
-                    <div class="tech-item opacity-0" data-animate>
-                        <img src="https://cdn.simpleicons.org/${item.icon}/" alt="${item.name} logo" onerror="this.style.display='none'">
-                        <span>${item.name}</span>
-                    </div>`).join('');
-            }
-        }
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                grids.forEach(g => g.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById(`${tab.dataset.tab}-grid`).classList.add('active');
-                gsap.from(`#${tab.dataset.tab}-grid .tech-item`, { opacity: 0, y: 20, stagger: 0.05, duration: 0.5 });
-            });
-        });
-        gsap.from(`#frontend-grid .tech-item`, { opacity: 0, y: 20, stagger: 0.05, duration: 0.5 });
-    }
-    
-    function initProcessNavigator() {
-        const container = document.getElementById('process-navigator');
-        if (!container) return;
-        
-        let svgHtml = `<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid meet" class="w-full h-auto">`;
-        svgHtml += `<defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--gradient-start)" /><stop offset="100%" stop-color="var(--gradient-end)" /></linearGradient></defs>`;
-        
-        const linePath = PROCESS_DATA.map((p, i) => (i === 0 ? 'M' : 'L') + `${p.x} ${p.y}`).join(' ');
-        svgHtml += `<path d="${linePath}" stroke="url(#grad)" stroke-width="3" fill="none" stroke-dasharray="10,5" class="line-path"/>`;
-
-        PROCESS_DATA.forEach(p => {
-            svgHtml += `
-                <g class="node-group" data-description="${p.description}" data-label="${p.label}" transform="translate(${p.x}, ${p.y})">
-                    <circle class="node-bg" r="50" fill="var(--panel-dark)" stroke="var(--gradient-start)" stroke-width="2"/>
-                    <circle r="40" fill="var(--bg-dark)"/>
-                    <text class="node-icon" text-anchor="middle" dominant-baseline="central" fill="var(--text-dark-primary)" font-family="FontAwesome" font-size="32">&#x${p.icon.split('-').map(part => part.codePointAt(0).toString(16)).join('')};</text>
-                </g>`;
-        });
-        svgHtml += `</svg>`;
-        container.innerHTML = svgHtml;
-        
-        const tooltip = document.querySelector('.process-tooltip');
-        document.querySelectorAll('#process-navigator .node-group').forEach(node => {
-            node.addEventListener('mousemove', e => {
-                tooltip.style.opacity = '1';
-                tooltip.style.visibility = 'visible';
-                tooltip.style.left = `${e.pageX + 20}px`;
-                tooltip.style.top = `${e.pageY}px`;
-                tooltip.innerHTML = `<strong class="gradient-text">${node.dataset.label}</strong><p class="text-sm text-dark-secondary mt-1">${node.dataset.description}</p>`;
-            });
-            node.addEventListener('mouseleave', () => {
-                tooltip.style.opacity = '0';
-                tooltip.style.visibility = 'hidden';
-            });
-        });
-    }
-
-    function initQuiz() { /* Placeholder for quiz logic */ }
-    
-    function initAIAssistant() { 
-        const aiSection = document.querySelector('#ai-chat-window')?.closest('section');
-        if(aiSection) aiSection.id = 'ai-chat-section-id';
-        /* Placeholder for AI Assistant logic */ 
-    }
-
-    async function initParticles() { 
-        const isLightMode = document.body.classList.contains('light-mode');
-        const particleColor = isLightMode ? "#4A5568" : "#A0AEC0";
-        const linkColor = isLightMode ? "#CBD5E0" : "#2D3748";
-
-        if (typeof tsParticles !== 'undefined') {
-            await tsParticles.load({
-                id: "tsparticles-hero",
-                options: {
-                    fpsLimit: 60,
-                    interactivity: { events: { onHover: { enable: true, mode: "bubble" } }, modes: { bubble: { distance: 200, duration: 2, opacity: 0.8, size: 5 } } },
-                    particles: {
-                        color: { value: particleColor },
-                        links: { color: linkColor, distance: 150, enable: true, opacity: 0.1, width: 1 },
-                        move: { direction: "none", enable: true, outModes: { default: "out" }, random: true, speed: 0.5, straight: false },
-                        number: { density: { enable: true, area: 800 }, value: 50 },
-                        opacity: { value: 0.2 },
-                        shape: { type: "circle" },
-                        size: { value: { min: 1, max: 3 } }
-                    },
-                    detectRetina: true
-                }
-            });
-        }
-    }
+    };
 
     // --- RUN EVERYTHING ---
-    init();
+    masterInit();
+});
 </script>
 
 </body>
