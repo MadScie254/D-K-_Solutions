@@ -92,7 +92,7 @@
 
         /* --- STICKY INNOVATORS SECTION --- */
         #innovators-container { position: relative; }
-        .innovator-sticky-trigger { height: 100vh; }
+        .innovator-sticky-trigger { height: 75vh; } /* Reduced from 100vh to lessen scroll space */
         #innovators-visuals { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
         .innovator-card { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; background-color: var(--bg-dark); transition: opacity 0.5s ease, visibility 0.5s ease; }
         .innovator-card.is-active { opacity: 1; visibility: visible; }
@@ -854,7 +854,6 @@
 <!-- ============================================ -->
 <!-- 10. IMPACT METRICS DASHBOARD (existing in new.html) -->
 <!-- ============================================ -->
-
 <!-- ============================================ -->
 <!-- 11. EVENTS & CONTRIBUTIONS                   -->
 <!-- ============================================ -->
@@ -1724,6 +1723,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DATA & CONFIG ---
     const TECH_STACK_DATA = {
         frontend: [ { name: 'React', icon: 'react' }, { name: 'Next.js', icon: 'nextdotjs' }, { name: 'Vue.js', icon: 'vuedotjs' }, { name: 'Svelte', icon: 'svelte' }, { name: 'TailwindCSS', icon: 'tailwindcss' }, { name: 'GSAP', icon: 'gsap' } ],
+        backend: [ { name: 'Python', icon: 'python' }, { name: 'Django', icon: 'django' }, { name: 'Node.js', icon: 'nodedotjs' }, { name: 'FastAPI', icon: 'fastapi' }, { name: 'PostgreSQL', icon: 'postgresql' }, { name: 'MongoDB', icon: 'mongodb' } ],
         backend: [ { name: 'Python', icon: 'python' }, { name: 'Django', icon: 'django' }, { name: 'Node.js', icon: 'nodedotjs' }, { name: 'FastAPI', icon: 'fastapi' }, { name: 'PostgreSQL', icon: 'postgresql' }, { name: 'MongoDB', icon: 'mongodb' } ],
         devops: [ { name: 'AWS', icon: 'amazonaws' }, { name: 'GCP', icon: 'googlecloud' }, { name: 'Docker', icon: 'docker' }, { name: 'Kubernetes', icon: 'kubernetes' }, { name: 'Terraform', icon: 'terraform' }, { name: 'Jenkins', icon: 'jenkins' } ],
         ai: [ { name: 'TensorFlow', icon: 'tensorflow' }, { name: 'PyTorch', icon: 'pytorch' }, { name: 'Scikit-learn', icon: 'scikitlearn' }, { name: 'LangChain', icon: 'langchain' }, { name: 'HuggingFace', icon: 'huggingface' }, { name: 'OpenAI', icon: 'openai' } ],
