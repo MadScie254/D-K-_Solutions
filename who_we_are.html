@@ -1281,7 +1281,7 @@
                 });
             }, { threshold: 0.1 });
 
-            revealElements.forEach(el => el.classList.add('visible'));
+            revealElements.forEach(el => observer.observe(el));
         }
 
         // --- 5. Footer Current Year ---
@@ -1294,9 +1294,12 @@
 
         // --- 6. Animated Timeline with GSAP ---
         function initAnimatedTimeline() {
+            const timeline = document.querySelector('.timeline');
             const timelineItems = gsap.utils.toArray('.timeline-container');
-            const timelineProgress = timeline.querySelector('.timeline-progress');
+            const timelineProgress = document.querySelector('.timeline-progress');
+            
             if (!timeline) return;
+            
             timelineItems.forEach(item => {
                 gsap.fromTo(item, 
                     { opacity: 0, y: 100 },
@@ -1383,18 +1386,18 @@
             });
         }
 
-        // Initialize all components        initFaqAccordion();
+        // Initialize all components
         initTheme();
         initMobileMenu();
         initHeaderScroll();
         initScrollReveal();
-        initFooter();</html>
+        initFooter();
         initAnimatedTimeline();
         initBackToTop();
         initLocalTime();
         initFaqAccordion();
-    });   const question = item.querySelector('.faq-question');
-    </script>                const answer = item.querySelector('.faq-answer');
+    });
+    </script>
 
-</body>'click', () => {
-</html>           const isActive = item.classList.contains('active');
+</body>
+</html>
