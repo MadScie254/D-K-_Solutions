@@ -2304,9 +2304,9 @@ function initAIAssistant() {
 
         try {
             // --- Gemini API Call ---
-            // The API key is now correctly assigned and used.
-            const apiKey = "AIzaSyB7akPc--HAu9pZU4x6IWdUwEBlcsVb7wU"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+            // This implementation now aligns with the official cURL command format.
+            const apiKey = "AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84"; 
+            const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
             const payload = {
                 contents: chatHistory,
@@ -2323,6 +2323,8 @@ function initAIAssistant() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    // The API key is now sent in the header, which is a more standard practice.
+                    'X-Goog-Api-Key': apiKey, 
                 },
                 body: JSON.stringify(payload),
             });
@@ -2477,6 +2479,7 @@ function initAIAssistant() {
     // --- Initial Welcome Message ---
     addMessage("Hello, Sir! I am your AI assistant, powered by Gemini. How can I help you with your project today?", 'ai');
 }
+
         // --- 11. Animated Counters ---
         function initAnimatedCounters() {
             const counters = document.querySelectorAll('.counter');
