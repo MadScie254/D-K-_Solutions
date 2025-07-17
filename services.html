@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Danco & Khadija</title>
+    <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Core Animation & Utility Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <style>
+        /* --- Theme Variables (Copied from index.html for consistency) --- */
+        :root {
+            --bg-primary: #f3f4f6; --bg-secondary: #ffffff; --bg-accent: #e5e7eb;
+            --text-primary: #1f2937; --text-secondary: #4b5563; --text-accent: #0ea5e9;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --gradient-start: #1e40af; --gradient-mid: #0d9488; --gradient-end: #047857;
+            --glass-bg: rgba(255, 255, 255, 0.5); --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(14, 165, 233, 0.15);
+        }
+
+        .dark-mode {
+            --bg-primary: #0a0a23; --bg-secondary: #111827; --bg-accent: #1f2937;
+            --text-primary: #e0e0ff; --text-secondary: #9ca3af; --text-accent: #38bdf8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-start: #2563eb; --gradient-mid: #14b8a6; --gradient-end: #059669;
+            --glass-bg: rgba(31, 41, 55, 0.4); --glass-border: rgba(255, 255, 255, 0.15);
+            --shadow-color: rgba(56, 189, 248, 0.25);
+        }
+
+        /* --- Base Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+        section { scroll-margin-top: 80px; }
+
+        /* --- Navigation (Copied for consistency) --- */
+        #main-header { 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        #main-header.scrolled {
+            background: var(--glass-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode #main-header.scrolled {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link {
+            color: var(--text-primary);
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            padding: 0.5rem 0.6rem;
+            font-size: 0.9rem;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover { color: var(--text-accent); }
+        .nav-link.active { color: var(--text-accent); font-weight: 600; border-bottom-color: var(--text-accent); }
+        #mobile-menu { background-color: var(--bg-accent); border-top: 1px solid var(--border-color); }
+        #mobile-menu a { color: var(--text-primary); display: block; padding: 0.75rem 1.5rem; }
+        #mobile-menu a:hover { background-color: var(--bg-primary); }
+        #mobile-menu a.active { color: var(--text-accent); font-weight: 600; background-color: var(--bg-primary); }
+        #theme-toggle, #theme-toggle-mobile {
+            background: none; border: none; color: var(--text-secondary); cursor: pointer;
+            font-size: 1.25rem; transition: color 0.3s ease; padding: 0.5rem;
+        }
+        #theme-toggle:hover, #theme-toggle-mobile:hover { color: var(--text-accent); }
+
+        /* --- Floating Dot Navigation --- */
+        #dot-nav {
+            position: fixed;
+            top: 50%;
+            right: 1.5rem;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .dot-nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .dot-nav-link {
+            width: 12px;
+            height: 12px;
+            background-color: var(--text-secondary);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+        .dot-nav-link.active, .dot-nav-link:hover {
+            background-color: var(--text-accent);
+            transform: scale(1.5);
+            opacity: 1;
+        }
+        .dot-nav-tooltip {
+            position: absolute;
+            right: 100%;
+            margin-right: 1rem;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--bg-accent);
+            color: var(--text-primary);
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .dot-nav-item:hover .dot-nav-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        /* --- Hero Section --- */
+        #services-hero {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background-color: #0a0a23;
+            color: #e0e0ff;
+        }
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 1rem;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+        @media (min-width: 768px) { .hero-content h1 { font-size: 4.5rem; } }
+        .hero-content p {
+            font-size: 1.25rem;
+            max-w-3xl;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+        }
+        .scroll-cue {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0.5; transform: translateY(10px); }
+        }
+
+        /* --- Services Grid Section --- */
+        #services-overview { background-color: var(--bg-secondary); }
+        .service-card {
+            background-color: var(--bg-accent);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .dark-mode .service-card { background-color: var(--bg-accent); }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+            border-color: var(--text-accent);
+        }
+        .service-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            color: var(--text-accent);
+        }
+        .service-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Deep Dive Panels --- */
+        .service-panel {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .service-panel:nth-child(even) { background-color: var(--bg-accent); }
+        .service-panel-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .service-panel-content { grid-template-columns: repeat(2, 1fr); }
+            .service-panel:nth-child(even) .service-visual { order: -1; }
+        }
+        .service-text h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .service-text .service-subtitle {
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        .service-text ul {
+            list-style-type: none;
+            padding: 0;
+            space-y-3;
+        }
+        .service-text ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .service-text ul li i {
+            color: var(--text-accent);
+            margin-top: 5px;
+        }
+        .service-visual {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* --- Why Work With Us Section --- */
+        #why-us { background-color: var(--bg-secondary); }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-accent);
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* --- Case Studies Section --- */
+        #case-studies { background-color: var(--bg-accent); }
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        .swiper-slide:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: white;
+        }
+
+        /* --- CTA Section --- */
+        #contact-cta {
+            background-color: var(--bg-secondary);
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+        .cta-container {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            border-radius: 1rem;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+        .cta-button { 
+            transition: all 0.3s ease; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid)); color: white;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--shadow-color) 130%, black);
+        }
+
+        /* --- FAQ Section --- */
+        #faq { background-color: var(--bg-secondary); }
+        .faq-item { border-bottom: 1px solid var(--border-color); }
+        .faq-question {
+            width: 100%; text-align: left; padding: 1.5rem 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; background: none; border: none;
+            font-size: 1.1rem; font-weight: 600; color: var(--text-primary);
+        }
+        .faq-question:hover { background-color: var(--bg-accent); }
+        .faq-icon { transition: transform 0.3s ease; font-size: 1rem; color: var(--text-accent); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, padding 0.5s ease;
+            padding: 0 1rem;
+        }
+        .faq-answer p { padding-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        
+        /* --- Footer (Copied for consistency) --- */
+        .site-footer {
+            background-color: var(--bg-accent); color: var(--text-secondary);
+            padding: 4rem 1.5rem 2rem; position: relative; border-top: 1px solid var(--border-color);
+        }
+        .dark-mode .site-footer { background-color: #0f172a; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="flex-shrink-0 flex items-center" title="Danco & Khadija Home">
+                <span class="text-xl md:text-2xl font-bold gradient-text">Danco & Khadija</span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-wrap justify-end">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="who_we_are.html" class="nav-link">Who We Are</a>
+                <a href="services.html" class="nav-link active">Services</a>
+                <a href="index.html#our-process" class="nav-link">Our Process</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <button id="theme-toggle" title="Toggle Theme" class="ml-2">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+            <div class="lg:hidden flex items-center space-x-3">
+                 <button id="theme-toggle-mobile" class="text-xl" title="Toggle Theme"><i class="fas fa-sun"></i></button>
+                 <button id="mobile-menu-button" class="focus:outline-none text-2xl" title="Toggle Mobile Menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <a href="index.html" class="block px-4 py-2">Home</a>
+            <a href="who_we_are.html" class="block px-4 py-2">Who We Are</a>
+            <a href="services.html" class="active block px-4 py-2">Services</a>
+            <a href="contact.html" class="block px-4 py-2">Contact</a>
+        </div>
+    </header>
+
+    <!-- Floating Dot Navigation -->
+    <nav id="dot-nav">
+        <!-- Dots will be generated by JavaScript -->
+    </nav>
+
+    <main>
+        <!-- 1. Hero Section -->
+        <section id="services-hero" data-nav="Hero">
+            <canvas id="particle-canvas"></canvas>
+            <div class="hero-content">
+                <h1 class="reveal-up">From Idea to Execution—<br><span class="gradient-text">Built for Impact.</span></h1>
+                <p class="reveal-up" style="transition-delay: 0.2s;">
+                    We provide a spectrum of services designed to transform your vision into a robust, intelligent, and engaging digital reality.
+                </p>
+                <a href="#services-overview" class="cta-button reveal-up" style="transition-delay: 0.4s;">Explore Our Services</a>
+            </div>
+            <a href="#services-overview" class="scroll-cue">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
+
+        <!-- 2. Services Grid -->
+        <section id="services-overview" class="py-16 md:py-24" data-nav="Services">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Our Core Competencies</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">A holistic approach to building the future of your business.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <a href="#service-development" class="service-card reveal-up">
+                        <i class="fas fa-code service-card-icon"></i>
+                        <h3>Custom Software Development</h3>
+                        <p class="text-secondary">Bespoke applications and systems built for scale and performance.</p>
+                    </a>
+                    <a href="#service-ai" class="service-card reveal-up" style="transition-delay: 0.1s;">
+                        <i class="fas fa-brain service-card-icon"></i>
+                        <h3>Machine Learning & AI</h3>
+                        <p class="text-secondary">Intelligent models that drive automation and uncover data-driven insights.</p>
+                    </a>
+                    <a href="#service-strategy" class="service-card reveal-up" style="transition-delay: 0.2s;">
+                        <i class="fas fa-lightbulb service-card-icon"></i>
+                        <h3>Digital Strategy</h3>
+                        <p class="text-secondary">Actionable roadmaps that align technology with your business goals.</p>
+                    </a>
+                    <a href="#service-design" class="service-card reveal-up" style="transition-delay: 0.3s;">
+                        <i class="fas fa-drafting-compass service-card-icon"></i>
+                        <h3>UI/UX Design</h3>
+                        <p class="text-secondary">Intuitive and engaging user experiences that captivate your audience.</p>
+                    </a>
+                    <a href="#service-analytics" class="service-card reveal-up" style="transition-delay: 0.4s;">
+                        <i class="fas fa-chart-line service-card-icon"></i>
+                        <h3>Data Analytics</h3>
+                        <p class="text-secondary">Transforming complex data into clear, actionable business intelligence.</p>
+                    </a>
+                    <a href="#service-fullstack" class="service-card reveal-up" style="transition-delay: 0.5s;">
+                        <i class="fas fa-laptop-code service-card-icon"></i>
+                        <h3>Full-Stack Development</h3>
+                        <p class="text-secondary">End-to-end creation of responsive and secure web platforms.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Deep-Dive Panels -->
+        <div id="service-details">
+            <section id="service-development" class="service-panel" data-nav="Development">
+                <div class="container mx-auto px-6 service-panel-content">
+                    <div class="service-text">
+                        <h2 class="gradient-text">Custom Software Development</h2>
+                        <p class="service-subtitle">Architecting solutions as unique as your business.</p>
+                        <p class="text-secondary mb-6">We don't believe in one-size-fits-all. Our custom development process involves a deep dive into your operations to build software that solves your specific challenges, enhances efficiency, and provides a platform for future growth.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i><span>Scalable backend systems and robust APIs.</span></li>
+                            <li><i class="fas fa-check"></i><span>Performance-optimized web and mobile applications.</span></li>
+                            <li><i class="fas fa-check"></i><span>Cloud-native architecture for reliability and flexibility.</span></li>
+                        </ul>
+                    </div>
+                    <div class="service-visual" id="lottie-development"></div>
+                </div>
+            </section>
+
+            <section id="service-ai" class="service-panel" data-nav="AI/ML">
+                <div class="container mx-auto px-6 service-panel-content">
+                    <div class="service-text">
+                        <h2 class="gradient-text">Machine Learning & AI</h2>
+                        <p class="service-subtitle">Embedding intelligence into your operations.</p>
+                        <p class="text-secondary mb-6">Unlock the power of your data. We design and deploy machine learning models that automate complex processes, predict future trends, and deliver personalized experiences, giving you a distinct competitive advantage.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i><span>Predictive analytics and forecasting models.</span></li>
+                            <li><i class="fas fa-check"></i><span>Natural Language Processing (NLP) for text analysis.</span></li>
+                            <li><i class="fas fa-check"></i><span>Computer Vision for image and video recognition.</span></li>
+                        </ul>
+                    </div>
+                    <div class="service-visual" id="lottie-ai"></div>
+                </div>
+            </section>
+            
+            <!-- Add other service panels here following the same structure -->
+
+        </div>
+
+        <!-- 4. Why Work With Us -->
+        <section id="why-us" class="py-16 md:py-24" data-nav="Why Us">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Driven by Results</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">Our success is measured by yours. We are committed to delivering tangible value and measurable impact.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="stat-item reveal-up">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-item reveal-up" style="transition-delay: 0.1s;">
+                        <div class="stat-number" data-target="30">0</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                    <div class="stat-item reveal-up" style="transition-delay: 0.2s;">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">% Client Retention</div>
+                    </div>
+                    <div class="stat-item reveal-up" style="transition-delay: 0.3s;">
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-label">Industries Served</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Case Studies -->
+        <section id="case-studies" class="py-16 md:py-24" data-nav="Our Work">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Our Work in Action</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">A glimpse into how we've helped our partners succeed.</p>
+                </div>
+                <div class="swiper-container" style="max-width: 1200px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://placehold.co/1200x675/4f46e5/ffffff?text=InvestWise+Predictor" alt="InvestWise Predictor Project" loading="lazy">
+                            <div class="slide-content">
+                                <h4>InvestWise Predictor</h4>
+                                <p>AI-powered financial forecasting engine.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                             <img src="https://placehold.co/1200x675/7c3aed/ffffff?text=metcom.ke" alt="metcom.ke Project" loading="lazy">
+                             <div class="slide-content">
+                                <h4>Metcom.ke Platform</h4>
+                                <p>Robust backend and UI for a connectivity provider.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                             <img src="https://placehold.co/1200x675/db2777/ffffff?text=marda.co.ke" alt="marda.co.ke Project" loading="lazy">
+                             <div class="slide-content">
+                                 <h4>Marda.co.ke E-commerce</h4>
+                                <p>Full-stack e-commerce and payment integration.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Quick Contact CTA -->
+        <section id="contact-cta" data-nav="Contact">
+            <div class="cta-container reveal-up">
+                <h2 class="text-3xl font-bold mb-4">Have a Project? Let's Build.</h2>
+                <p class="text-secondary mb-8 max-w-xl mx-auto">We're ready to help you navigate your digital transformation. Reach out to start a conversation about your project.</p>
+                <a href="https://tally.so/r/mR2xJd" target="_blank" rel="noopener" class="cta-button">
+                    Get a Quote
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 7. FAQ Section -->
+        <section id="faq" class="py-16 md:py-24" data-nav="FAQ">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Answering Your Questions</h2>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <div class="faq-item reveal-up">
+                        <button class="faq-question"><span>How do you begin a new project?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>Every project starts with a complimentary discovery call. We dive deep into your goals, challenges, and vision. This allows us to draft a detailed proposal outlining the scope, timeline, and strategy, ensuring we're perfectly aligned before any work begins.</p></div>
+                    </div>
+                    <div class="faq-item reveal-up">
+                        <button class="faq-question"><span>Can you integrate with our existing systems?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>Absolutely. We specialize in creating solutions that seamlessly integrate with your current software, APIs, and third-party services. Our goal is to enhance your existing ecosystem, not replace it, ensuring a smooth transition and data continuity.</p></div>
+                    </div>
+                    <div class="faq-item reveal-up">
+                        <button class="faq-question"><span>What does post-launch support look like?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>Our partnership doesn't end at launch. We offer flexible support and maintenance retainers to ensure your application remains secure, up-to-date, and performing optimally. We can also collaborate on future feature development and scaling strategies as your business grows.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Danco & Khadija</h5>
+                    <p class="text-sm leading-relaxed">Pioneering intelligent, scalable, and design-driven digital solutions.</p>
+                 </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Navigate</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="who_we_are.html" class="hover:text-accent transition-colors">Who We Are</a></li>
+                        <li><a href="services.html" class="hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Core Competencies</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li>Advanced Data Science & ML</li>
+                        <li>Full-Stack Web Development</li>
+                        <li>Strategic Digital Consulting</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Connect With Us</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt mr-2 opacity-70"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-envelope mr-2 opacity-70"></i> <a href="mailto:dmwanjal254@gmail.com" class="hover:text-accent transition-colors">dmwanjal254@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-border-color pt-8 mt-8 text-center text-sm">
+                <p>&copy; <span id="current-year"></span> Danco & Khadija Freelance Partnership. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Initialize common components ---
+        const body = document.body;
+        const header = document.getElementById('main-header');
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Theme Management ---
+        function initTheme() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const sunIconClass = 'fa-sun';
+            const moonIconClass = 'fa-moon';
+            let currentTheme = localStorage.getItem('theme') || 'light';
+
+            const applyTheme = (theme) => {
+                const iconToAdd = theme === 'dark' ? sunIconClass : moonIconClass;
+                const iconToRemove = theme === 'dark' ? moonIconClass : sunIconClass;
+                document.body.classList.toggle('dark-mode', theme === 'dark');
+                [themeToggle, themeToggleMobile].forEach(button => {
+                    if (button) {
+                        const iconElement = button.querySelector('i');
+                        if (iconElement) {
+                            iconElement.classList.remove(iconToRemove);
+                            iconElement.classList.add(iconToAdd);
+                        }
+                    }
+                });
+            };
+
+            const toggleTheme = () => {
+                currentTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', currentTheme);
+                applyTheme(currentTheme);
+            };
+
+            applyTheme(currentTheme);
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+        }
+
+        // --- Mobile Menu ---
+        function initMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = mobileMenuButton ? mobileMenuButton.querySelector('i') : null;
+
+            if (mobileMenuButton && mobileMenu && mobileMenuIcon) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenuIcon.classList.toggle('fa-bars');
+                    mobileMenuIcon.classList.toggle('fa-times');
+                });
+            }
+        }
+
+        // --- Header Scroll Effect ---
+        function initHeaderScroll() {
+             if (header) {
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            }
+        }
+
+        // --- Scroll Reveal Animations ---
+        function initScrollReveal() { 
+            const revealElements = document.querySelectorAll('.reveal-up');
+            if ("IntersectionObserver" in window) {
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            entry.target.style.transitionDelay = entry.target.style.transitionDelay || '0s';
+                            gsap.fromTo(entry.target, { y: 40, opacity: 0 }, {
+                                y: 0,
+                                opacity: 1,
+                                duration: 1,
+                                ease: 'power3.out',
+                                delay: parseFloat(entry.target.style.transitionDelay),
+                                onComplete: () => observer.unobserve(entry.target)
+                            });
+                        }
+                    });
+                }, { threshold: 0.1 });
+                revealElements.forEach(el => revealObserver.observe(el));
+            } else {
+                revealElements.forEach(el => el.classList.add('visible'));
+            }
+        }
+
+        // --- Hero Particle Animation ---
+        function initParticleHero() {
+            const canvas = document.getElementById('particle-canvas');
+            if (!canvas || !THREE) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const particleCount = 5000;
+            const particles = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 10;
+            }
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0x38bdf8, // --text-accent dark
+                size: 0.02,
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+            const particleSystem = new THREE.Points(particles, particleMaterial);
+            scene.add(particleSystem);
+            camera.position.z = 5;
+
+            const mouse = new THREE.Vector2();
+            document.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particleSystem.rotation.y += 0.0005;
+                scene.rotation.x = mouse.y * 0.1;
+                scene.rotation.y = mouse.x * 0.1;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // --- Lottie Animations ---
+        function initLottie() {
+            try {
+                lottie.loadAnimation({
+                    container: document.getElementById('lottie-development'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'https://assets1.lottiefiles.com/packages/lf20_pwohahvd.json' 
+                });
+                lottie.loadAnimation({
+                    container: document.getElementById('lottie-ai'),
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'https://assets10.lottiefiles.com/packages/lf20_v1yudlrx.json'
+                });
+            } catch(e) { console.error("Lottie failed to load:", e); }
+        }
+        
+        // --- Animated Counters ---
+        function initStatCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                ScrollTrigger.create({
+                    trigger: counter,
+                    start: 'top 80%',
+                    once: true,
+                    onEnter: () => {
+                        const target = +counter.getAttribute('data-target');
+                        gsap.to(counter, {
+                            duration: 2,
+                            innerText: target,
+                            roundProps: "innerText",
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        }
+
+        // --- Swiper for Case Studies ---
+        function initSwiper() {
+            if (typeof Swiper !== 'undefined' && document.querySelector('.swiper-container')) {
+                new Swiper('.swiper-container', {
+                    loop: true,
+                    autoplay: { delay: 4000, disableOnInteraction: false },
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    pagination: { el: '.swiper-pagination', clickable: true },
+                    breakpoints: {
+                        768: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 },
+                    }
+                });
+            }
+        }
+
+        // --- FAQ Accordion ---
+        function initFaqAccordion() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    if (isActive) {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = 0;
+                    } else {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+        }
+
+        // --- Floating Dot Navigation ---
+        function initDotNav() {
+            const navContainer = document.getElementById('dot-nav');
+            const sections = document.querySelectorAll('section[data-nav]');
+            if (!navContainer || sections.length === 0) return;
+
+            sections.forEach(section => {
+                const navName = section.getAttribute('data-nav');
+                const sectionId = section.getAttribute('id');
+
+                const item = document.createElement('div');
+                item.className = 'dot-nav-item';
+                
+                const link = document.createElement('a');
+                link.href = `#${sectionId}`;
+                link.className = 'dot-nav-link';
+                link.dataset.navlink = sectionId;
+
+                const tooltip = document.createElement('span');
+                tooltip.className = 'dot-nav-tooltip';
+                tooltip.textContent = navName;
+
+                item.appendChild(tooltip);
+                item.appendChild(link);
+                navContainer.appendChild(item);
+            });
+            
+            const navLinks = document.querySelectorAll('.dot-nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // --- Footer Current Year ---
+        function initFooter() {
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+        }
+
+        // --- Initialize All ---
+        initTheme();
+        initMobileMenu();
+        initHeaderScroll();
+        initScrollReveal();
+        initParticleHero();
+        initLottie();
+        initStatCounters();
+        initSwiper();
+        initFaqAccordion();
+        initDotNav();
+        initFooter();
+    });
+    </script>
+
+</body>
+</html>
