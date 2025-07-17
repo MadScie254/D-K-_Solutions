@@ -2304,16 +2304,19 @@ function initAIAssistant() {
 
         try {
             // --- Gemini API Call ---
-            // The API key is left as an empty string. The environment will securely
-            // provide it at runtime.
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84}`;
+            // The API key is now correctly assigned and used.
+            const apiKey = "AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84"; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
 
             const payload = {
                 contents: chatHistory,
-                // Optional: Add safety settings and generation config if needed
-                // safetySettings: [...],
-                // generationConfig: {...}
+                // Optional: Add safety settings to reduce content blocking.
+                // safetySettings: [
+                //   { "category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE" },
+                //   { "category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE" },
+                //   { "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE" },
+                //   { "category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE" }
+                // ]
             };
 
             const response = await fetch(apiUrl, {
@@ -2324,28 +2327,44 @@ function initAIAssistant() {
                 body: JSON.stringify(payload),
             });
 
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status} ${response.statusText}`);
-            }
-
+            // Always attempt to parse the JSON body, even for errors, to get more details.
             const result = await response.json();
+
+            if (!response.ok) {
+                // If the API returned an error, it often includes a helpful message.
+                const errorMessage = result?.error?.message || `API Error: ${response.status} ${response.statusText}`;
+                throw new Error(errorMessage);
+            }
             
             // --- Process and Display Response ---
             thinkingMsg.remove(); // Remove thinking animation
 
-            if (result.candidates && result.candidates.length > 0) {
+            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content?.parts?.[0]?.text) {
                 const aiResponseText = result.candidates[0].content.parts[0].text;
                 addMessage(aiResponseText, 'ai');
                 // Add AI response to history for context in future messages
                 chatHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
             } else {
-                 throw new Error("No response content received from API.");
+                 // This can happen if the content is filtered due to safety settings or other reasons.
+                 const finishReason = result.candidates?.[0]?.finishReason;
+                 const blockReason = result.promptFeedback?.blockReason;
+
+                 let detailedError = "The AI returned an empty or incomplete response.";
+                 if (finishReason === 'SAFETY') {
+                    detailedError = `The response was blocked for safety reasons. Reason: ${blockReason || 'Not specified'}.`;
+                    console.warn("Safety Feedback:", result.promptFeedback);
+                 } else if (finishReason) {
+                    detailedError = `The API call finished unexpectedly. Reason: ${finishReason}.`;
+                 }
+                 
+                 throw new Error(detailedError);
             }
 
         } catch (error) {
             console.error("Gemini API call failed:", error);
             thinkingMsg.remove();
-            addMessage("I'm having trouble connecting to my brain right now. Please check the console for errors or try again later!", 'ai');
+            // Display a more informative error message directly in the chat UI.
+            addMessage(`I'm sorry, I encountered an error: <br><pre class="error-message">${error.message}</pre> Please check the console for more details and try again.`, 'ai');
         }
     };
 
@@ -2423,9 +2442,9 @@ function initAIAssistant() {
             // Italic: *text*
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
             // Code blocks: ```code```
-            .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+            .replace(/```([\s\S]*?)```/g, (match, p1) => `<pre><code>${p1.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`)
             // Inline code: `code`
-            .replace(/`(.*?)`/g, '<code>$1</code>')
+            .replace(/`(.*?)`/g, (match, p1) => `<code>${p1.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>`)
             // Emojis and special characters (optional, can be expanded)
             .replace(/🎯|🔧|💾|☁️|🔒|🤖|📊|⚡|🔍|🔐|🛡️|🔄|👁️|📋/g, '<span style="font-size: 1.2em;">$&</span>')
             // Newlines
