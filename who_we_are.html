@@ -355,6 +355,7 @@
         /* --- CTA Section with Background Image --- */
         #join-us {
             position: relative;
+            background-image: url('https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -2006,7 +2007,7 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+        <section id="join-us" class="py-16 md:py-24">
         <section id="join-us" class="py-16 md:py-24" style="background-image: url('https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
             <div class="container mx-auto px-6 text-center relative z-10">
                  <div class="reveal-up">
@@ -2268,227 +2269,195 @@
             });
         }
 
-        // Add this enhanced JavaScript section
-        // --- 10. AI Assistant Integration ---
-        function initAIAssistant() {
-            const aiInput = document.getElementById('ai-input');
-            const aiSendBtn = document.getElementById('ai-send-btn');
-            const chatMessages = document.getElementById('ai-chat-messages');
-            const quickQuestions = document.querySelectorAll('.quick-question');
-            
-            const API_KEY = 'AIzaSyCOyiZkk8t7zFtX4zC9G4v66MPJfgjIi84'; // Demo key
-            
-            const sendMessage = async (message) => {
-                if (!message.trim()) return;
-                
-                // Add user message
-                addMessage(message, 'user');
-                aiInput.value = '';
-                
-                // Show thinking animation
-                const thinkingMsg = addThinkingMessage();
-                
-                try {
-                    // Simulate API call with contextual responses
-                    const response = await simulateAIResponse(message);
-                    
-                    // Remove thinking message
-                    thinkingMsg.remove();
-                    
-                    // Add AI response
-                    addMessage(response, 'ai');
-                    
-                } catch (error) {
-                    thinkingMsg.remove();
-                    addMessage("I'm having trouble connecting right now. Please try again later!", 'ai');
-                }
+/**
+ * -------------------------------------------------------------------------
+ * 10. AI Assistant Integration (Active Gemini API)
+ * -------------------------------------------------------------------------
+ * This section powers the AI chat assistant. It sends user messages to the 
+ * Google Gemini API and displays the real-time responses.
+ */
+function initAIAssistant() {
+    // --- Element References ---
+    const aiInput = document.getElementById('ai-input');
+    const aiSendBtn = document.getElementById('ai-send-btn');
+    const chatMessages = document.getElementById('ai-chat-messages');
+    const quickQuestions = document.querySelectorAll('.quick-question');
+
+    // --- State Management ---
+    let chatHistory = []; // Stores the conversation history for context
+
+    /**
+     * Sends a message to the Gemini API and displays the response.
+     * @param {string} message - The user's message.
+     */
+    const sendMessage = async (message) => {
+        const prompt = message.trim();
+        if (!prompt) return;
+
+        // Add user message to the UI and history
+        addMessage(prompt, 'user');
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        aiInput.value = '';
+
+        // Show the "thinking" animation while waiting for the API
+        const thinkingMsg = addThinkingMessage();
+
+        try {
+            // --- Gemini API Call ---
+            // The API key is left as an empty string. The environment will securely
+            // provide it at runtime.
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: chatHistory,
+                // Optional: Add safety settings and generation config if needed
+                // safetySettings: [...],
+                // generationConfig: {...}
             };
-            
-            const simulateAIResponse = (message) => {
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        const responses = {
-                            'startup tech stack': `For a startup, I recommend this modern tech stack:
 
-🎯 **Frontend:** React or Vue.js for user interfaces
-🔧 **Backend:** Node.js with Express or Python with FastAPI
-💾 **Database:** PostgreSQL for relational data, Redis for caching
-☁️ **Cloud:** AWS or Vercel for hosting, with auto-scaling
-🔒 **Security:** JWT authentication, HTTPS, input validation
-
-**Why this stack?**
-- Fast development cycles
-- Strong community support
-- Scalable architecture
-- Cost-effective for MVPs
-
-Need help with implementation? Ask about specific technologies!`,
-                            
-                            'ai for business': `AI can transform your business in several ways:
-
-🤖 **Customer Service:** Chatbots and automated support
-📊 **Data Analytics:** Predictive insights and pattern recognition
-🎯 **Marketing:** Personalized recommendations and targeting
-⚡ **Automation:** Process optimization and workflow automation
-🔍 **Quality Control:** Automated testing and monitoring
-
-**Real Example:** An e-commerce client increased sales by 40% using our AI recommendation engine.
-
-**Getting Started:**
-1. Identify repetitive tasks
-2. Collect quality data
-3. Start with a pilot project
-4. Measure ROI and scale
-
-What specific business challenge would you like AI to solve?`,
-                            
-                            'data security': `Here are essential data security best practices:
-
-🔐 **Encryption:** AES-256 for data at rest, TLS 1.3 for transit
-🛡️ **Access Control:** Multi-factor authentication, role-based permissions
-🔄 **Backups:** Automated, encrypted, geographically distributed
-👁️ **Monitoring:** Real-time threat detection and logging
-📋 **Compliance:** GDPR, HIPAA, SOC 2 standards
-
-**Implementation Checklist:**
-- Regular security audits
-- Employee training programs
-- Incident response plans
-- Vendor security assessments
-
-**Pro Tip:** Security is not a one-time setup—it's an ongoing process.
-
-Need specific guidance on any security aspect?`
-                        };
-                        
-                        // Find matching response or provide general help
-                        const lowerMessage = message.toLowerCase();
-                        let response = '';
-                        
-                        for (const [key, value] of Object.entries(responses)) {
-                            if (lowerMessage.includes(key.replace(/\s+/g, ' '))) {
-                                response = value;
-                                break;
-                            }
-                        }
-                        
-                        if (!response) {
-                            response = `Great question! Based on our expertise in software development, AI/ML, and digital transformation, here's my perspective:
-
-${getContextualResponse(message)}
-
-For more specific guidance, try asking about:
-- Technology recommendations
-- Implementation strategies  
-- Best practices and patterns
-- Real-world examples
-
-How can I help you dive deeper into this topic?`;
-                        }
-                        
-                        resolve(response);
-                    }, 1500 + Math.random() * 1000); // Realistic delay
-                });
-            };
-            
-            const getContextualResponse = (message) => {
-                const keywords = {
-                    'machine learning': 'Machine learning can automate decision-making and find patterns in your data. Popular algorithms include regression, classification, and neural networks.',
-                    'database': 'For databases, consider PostgreSQL for complex queries, MongoDB for flexible schemas, or Redis for high-performance caching.',
-                    'react': 'React is excellent for building dynamic user interfaces. Pair it with state management tools like Redux or Context API for complex applications.',
-                    'python': 'Python excels in data science, AI/ML, and backend development. Frameworks like Django and FastAPI make web development efficient.',
-                    'security': 'Security should be built into every layer of your application, from secure coding practices to infrastructure protection.',
-                    'cloud': 'Cloud platforms like AWS, Azure, and GCP offer scalable infrastructure. Start with managed services to reduce operational overhead.'
-                };
-                
-                for (const [keyword, response] of Object.entries(keywords)) {
-                    if (message.toLowerCase().includes(keyword)) {
-                        return response;
-                    }
-                }
-                
-                return 'I can help you with software development, AI/ML implementation, cloud architecture, data analytics, and digital transformation strategies.';
-            };
-            
-            const addMessage = (content, sender) => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `ai-message ${sender === 'user' ? 'user-message' : ''}`;
-                
-                const avatar = document.createElement('div');
-                avatar.className = 'message-avatar';
-                avatar.textContent = sender === 'user' ? '👤' : '🤖';
-                
-                const messageContent = document.createElement('div');
-                messageContent.className = 'message-content';
-                messageContent.innerHTML = formatMessage(content);
-                
-                messageDiv.appendChild(avatar);
-                messageDiv.appendChild(messageContent);
-                
-                chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                return messageDiv;
-            };
-            
-            const addThinkingMessage = () => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'ai-message';
-                
-                const avatar = document.createElement('div');
-                avatar.className = 'message-avatar';
-                avatar.textContent = '🤖';
-                
-                const messageContent = document.createElement('div');
-                messageContent.className = 'message-content ai-thinking';
-                messageContent.innerHTML = `
-                    <span>Thinking</span>
-                    <div class="thinking-dots">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                `;
-                
-                messageDiv.appendChild(avatar);
-                messageDiv.appendChild(messageContent);
-                
-                chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                return messageDiv;
-            };
-            
-            const formatMessage = (content) => {
-                return content
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/🎯|🔧|💾|☁️|🔒|🤖|📊|⚡|🔍|🔐|🛡️|🔄|👁️|📋/g, '<span style="font-size: 1.2em;">$&</span>')
-                    .replace(/\n/g, '<br>');
-            };
-            
-            // Event listeners
-            if (aiSendBtn) {
-                aiSendBtn.addEventListener('click', () => {
-                    sendMessage(aiInput.value);
-                });
-            }
-            
-            if (aiInput) {
-                aiInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        sendMessage(aiInput.value);
-                    }
-                });
-            }
-            
-            quickQuestions.forEach(button => {
-                button.addEventListener('click', () => {
-                    const question = button.dataset.question;
-                    sendMessage(question);
-                });
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
             });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            
+            // --- Process and Display Response ---
+            thinkingMsg.remove(); // Remove thinking animation
+
+            if (result.candidates && result.candidates.length > 0) {
+                const aiResponseText = result.candidates[0].content.parts[0].text;
+                addMessage(aiResponseText, 'ai');
+                // Add AI response to history for context in future messages
+                chatHistory.push({ role: "model", parts: [{ text: aiResponseText }] });
+            } else {
+                 throw new Error("No response content received from API.");
+            }
+
+        } catch (error) {
+            console.error("Gemini API call failed:", error);
+            thinkingMsg.remove();
+            addMessage("I'm having trouble connecting to my brain right now. Please check the console for errors or try again later!", 'ai');
         }
-        
+    };
+
+    /**
+     * Creates and appends a message bubble to the chat window.
+     * @param {string} content - The text content of the message.
+     * @param {string} sender - 'user' or 'ai'.
+     * @returns {HTMLElement} The created message element.
+     */
+    const addMessage = (content, sender) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `ai-message ${sender === 'user' ? 'user-message' : ''}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.textContent = sender === 'user' ? '👤' : '🤖';
+
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        // Use a robust formatting function for the AI's response
+        messageContent.innerHTML = formatMessage(content);
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(messageContent);
+
+        chatMessages.appendChild(messageDiv);
+        // Scroll to the latest message
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        return messageDiv;
+    };
+
+    /**
+     * Displays a "thinking" animation in the chat.
+     * @returns {HTMLElement} The created thinking message element.
+     */
+    const addThinkingMessage = () => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'ai-message';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.textContent = '🤖';
+
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content ai-thinking';
+        messageContent.innerHTML = `
+            <span>Thinking</span>
+            <div class="thinking-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(messageContent);
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        return messageDiv;
+    };
+
+    /**
+     * Formats the message content, converting markdown-like syntax to HTML.
+     * @param {string} content - The raw text content.
+     * @returns {string} The HTML-formatted content.
+     */
+    const formatMessage = (content) => {
+        // A more robust formatting function to handle various markdown elements
+        return content
+            // Bold: **text**
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            // Italic: *text*
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            // Code blocks: ```code```
+            .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+            // Inline code: `code`
+            .replace(/`(.*?)`/g, '<code>$1</code>')
+            // Emojis and special characters (optional, can be expanded)
+            .replace(/🎯|🔧|💾|☁️|🔒|🤖|📊|⚡|🔍|🔐|🛡️|🔄|👁️|📋/g, '<span style="font-size: 1.2em;">$&</span>')
+            // Newlines
+            .replace(/\n/g, '<br>');
+    };
+
+    // --- Event Listeners ---
+    if (aiSendBtn) {
+        aiSendBtn.addEventListener('click', () => sendMessage(aiInput.value));
+    }
+
+    if (aiInput) {
+        aiInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) { // Send on Enter, not Shift+Enter
+                e.preventDefault(); // Prevents new line in input
+                sendMessage(aiInput.value);
+            }
+        });
+    }
+
+    quickQuestions.forEach(button => {
+        button.addEventListener('click', () => {
+            const question = button.dataset.question;
+            // Place question in input and send it for a better UX
+            aiInput.value = question;
+            sendMessage(question);
+        });
+    });
+
+    // --- Initial Welcome Message ---
+    addMessage("Hello, Sir! I am your AI assistant, powered by Gemini. How can I help you with your project today?", 'ai');
+}
         // --- 11. Animated Counters ---
         function initAnimatedCounters() {
             const counters = document.querySelectorAll('.counter');
