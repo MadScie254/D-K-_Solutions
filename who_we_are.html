@@ -492,6 +492,164 @@
         #back-to-top:hover {
             background: color-mix(in srgb, var(--text-accent) 80%, black);
         }
+
+        /* --- New Styles for Added Sections --- */
+        /* Methodology Section */
+        .methodology-step {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .step-number::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--text-accent), transparent);
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+        @media (max-width: 1024px) {
+            .step-number::after {
+                display: none;
+            }
+        }
+
+        /* --- Testimonials Section --- */
+        .testimonial-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+        .quote-mark {
+            font-size: 3rem;
+            color: var(--text-accent);
+            font-family: serif;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .author-info h4 {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* --- Technology Stack Section --- */
+        .tech-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.5rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        .tech-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        .tech-icon {
+            font-size: 2.5rem;
+            color: var(--text-accent);
+            transition: transform 0.3s ease;
+        }
+        .tech-item:hover .tech-icon {
+            transform: scale(1.1);
+        }
+        .tech-item span {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* --- Awards & Recognition Section --- */
+        .achievement-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .achievement-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+        .achievement-icon {
+            font-size: 2.5rem;
+            color: var(--text-accent);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .achievement-card:hover .achievement-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+        .achievement-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Enhanced Smooth Scrolling for New Sections --- */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .reveal-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -768,6 +926,200 @@
                             <p>Security is a non-negotiable, foundational pillar of our work, overseen by our Chief Information Security Officer. We embed security into every stage of the development lifecycle, following a "security by design" principle. This includes multi-layered architectural defenses, rigorous code reviews, continuous vulnerability scanning, and strict adherence to data privacy regulations like GDPR. We treat your digital assets with the utmost care, ensuring they are protected against current and future threats.</p>
                         </div>
                     </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Do you provide ongoing support after project completion?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Absolutely. We believe in long-term partnerships with our clients. Our support packages include regular maintenance, performance monitoring, security updates, and feature enhancements. We also provide training to your team and comprehensive documentation to ensure you can maximize the value of your solution. Our "Evolution" phase ensures your technology grows with your business needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Our Methodology Section -->
+        <section id="methodology" class="py-16 md:py-24 bg-primary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Our <span class="gradient-text">Methodology</span></h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        We follow a proven, iterative approach that ensures quality, transparency, and client satisfaction at every step.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="methodology-step reveal-up">
+                        <div class="step-number">01</div>
+                        <h3 class="text-xl font-bold mb-3">Discovery</h3>
+                        <p class="text-secondary">Deep dive into your business needs, goals, and challenges through collaborative workshops and stakeholder interviews.</p>
+                    </div>
+                    <div class="methodology-step reveal-up" style="transition-delay: 0.1s;">
+                        <div class="step-number">02</div>
+                        <h3 class="text-xl font-bold mb-3">Strategy</h3>
+                        <p class="text-secondary">Develop a comprehensive roadmap with clear milestones, technology choices, and success metrics.</p>
+                    </div>
+                    <div class="methodology-step reveal-up" style="transition-delay: 0.2s;">
+                        <div class="step-number">03</div>
+                        <h3 class="text-xl font-bold mb-3">Execution</h3>
+                        <p class="text-secondary">Agile development with regular check-ins, continuous testing, and iterative improvements based on feedback.</p>
+                    </div>
+                    <div class="methodology-step reveal-up" style="transition-delay: 0.3s;">
+                        <div class="step-number">04</div>
+                        <h3 class="text-xl font-bold mb-3">Evolution</h3>
+                        <p class="text-secondary">Ongoing support, optimization, and enhancement to ensure your solution continues to deliver value.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Testimonials Section -->
+        <section id="testimonials" class="py-16 md:py-24 bg-secondary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">What Our Partners Say</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        Don't just take our word for it. Here's what our clients have to say about our collaboration.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="testimonial-card reveal-up">
+                        <div class="testimonial-content">
+                            <div class="quote-mark">"</div>
+                            <p class="testimonial-text">Working with Danco & Khadija transformed our data analytics capabilities. Their machine learning solution increased our operational efficiency by 35% in just three months.</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <img src="https://placehold.co/60x60/0a0a23/e0e0ff?text=JS" alt="John Smith">
+                                </div>
+                                <div class="author-info">
+                                    <h4>John Smith</h4>
+                                    <p>CTO, LogiFlow Solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal-up" style="transition-delay: 0.2s;">
+                        <div class="testimonial-content">
+                            <div class="quote-mark">"</div>
+                            <p class="testimonial-text">The strategic approach and technical expertise they brought to our digital transformation was exceptional. They didn't just build software; they architected our future.</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <img src="https://placehold.co/60x60/111827/e0e0ff?text=MJ" alt="Maria Johnson">
+                                </div>
+                                <div class="author-info">
+                                    <h4>Maria Johnson</h4>
+                                    <p>CEO, InnovateTech</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal-up" style="transition-delay: 0.4s;">
+                        <div class="testimonial-content">
+                            <div class="quote-mark">"</div>
+                            <p class="testimonial-text">Security was our top concern, and their CISO's expertise gave us complete confidence. The solution is robust, scalable, and completely secure.</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <img src="https://placehold.co/60x60/1f2937/e0e0ff?text=RK" alt="Robert Kim">
+                                </div>
+                                <div class="author-info">
+                                    <h4>Robert Kim</h4>
+                                    <p>Director, SecureFinance Co.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Technology Stack Section -->
+        <section id="tech-stack" class="py-16 md:py-24 bg-primary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Our Technology Arsenal</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        We leverage cutting-edge technologies and frameworks to build solutions that are both powerful and future-proof.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <div class="tech-item reveal-up">
+                        <div class="tech-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <span>Python</span>
+                    </div>
+                    <div class="tech-item reveal-up" style="transition-delay: 0.1s;">
+                        <div class="tech-icon">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <span>React</span>
+                    </div>
+                    <div class="tech-item reveal-up" style="transition-delay: 0.2s;">
+                        <div class="tech-icon">
+                            <i class="fab fa-node-js"></i>
+                        </div>
+                        <span>Node.js</span>
+                    </div>
+                    <div class="tech-item reveal-up" style="transition-delay: 0.3s;">
+                        <div class="tech-icon">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                        <span>AWS</span>
+                    </div>
+                    <div class="tech-item reveal-up" style="transition-delay: 0.4s;">
+                        <div class="tech-icon">
+                            <i class="fab fa-docker"></i>
+                        </div>
+                        <span>Docker</span>
+                    </div>
+                    <div class="tech-item reveal-up" style="transition-delay: 0.5s;">
+                        <div class="tech-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <span>PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Awards & Recognition Section -->
+        <section id="recognition" class="py-16 md:py-24 bg-secondary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Recognition & Achievements</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        Our commitment to excellence has been recognized by industry peers and prestigious organizations.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="achievement-card reveal-up">
+                        <div class="achievement-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Innovation Award 2023</h3>
+                        <p class="text-secondary">Best AI Implementation in Logistics</p>
+                    </div>
+                    <div class="achievement-card reveal-up" style="transition-delay: 0.1s;">
+                        <div class="achievement-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Client Satisfaction</h3>
+                        <p class="text-secondary">98% Client Retention Rate</p>
+                    </div>
+                    <div class="achievement-card reveal-up" style="transition-delay: 0.2s;">
+                        <div class="achievement-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Security Excellence</h3>
+                        <p class="text-secondary">ISO 27001 Certified Processes</p>
+                    </div>
+                    <div class="achievement-card reveal-up" style="transition-delay: 0.3s;">
+                        <div class="achievement-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Global Reach</h3>
+                        <p class="text-secondary">50+ Projects Across 5 Continents</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -905,29 +1257,31 @@
 
         // --- 3. Header Scroll Effect ---
         function initHeaderScroll() {
-            if (header) {
-                window.addEventListener('scroll', () => {
-                    header.classList.toggle('scrolled', window.scrollY > 50);
-                });
-            }
+            if (!header) return;
+
+            const handleScroll = () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            };
+
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
         }
 
         // --- 4. Scroll Reveal Animation ---
         function initScrollReveal() {
+            if (!("IntersectionObserver" in window)) return;
+
             const revealElements = document.querySelectorAll('.reveal-up');
-            if ("IntersectionObserver" in window) {
-                const revealObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                revealElements.forEach(el => revealObserver.observe(el));
-            } else {
-                revealElements.forEach(el => el.classList.add('visible'));
-            }
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => el.classList.add('visible'));
         }
 
         // --- 5. Footer Current Year ---
@@ -937,28 +1291,12 @@
                 currentYearSpan.textContent = new Date().getFullYear();
             }
         }
-        
+
         // --- 6. Animated Timeline with GSAP ---
         function initAnimatedTimeline() {
-            const timeline = document.querySelector('.timeline');
-            if (!timeline) return;
-
-            const timelineProgress = timeline.querySelector('.timeline-progress');
             const timelineItems = gsap.utils.toArray('.timeline-container');
-
-            // Animate the progress bar
-            gsap.to(timelineProgress, {
-                height: '100%',
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: timeline,
-                    start: 'top center',
-                    end: 'bottom center',
-                    scrub: true
-                }
-            });
-
-            // Animate each timeline item
+            const timelineProgress = timeline.querySelector('.timeline-progress');
+            if (!timeline) return;
             timelineItems.forEach(item => {
                 gsap.fromTo(item, 
                     { opacity: 0, y: 100 },
@@ -1045,18 +1383,18 @@
             });
         }
 
-        // Initialize all components
+        // Initialize all components        initFaqAccordion();
         initTheme();
         initMobileMenu();
         initHeaderScroll();
         initScrollReveal();
-        initFooter();
+        initFooter();</html>
         initAnimatedTimeline();
         initBackToTop();
         initLocalTime();
         initFaqAccordion();
-    });
-    </script>
+    });   const question = item.querySelector('.faq-question');
+    </script>                const answer = item.querySelector('.faq-answer');
 
-</body>
-</html>
+</body>'click', () => {
+</html>           const isActive = item.classList.contains('active');
