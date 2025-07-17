@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Danco & Khadija</title>
+    <link rel="icon" href="https://placehold.co/32x32/7c3aed/ffffff?text=DK" type="image/png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* --- Theme Variables (Copied from index.html for consistency) --- */
+        :root {
+            --bg-primary: #f3f4f6; --bg-secondary: #ffffff; --bg-accent: #e5e7eb;
+            --text-primary: #1f2937; --text-secondary: #4b5563; --text-accent: #0ea5e9;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --gradient-start: #1e40af; --gradient-mid: #0d9488; --gradient-end: #047857;
+            --glass-bg: rgba(255, 255, 255, 0.5); --glass-border: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(14, 165, 233, 0.15);
+            --input-bg: #ffffff; --input-text: var(--text-primary); --input-border: #d1d5db;
+            --input-focus-ring: var(--text-accent); --label-text: var(--text-primary);
+        }
+
+        .dark-mode {
+            --bg-primary: #0a0a23; --bg-secondary: #111827; --bg-accent: #1f2937;
+            --text-primary: #e0e0ff; --text-secondary: #9ca3af; --text-accent: #38bdf8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-start: #2563eb; --gradient-mid: #14b8a6; --gradient-end: #059669;
+            --glass-bg: rgba(31, 41, 55, 0.4); --glass-border: rgba(255, 255, 255, 0.15);
+            --shadow-color: rgba(56, 189, 248, 0.25);
+            --input-bg: #1f2937; --input-text: var(--text-primary); --input-border: #4b5563;
+        }
+
+        /* --- Base Styles --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        body::before { 
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at top left, color-mix(in srgb, var(--gradient-start) 10%, transparent) 0%, transparent 40%),
+                radial-gradient(ellipse at bottom right, color-mix(in srgb, var(--gradient-mid) 10%, transparent) 0%, transparent 40%);
+            opacity: 0.2; z-index: -2; pointer-events: none; transition: background 0.3s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        html { scroll-behavior: smooth; }
+        section { scroll-margin-top: 80px; }
+
+        /* --- Navigation (Copied for consistency) --- */
+        #main-header { 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        #main-header.scrolled {
+            background: var(--glass-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode #main-header.scrolled {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link {
+            color: var(--text-primary);
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            padding: 0.5rem 0.6rem;
+            font-size: 0.9rem;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover { color: var(--text-accent); }
+        .nav-link.active { color: var(--text-accent); font-weight: 600; border-bottom-color: var(--text-accent); }
+        #mobile-menu { background-color: var(--bg-accent); border-top: 1px solid var(--border-color); }
+        #mobile-menu a { color: var(--text-primary); display: block; padding: 0.75rem 1.5rem; }
+        #mobile-menu a:hover { background-color: var(--bg-primary); }
+        #mobile-menu a.active { color: var(--text-accent); font-weight: 600; background-color: var(--bg-primary); }
+        #theme-toggle, #theme-toggle-mobile {
+            background: none; border: none; color: var(--text-secondary); cursor: pointer;
+            font-size: 1.25rem; transition: color 0.3s ease; padding: 0.5rem;
+        }
+        #theme-toggle:hover, #theme-toggle-mobile:hover { color: var(--text-accent); }
+
+        /* --- NEW Hero Section --- */
+        .page-hero {
+            padding: 10rem 1.5rem 6rem;
+            background-color: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 1024px) {
+            .hero-grid { grid-template-columns: 2fr 1fr; }
+        }
+        .hero-text-content h1 {
+            color: var(--text-primary);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .hero-text-content p { color: var(--text-secondary); }
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .hero-meta-item i {
+            color: var(--text-accent);
+            font-size: 1.1rem;
+        }
+        .hero-visual-card {
+            background: var(--bg-accent);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+        }
+        .dark-mode .hero-visual-card {
+             background: var(--bg-accent);
+             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .hero-visual-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--text-accent);
+            object-fit: cover;
+        }
+        .hero-visual-card h3 {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+        }
+        .hero-visual-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .hero-social-links a {
+            color: var(--text-secondary);
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .hero-social-links a:hover {
+            color: var(--text-accent);
+        }
+
+        /* --- Contact Grid --- */
+        .contact-grid-card {
+            background-color: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 0.75rem; padding: 2rem; text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+        }
+        .contact-grid-card:hover {
+            transform: translateY(-8px); box-shadow: 0 10px 25px var(--shadow-color);
+        }
+        .contact-grid-icon {
+            font-size: 2.5rem; color: var(--text-accent); margin-bottom: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            width: 4.5rem; height: 4.5rem; border-radius: 50%;
+            background-color: color-mix(in srgb, var(--text-accent) 10%, transparent);
+        }
+        
+        /* --- Contact Form & Map Section --- */
+        #contact-form-section { background-color: var(--bg-primary); }
+        .form-container {
+            background-color: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 0.75rem; padding: 2.5rem; box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+        }
+        .dark-mode .form-container { box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        
+        /* --- Map Container --- */
+        .map-container {
+            border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color);
+            position: relative; aspect-ratio: 16 / 10;
+        }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+        .dark-mode .map-container iframe { filter: invert(1) hue-rotate(200deg) brightness(0.8) contrast(1.2); }
+        .office-status {
+            position: absolute; top: 1rem; left: 1rem; background-color: var(--glass-bg);
+            padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500;
+            display: flex; align-items: center; gap: 0.5rem; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+        }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+        /* --- FAQ Section --- */
+        #faq { background-color: var(--bg-secondary); }
+        .faq-item { border-bottom: 1px solid var(--border-color); }
+        .faq-question {
+            width: 100%; text-align: left; padding: 1.5rem 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; background: none; border: none;
+            font-size: 1.1rem; font-weight: 600; color: var(--text-primary);
+        }
+        .faq-question:hover { background-color: var(--bg-accent); }
+        .faq-icon { transition: transform 0.3s ease; font-size: 1rem; color: var(--text-accent); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out, padding 0.5s ease;
+            padding: 0 1rem;
+        }
+        .faq-answer p { padding-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        
+        /* --- Scroll Animation & Buttons --- */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
+        .reveal-up.visible { opacity: 1; transform: translateY(0); }
+        .cta-button { 
+            transition: all 0.3s ease; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid)); color: white;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--shadow-color) 130%, black);
+        }
+        .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        /* --- Footer & Back to Top (Copied for consistency) --- */
+        .site-footer {
+            background-color: var(--bg-accent); color: var(--text-secondary);
+            padding: 4rem 1.5rem 2rem; position: relative; border-top: 1px solid var(--border-color);
+        }
+        .dark-mode .site-footer { background-color: #0f172a; }
+        #back-to-top {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; width: 45px; height: 45px;
+            background: var(--text-accent); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 100;
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+        #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+            <a href="index.html" class="flex-shrink-0 flex items-center" title="Danco & Khadija Home">
+                <span class="text-xl md:text-2xl font-bold gradient-text">Danco & Khadija</span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-wrap justify-end">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="who_we_are.html" class="nav-link">Who We Are</a>
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="index.html#our-process" class="nav-link">Our Process</a>
+                <a href="index.html#tech-skills" class="nav-link">Expertise</a>
+                <a href="index.html#portfolio" class="nav-link">Our Work</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+                <button id="theme-toggle" title="Toggle Theme" class="ml-2">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+            <div class="lg:hidden flex items-center space-x-3">
+                 <button id="theme-toggle-mobile" class="text-xl" title="Toggle Theme"><i class="fas fa-sun"></i></button>
+                 <button id="mobile-menu-button" class="focus:outline-none text-2xl" title="Toggle Mobile Menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <a href="index.html" class="block px-4 py-2">Home</a>
+            <a href="who_we_are.html" class="block px-4 py-2">Who We Are</a>
+            <a href="contact.html" class="active block px-4 py-2">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- REDESIGNED Page Hero Section -->
+        <section class="page-hero">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="hero-grid">
+                    <div class="hero-text-content reveal-up">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">Let's Start a Conversation.</h1>
+                        <p class="text-lg md:text-xl max-w-3xl mb-8">
+                            Your vision has potential. Our expertise can unlock it. Whether you have a project idea, a technical challenge, or a strategic question, we're ready to listen and explore how we can build something extraordinary together.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="hero-meta-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span><strong class="font-semibold text-primary">Partnership-Driven:</strong> We collaborate with you, not just for you.</span>
+                            </div>
+                            <div class="hero-meta-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <span><strong class="font-semibold text-primary">Innovation at the Core:</strong> Fusing data science with digital strategy.</span>
+                            </div>
+                            <div class="hero-meta-item">
+                                <i class="fas fa-headset"></i>
+                                <span><strong class="font-semibold text-primary">Responsive & Ready:</strong> Expect a reply within 24 business hours.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block reveal-up" style="transition-delay: 0.2s;">
+                        <div class="hero-visual-card">
+                            <img src="https://placehold.co/200x200/e0e7ff/4338ca?text=DW" alt="Daniel Wanjala">
+                            <h3>Daniel Wanjala</h3>
+                            <p>Lead Data Scientist & Engineer</p>
+                            <div class="hero-social-links">
+                                <a href="https://github.com/madscie254" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                                <a href="https://www.linkedin.com/in/daniel-wanjala-912b8b17b/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                            </div>
+                            <hr class="my-4 border-t border-border-color">
+                            <img src="https://placehold.co/200x200/e0f2fe/075985?text=KA" alt="Khadija Abdalla">
+                            <h3>Khadija Abdalla</h3>
+                            <p>Lead Digital Strategist & UX Designer</p>
+                             <div class="hero-social-links">
+                                <a href="#" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                                <a href="#" target="_blank" rel="noopener" title="Portfolio"><i class="fas fa-briefcase"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Grid Section -->
+        <section id="contact-grid" class="py-16 md:py-24 bg-primary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Choose Your Path to Connection</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">Every great project starts with a conversation. Select the method that best suits your needs.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- UPDATED: This card now links to the Tally form -->
+                    <a href="https://tally.so/r/mR2xJd" target="_blank" rel="noopener" class="contact-grid-card reveal-up" style="transition-delay: 0.1s;">
+                        <div class="contact-grid-icon"><i class="fas fa-paper-plane"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Detail Your Project</h3>
+                        <p class="text-secondary">Ideal for comprehensive project descriptions. Share your vision and we'll reply within a day.</p>
+                    </a>
+                    <!-- This card was already linking to Tally, no changes needed -->
+                    <a href="https://tally.so/r/mR2xJd" target="_blank" rel="noopener" class="contact-grid-card reveal-up" style="transition-delay: 0.2s;">
+                        <div class="contact-grid-icon"><i class="fas fa-list-check"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Request a Quote</h3>
+                        <p class="text-secondary">Use our guided form to provide specifics and receive a tailored project estimate.</p>
+                    </a>
+                    <a href="tel:+254742007277" class="contact-grid-card reveal-up" style="transition-delay: 0.3s;">
+                        <div class="contact-grid-icon"><i class="fas fa-phone-alt"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Speak With Us</h3>
+                        <p class="text-secondary">For immediate questions or to discuss urgent matters during business hours (9am-5pm EAT).</p>
+                    </a>
+                    <a href="https://wa.me/254742007277?text=Hello%2C%20I%27m%20interested%20in%20your%20services." target="_blank" rel="noopener" class="contact-grid-card reveal-up" style="transition-delay: 0.4s;">
+                        <div class="contact-grid-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Chat on WhatsApp</h3>
+                        <p class="text-secondary">The fastest way to get a response for general inquiries and quick questions.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- UPDATED Contact Form Section -->
+        <section id="contact-form-section" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-5 gap-12">
+                    <!-- Form Container - NOW A TALLY LINK -->
+                    <div class="lg:col-span-3 reveal-up">
+                        <div class="form-container">
+                            <h2 class="text-2xl font-bold mb-2">Ready to Detail Your Project?</h2>
+                            <p class="text-secondary mb-6">Click the button below to open our secure project inquiry form. We're excited to learn about your vision and will get back to you within 24 business hours!</p>
+                            <a href="https://tally.so/r/mR2xJd" target="_blank" rel="noopener" class="cta-button w-full text-center">
+                                Open Project Inquiry Form
+                                <i class="fas fa-external-link-alt ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Map & Info -->
+                    <div class="lg:col-span-2 reveal-up" style="transition-delay: 0.2s;">
+                        <h3 class="text-2xl font-bold mb-4">Our Base of Operations</h3>
+                        <div class="map-container mb-6 shadow-lg">
+                            <div class="office-status">
+                                <span id="status-dot" class="status-dot"></span>
+                                <span id="status-text"></span>
+                            </div>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63821.33918342462!2d36.75842424845558!3d-1.277832412581023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f104b694b2959%3A0x1263428989d1a2ed!2sWestlands%2C%20Nairobi!5e0!3m2!1sen!2ske!4v1678886543210!5m2!1sen!2ske" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="space-y-3 text-secondary">
+                            <p class="flex items-start"><i class="fas fa-map-marker-alt w-5 text-center mr-3 mt-1 text-accent"></i><span>Westlands, Nairobi, Kenya</span></p>
+                            <p class="flex items-start"><i class="fas fa-envelope w-5 text-center mr-3 mt-1 text-accent"></i><a href="mailto:dmwanjal254@gmail.com" class="hover:text-accent">dmwanjal254@gmail.com</a></p>
+                            <p class="flex items-start"><i class="fas fa-phone-alt w-5 text-center mr-3 mt-1 text-accent"></i><a href="tel:+254742007277" class="hover:text-accent">+254 742 007 277</a></p>
+                            <p class="flex items-start"><i class="fas fa-clock w-5 text-center mr-3 mt-1 text-accent"></i><span>Mon - Fri, 9:00 AM - 5:00 PM (EAT)</span></p>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-border-color">
+                            <h4 class="font-semibold mb-3 text-primary">Follow Our Journey</h4>
+                            <div class="flex space-x-4">
+                               <a href="https://github.com/madscie254" target="_blank" rel="noopener" class="text-secondary hover:text-accent transition-colors" title="GitHub"><i class="fab fa-github fa-2x"></i></a>
+                               <a href="https://www.linkedin.com/in/daniel-wanjala-912b8b17b/" target="_blank" rel="noopener" class="text-secondary hover:text-accent transition-colors" title="LinkedIn"><i class="fab fa-linkedin-in fa-2x"></i></a>
+                               <a href="#" target="_blank" rel="noopener" class="text-secondary hover:text-accent transition-colors" title="Twitter/X"><i class="fab fa-twitter fa-2x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Frequently Asked Questions</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">A few common questions that might help you get the answers you need even faster.</p>
+                </div>
+                <div class="max-w-4xl mx-auto reveal-up">
+                    <div class="faq-item">
+                        <button class="faq-question"><span>What is the typical timeline for a project?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>Project timelines vary significantly based on scope and complexity. A simple website might take 4-6 weeks, while a complex web application or AI model could take 3-6 months or more. After our initial discovery call, we provide a detailed project plan with clear milestones and timelines.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question"><span>Do you offer free consultations?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>Absolutely. We offer a complimentary 30-minute discovery call to discuss your project, understand your goals, and determine if we're the right fit for each other. This is a no-obligation chat to explore the possibilities. You can schedule one by mentioning it in the contact form.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question"><span>What kind of clients do you work with?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>We partner with a diverse range of clients, from ambitious startups and small-to-medium enterprises (SMEs) to established companies seeking to innovate. Our ideal partners are those who value a collaborative, strategic approach to building high-quality digital solutions.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question"><span>Can I visit your offices?</span><i class="fas fa-plus faq-icon"></i></button>
+                        <div class="faq-answer"><p>As a modern freelance partnership, we operate in a hybrid model and primarily meet with clients virtually. However, for key project milestones and workshops, we are happy to arrange in-person meetings at a convenient location in Nairobi. Please schedule any visits in advance.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Danco & Khadija</h5>
+                    <p class="text-sm leading-relaxed">Pioneering intelligent, scalable, and design-driven digital solutions. Based in Nairobi, serving globally.</p>
+                 </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Navigate</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="who_we_are.html" class="hover:text-accent transition-colors">Who We Are</a></li>
+                        <li><a href="index.html#services" class="hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="index.html#portfolio" class="hover:text-accent transition-colors">Our Work</a></li>
+                        <li><a href="contact.html" class="hover:text-accent transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Core Competencies</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li>Advanced Data Science & ML</li>
+                        <li>Full-Stack Web Development</li>
+                        <li>Strategic Digital Consulting</li>
+                        <li>User-Centric UI/UX Design</li>
+                        <li>Cloud Architecture & DevOps</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-3 text-primary">Connect With Us</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt mr-2 opacity-70"></i> Nairobi, Kenya</li>
+                        <li><i class="fas fa-phone-alt mr-2 opacity-70"></i> +254 742 007 277</li>
+                        <li><i class="fas fa-envelope mr-2 opacity-70"></i> <a href="mailto:dmwanjal254@gmail.com" class="hover:text-accent transition-colors">dmwanjal254@gmail.com</a></li>
+                         <li>
+                            <div class="flex space-x-4 mt-3">
+                                <a href="https://github.com/MadScie254" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" title="Daniel's GitHub"><i class="fab fa-github"></i></a>
+                                <a href="https://linkedin.com/in/daniel-wanjala-912b8b17b" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors" title="Daniel's LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-border-color pt-8 mt-8 text-center text-sm">
+                <p>&copy; <span id="current-year"></span> Danco & Khadija Freelance Partnership. All Rights Reserved.</p>
+                <p class="mt-1">Transforming Visions into Digital Realities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" id="back-to-top" title="Back to Top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Submission Status Modal REMOVED -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Initialize common components ---
+        const body = document.body;
+        const header = document.getElementById('main-header');
+        gsap.registerPlugin(ScrollTrigger);
+
+        function initTheme() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const sunIconClass = 'fa-sun';
+            const moonIconClass = 'fa-moon';
+            let currentTheme = localStorage.getItem('theme') || 'light';
+
+            const applyTheme = (theme) => {
+                const iconToAdd = theme === 'dark' ? sunIconClass : moonIconClass;
+                const iconToRemove = theme === 'dark' ? moonIconClass : sunIconClass;
+                body.classList.toggle('dark-mode', theme === 'dark');
+                [themeToggle, themeToggleMobile].forEach(button => {
+                    if (button) {
+                        const iconElement = button.querySelector('i');
+                        if (iconElement) {
+                            iconElement.classList.remove(iconToRemove);
+                            iconElement.classList.add(iconToAdd);
+                        }
+                    }
+                });
+            };
+
+            const toggleTheme = () => {
+                currentTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', currentTheme);
+                applyTheme(currentTheme);
+            };
+
+            applyTheme(currentTheme);
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+        }
+
+        function initMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = mobileMenuButton ? mobileMenuButton.querySelector('i') : null;
+
+            if (mobileMenuButton && mobileMenu && mobileMenuIcon) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenuIcon.classList.toggle('fa-bars');
+                    mobileMenuIcon.classList.toggle('fa-times');
+                });
+            }
+        }
+
+        function initHeaderScroll() {
+             if (header) {
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                });
+            }
+        }
+
+        function initScrollReveal() { 
+            const revealElements = document.querySelectorAll('.reveal-up');
+            if ("IntersectionObserver" in window) {
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                revealElements.forEach(el => revealObserver.observe(el));
+            } else {
+                revealElements.forEach(el => el.classList.add('visible'));
+            }
+        }
+
+        function initFooter() {
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+        }
+
+        function initBackToTop() { 
+            const backToTopButton = document.getElementById('back-to-top');
+            if (!backToTopButton) return;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        function initFaqAccordion() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    if (isActive) {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = 0;
+                    } else {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
+        }
+
+        // --- Page-Specific Logic ---
+
+        // 1. Office Status
+        function updateOfficeStatus() {
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            if (!statusDot || !statusText) return;
+
+            const now = new Date();
+            // EAT is UTC+3. Get UTC day and hour.
+            const dayUTC = now.getUTCDay(); // 0=Sun, 1=Mon...
+            const hourUTC = now.getUTCHours();
+            const hourEAT = (hourUTC + 3) % 24;
+            // Adjust day if hour wraps past midnight
+            const dayEAT = (hourUTC + 3 >= 24) ? (dayUTC + 1) % 7 : dayUTC;
+
+            const isOpen = (dayEAT >= 1 && dayEAT <= 5) && (hourEAT >= 9 && hourEAT < 17);
+
+            if (isOpen) {
+                statusDot.style.backgroundColor = '#22c55e'; // green-500
+                statusText.textContent = 'Open Now';
+            } else {
+                statusDot.style.backgroundColor = '#ef4444'; // red-500
+                statusText.textContent = 'Currently Closed';
+            }
+        }
+
+        // Contact form JS has been removed as it's no longer needed.
+
+        // --- Initialize All ---
+        initTheme();
+        initMobileMenu();
+        initHeaderScroll();
+        initScrollReveal();
+        initFooter();
+        initBackToTop();
+        initFaqAccordion();
+        updateOfficeStatus();
+    });
+    </script>
+
+</body>
+</html>
