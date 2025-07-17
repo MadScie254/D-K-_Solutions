@@ -45,20 +45,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
-        /* Particle background */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.5;
-            transition: opacity 0.5s ease;
-        }
-        .dark-mode #particle-canvas { opacity: 0.3; }
-
         .gradient-text {
             background: linear-gradient(90deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
             -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -101,13 +87,37 @@
         }
         #theme-toggle:hover, #theme-toggle-mobile:hover { color: var(--text-accent); }
 
-        /* --- Page-Specific Hero --- */
+        /* --- Page-Specific Hero with Video Background --- */
         .page-hero {
-            padding: 10rem 1.5rem 6rem;
+            padding: 12rem 1.5rem 8rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, color-mix(in srgb, var(--gradient-start) 15%, transparent), color-mix(in srgb, var(--gradient-end) 15%, transparent));
+        }
+        #hero-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+            opacity: 0.8;
+            z-index: -1;
+            transition: background-color 0.3s ease;
+        }
+        .dark-mode .hero-overlay {
+            background-color: var(--bg-primary);
+            opacity: 0.85;
         }
         .page-hero h1 {
             color: var(--text-primary);
@@ -116,21 +126,32 @@
         .page-hero p {
             color: var(--text-secondary);
         }
-        .dark-mode .page-hero h1 { color: var(--text-primary); }
-        .dark-mode .page-hero p { color: var(--text-secondary); }
 
-        /* --- Content Card (reused and enhanced) --- */
-        .content-card { 
+        /* --- Core Values Section --- */
+        .value-card {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 0.75rem; 
-            padding: 2rem; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .dark-mode .content-card { box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--text-accent);
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .value-card:hover .value-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
 
-        /* --- Timeline Section for "Our Journey" --- */
+        /* --- Animated Timeline Section --- */
         .timeline {
             position: relative;
             max-width: 1200px;
@@ -140,19 +161,29 @@
             content: '';
             position: absolute;
             width: 4px;
-            background-color: var(--text-accent);
-            opacity: 0.3;
+            background-color: color-mix(in srgb, var(--text-accent) 30%, transparent);
             top: 0;
             bottom: 0;
             left: 50%;
             margin-left: -2px;
-            border-radius: 2px;
+            z-index: 0;
+        }
+        .timeline-progress {
+            position: absolute;
+            width: 4px;
+            background-color: var(--text-accent);
+            top: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 1;
+            height: 0; /* Animated by GSAP */
         }
         .timeline-container {
             padding: 10px 40px;
             position: relative;
             background-color: inherit;
             width: 50%;
+            opacity: 0; /* Initially hidden for animation */
         }
         .timeline-container.left { left: 0; }
         .timeline-container.right { left: 50%; }
@@ -166,9 +197,13 @@
             border: 4px solid var(--text-accent);
             top: 28px;
             border-radius: 50%;
-            z-index: 1;
+            z-index: 2;
+            transition: transform 0.3s ease;
         }
         .timeline-container.right::after { left: -10px; }
+        .timeline-container.visible::after {
+            transform: scale(1.2);
+        }
         .timeline-content {
             padding: 20px 30px;
             background-color: var(--bg-secondary);
@@ -179,13 +214,13 @@
         }
         .timeline-content h3 { color: var(--text-accent); }
         @media screen and (max-width: 768px) {
-            .timeline::after { left: 20px; }
+            .timeline::after, .timeline-progress { left: 20px; }
             .timeline-container { width: 100%; padding-left: 60px; padding-right: 15px; }
             .timeline-container.right { left: 0%; }
             .timeline-container.left::after, .timeline-container.right::after { left: 12px; }
         }
 
-        /* --- Team Section: "Our Core Innovators" --- */
+        /* --- Team Section: "Our Core Innovators" (no changes) --- */
         .team-card {
             background-color: var(--bg-secondary);
             border-radius: 1rem;
@@ -268,6 +303,68 @@
         .team-social-links a:hover {
             color: var(--text-accent);
             transform: scale(1.2);
+        }
+
+        /* --- FAQ Section --- */
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .faq-question:hover {
+            background-color: var(--bg-accent);
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+            color: var(--text-accent);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease;
+            padding: 0 1rem;
+        }
+        .faq-answer p {
+            padding-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        /* --- CTA Section with Background Image --- */
+        #join-us {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+        #join-us::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-secondary);
+            opacity: 0.9;
+            z-index: -1;
+            transition: background-color 0.3s ease;
+        }
+        .dark-mode #join-us::before {
+            background-color: var(--bg-primary);
         }
 
         /* --- Scroll Animation --- */
@@ -399,8 +496,6 @@
 </head>
 <body class="antialiased">
 
-    <canvas id="particle-canvas"></canvas>
-
     <!-- Header (Copied from index.html, 'active' class updated) -->
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
         <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
@@ -444,6 +539,11 @@
     <main>
         <!-- Page Hero Section -->
         <section class="page-hero">
+            <video id="hero-video-bg" autoplay loop muted playsinline poster="https://placehold.co/1920x1080/0a0a23/1f2937?text=Loading...">
+                <source src="https://videos.pexels.com/video-files/3214466/3214466-hd_1920_1080_25fps.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
             <div class="container mx-auto px-6 relative z-10">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 reveal-up">The Minds Behind the Mission</h1>
                 <p class="text-lg md:text-xl max-w-3xl mx-auto reveal-up" style="transition-delay: 0.2s;">
@@ -453,7 +553,7 @@
         </section>
 
         <!-- Our Genesis Section -->
-        <section id="genesis" class="py-16 md:py-24 bg-primary">
+        <section id="genesis" class="py-16 md:py-24 bg-secondary">
             <div class="container mx-auto px-6">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="reveal-up">
@@ -467,6 +567,38 @@
                         <p class="text-secondary leading-relaxed">
                             Our partnership was forged in the crucible of shared ambition—to not just build software, but to engineer holistic solutions. We believe that the most profound impact is achieved when elegant code, intelligent algorithms, and strategic foresight coalesce into a singular, seamless experience. This is our founding principle and the promise we bring to every collaboration.
                         </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Our Core Values Section -->
+        <section id="values" class="py-16 md:py-24 bg-primary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Our Core Values</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">The principles that guide our work, our partnerships, and our pursuit of excellence.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="value-card reveal-up">
+                        <i class="fas fa-lightbulb value-icon"></i>
+                        <h3 class="text-xl font-bold mb-2">Innovation</h3>
+                        <p class="text-secondary">We relentlessly explore emerging technologies to deliver forward-thinking solutions that provide a competitive edge.</p>
+                    </div>
+                    <div class="value-card reveal-up" style="transition-delay: 0.1s;">
+                        <i class="fas fa-shield-halved value-icon"></i>
+                        <h3 class="text-xl font-bold mb-2">Integrity</h3>
+                        <p class="text-secondary">We operate with unwavering transparency and honesty, building trust through every interaction and line of code.</p>
+                    </div>
+                    <div class="value-card reveal-up" style="transition-delay: 0.2s;">
+                        <i class="fas fa-users value-icon"></i>
+                        <h3 class="text-xl font-bold mb-2">Collaboration</h3>
+                        <p class="text-secondary">We believe the best results come from true partnership, working closely with our clients as a unified team.</p>
+                    </div>
+                    <div class="value-card reveal-up" style="transition-delay: 0.3s;">
+                        <i class="fas fa-rocket value-icon"></i>
+                        <h3 class="text-xl font-bold mb-2">Excellence</h3>
+                        <p class="text-secondary">We are committed to the highest standards of quality, from strategic planning to pixel-perfect execution.</p>
                     </div>
                 </div>
             </div>
@@ -555,31 +687,32 @@
                     </p>
                 </div>
                 <div class="timeline">
-                    <div class="timeline-container left reveal-up">
+                    <div class="timeline-progress"></div>
+                    <div class="timeline-container left">
                         <div class="timeline-content">
                             <h3 class="font-bold text-xl mb-2">2020: The Spark</h3>
                             <p class="text-secondary">The initial collaboration begins, focusing on freelance data analysis projects and laying the groundwork for a future partnership.</p>
                         </div>
                     </div>
-                    <div class="timeline-container right reveal-up">
+                    <div class="timeline-container right">
                         <div class="timeline-content">
                             <h3 class="font-bold text-xl mb-2">2021: Formal Partnership</h3>
                             <p class="text-secondary">Danco & Khadija is officially formed. We expand our services to include full-stack web development and strategic consulting.</p>
                         </div>
                     </div>
-                    <div class="timeline-container left reveal-up">
+                    <div class="timeline-container left">
                         <div class="timeline-content">
                             <h3 class="font-bold text-xl mb-2">2022: First Major AI Project</h3>
                             <p class="text-secondary">We successfully develop and deploy our first large-scale machine learning solution for a client in the logistics sector, achieving a 30% efficiency increase.</p>
                         </div>
                     </div>
-                    <div class="timeline-container right reveal-up">
+                    <div class="timeline-container right">
                         <div class="timeline-content">
                             <h3 class="font-bold text-xl mb-2">2023: Team Expansion</h3>
                             <p class="text-secondary">Our core team grows, bringing in specialized expertise in cybersecurity and UI/UX design to offer a more holistic service portfolio.</p>
                         </div>
                     </div>
-                     <div class="timeline-container left reveal-up">
+                     <div class="timeline-container left">
                         <div class="timeline-content">
                             <h3 class="font-bold text-xl mb-2">Today: Future-Forward</h3>
                             <p class="text-secondary">We continue to push the boundaries of digital innovation, exploring new frontiers in generative AI and decentralized applications, while serving a growing portfolio of international clients.</p>
@@ -589,9 +722,59 @@
             </div>
         </section>
 
+        <!-- NEW: FAQ Section -->
+        <section id="faq" class="py-16 md:py-24 bg-secondary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16 reveal-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Frequently Asked Questions</h2>
+                    <p class="text-lg text-secondary max-w-3xl mx-auto">
+                        Have questions? We have answers. Here are some common inquiries about our process and services.
+                    </p>
+                </div>
+                <div class="max-w-4xl mx-auto reveal-up">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What kinds of clients do you typically work with?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We partner with a diverse range of clients, from ambitious startups aiming to launch their first minimum viable product (MVP) to established enterprises seeking to optimize operations or undergo a significant digital transformation. Our ideal partner is one who values innovation, collaboration, and is looking for a dedicated technical and strategic team to bring a bold vision to life.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does your process begin for a new project?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Every project kicks off with our "Discovery & Strategic Planning" phase. This involves a series of deep-dive workshops where we immerse ourselves in your business, goals, and challenges. We collaboratively define the project scope, identify key performance indicators (KPIs), and create a detailed strategic roadmap. This foundational step ensures we are perfectly aligned before any design or development work begins.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What makes your approach to AI and Machine Learning unique?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Our uniqueness lies in our focus on practical, business-centric AI. We don't implement technology for its own sake. Led by our Chief Technical Architect, we specialize in developing custom machine learning models that solve specific, high-impact business problems—be it predictive analytics, process automation, or generating novel insights from complex data. We ensure our AI solutions are not only technically robust but are also seamlessly integrated into your workflow to deliver measurable value and a clear return on investment.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How is security handled in your projects?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Security is a non-negotiable, foundational pillar of our work, overseen by our Chief Information Security Officer. We embed security into every stage of the development lifecycle, following a "security by design" principle. This includes multi-layered architectural defenses, rigorous code reviews, continuous vulnerability scanning, and strict adherence to data privacy regulations like GDPR. We treat your digital assets with the utmost care, ensuring they are protected against current and future threats.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA Section -->
-        <section id="join-us" class="py-16 md:py-24 bg-secondary">
-            <div class="container mx-auto px-6 text-center">
+        <section id="join-us" class="py-16 md:py-24" style="background-image: url('https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+            <div class="container mx-auto px-6 text-center relative z-10">
                  <div class="reveal-up">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">Join Our Odyssey</h2>
                     <p class="text-lg text-secondary max-w-3xl mx-auto mb-8">
@@ -647,7 +830,7 @@
                         <li><a href="index.html#publications">Publications</a></li>
                         <li><a href="#">Case Studies</a></li>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#faq">FAQs</a></li>
                     </ul>
                 </div>
             </div>
@@ -669,6 +852,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const body = document.body;
         const header = document.getElementById('main-header');
+        gsap.registerPlugin(ScrollTrigger); // Register GSAP plugin
 
         // --- 1. Theme Management ---
         function initTheme() {
@@ -754,83 +938,44 @@
             }
         }
         
-        // --- 6. Interactive Particle Background ---
-        function initParticleCanvas() {
-            const canvas = document.getElementById('particle-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        // --- 6. Animated Timeline with GSAP ---
+        function initAnimatedTimeline() {
+            const timeline = document.querySelector('.timeline');
+            if (!timeline) return;
 
-            const isDarkMode = () => document.body.classList.contains('dark-mode');
+            const timelineProgress = timeline.querySelector('.timeline-progress');
+            const timelineItems = gsap.utils.toArray('.timeline-container');
 
-            class Particle {
-                constructor(x, y, directionX, directionY, size, color) {
-                    this.x = x;
-                    this.y = y;
-                    this.directionX = directionX;
-                    this.directionY = directionY;
-                    this.size = size;
-                    this.color = color;
+            // Animate the progress bar
+            gsap.to(timelineProgress, {
+                height: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: timeline,
+                    start: 'top center',
+                    end: 'bottom center',
+                    scrub: true
                 }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                }
-                update() {
-                    if (this.x > canvas.width || this.x < 0) {
-                        this.directionX = -this.directionX;
-                    }
-                    if (this.y > canvas.height || this.y < 0) {
-                        this.directionY = -this.directionY;
-                    }
-                    this.x += this.directionX;
-                    this.y += this.directionY;
-                    this.draw();
-                }
-            }
-
-            function initParticles() {
-                particles = [];
-                const numberOfParticles = (canvas.height * canvas.width) / 9000;
-                const color = isDarkMode() ? 'rgba(224, 224, 255, 0.5)' : 'rgba(14, 165, 233, 0.5)';
-
-                for (let i = 0; i < numberOfParticles; i++) {
-                    const size = Math.random() * 2 + 1;
-                    const x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-                    const y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-                    const directionX = (Math.random() * 0.4) - 0.2;
-                    const directionY = (Math.random() * 0.4) - 0.2;
-                    particles.push(new Particle(x, y, directionX, directionY, size, color));
-                }
-            }
-
-            function animateParticles() {
-                requestAnimationFrame(animateParticles);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                }
-            }
-
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                initParticles();
             });
 
-            // Re-initialize particles on theme change
-            ['theme-toggle', 'theme-toggle-mobile'].forEach(id => {
-                const button = document.getElementById(id);
-                if(button) button.addEventListener('click', () => setTimeout(initParticles, 100));
+            // Animate each timeline item
+            timelineItems.forEach(item => {
+                gsap.fromTo(item, 
+                    { opacity: 0, y: 100 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none',
+                            onEnter: () => item.classList.add('visible') // For the dot scaling
+                        }
+                    }
+                );
             });
-            
-            initParticles();
-            animateParticles();
         }
 
         // --- 7. Back to Top Button ---
@@ -863,11 +1008,41 @@
             function updateTime() {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                timeDisplay.textContent = `Your Local Time: ${timeString}`;
+                timeDisplay.textContent = `Local Time: ${timeString}`;
             }
 
             updateTime();
             setInterval(updateTime, 1000);
+        }
+        
+        // --- 9. FAQ Accordion ---
+        function initFaqAccordion() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-answer').style.maxHeight = 0;
+                        }
+                    });
+                    
+                    // Toggle the clicked item
+                    if (isActive) {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = 0;
+                    } else {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
+            });
         }
 
         // Initialize all components
@@ -876,9 +1051,10 @@
         initHeaderScroll();
         initScrollReveal();
         initFooter();
-        initParticleCanvas();
+        initAnimatedTimeline();
         initBackToTop();
         initLocalTime();
+        initFaqAccordion();
     });
     </script>
 
