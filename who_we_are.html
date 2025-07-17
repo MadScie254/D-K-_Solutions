@@ -58,6 +58,8 @@
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             background: var(--glass-bg);
             -webkit-backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
         #main-header.scrolled {
@@ -1756,7 +1758,7 @@
                         <div class="ai-input-container">
                             <div class="ai-input-wrapper">
                                 <input type="text" id="ai-input" placeholder="Ask me about technology, AI, development..." maxlength="500">
-                                <button id="ai-send-btn" class="ai-send-button">
+                                <button id="ai-send-btn" class="ai-send-button" aria-label="Send message" title="Send message">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
                             </div>
